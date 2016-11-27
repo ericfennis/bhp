@@ -8,7 +8,9 @@
                     <div class="panel-body">
                         I'm an example component!
                     </div>
-                    
+                    <div class="message">
+                        {{ message }}
+                    </div>
                 </div>
             </div>
         </div>
@@ -17,6 +19,11 @@
 
 <script>
     export default {
+        data () {
+            return {
+                message:"joooo"
+            }
+        }
         mounted() {
             console.log('Component ready.')
         }
