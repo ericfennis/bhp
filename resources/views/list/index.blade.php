@@ -3,7 +3,7 @@
 @section('content')
 <main>
     <list></list>
-	
+
 
    
 </main>
