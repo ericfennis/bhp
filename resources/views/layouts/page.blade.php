@@ -8,6 +8,7 @@
     <title>{{ config('app.name') }}</title>
 
     <!-- Styles -->
+    <link href="/css/ol.css" rel="stylesheet">
     <link href="/css/app.css" rel="stylesheet">
 
     <!-- Scripts -->
@@ -19,5 +20,7 @@
    @yield('content') 
    <!-- Scripts -->
     <script src="/js/app.js"></script>
+    <script src="/js/ol.js"></script>
+    <script src="/js/main.js"></script>
 </body>
 </html>
