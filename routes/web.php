@@ -20,3 +20,7 @@ Auth::routes();
 Route::get('/home', 'HomeController@index');
 
 Route::get('/list', 'ListController@index');
+
+Route::get('/api/companies', function(){
+	return App\Company::all();
+});

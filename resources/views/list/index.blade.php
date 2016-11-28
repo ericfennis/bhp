@@ -2,6 +2,9 @@
 
 @section('content')
 <main>
-    <app></app>
+    <list></list>
+	
+
+   
 </main>
 @endsection
