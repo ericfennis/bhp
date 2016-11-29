@@ -38,7 +38,7 @@ return [
     |
     */
 
-    'debug' => env('APP_DEBUG', false),
+    'debug' => env('APP_DEBUG', true),
 
     /*
     |--------------------------------------------------------------------------
@@ -168,6 +168,7 @@ return [
          */
 
         //
+	Nvd\Crud\Providers\NvdCrudServiceProvider::class,
 
         /*
          * Application Service Providers...

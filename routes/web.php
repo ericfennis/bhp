@@ -24,3 +24,8 @@ Route::get('/list', 'ListController@index');
 Route::get('/api/companies', function(){
 	return App\Company::all();
 });
+
+//crud
+Route::resource('company','CompanyController');
+Route::resource('person','PersonController');
+
