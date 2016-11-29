@@ -22,6 +22,7 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
     ];
 });
 
+<<<<<<< HEAD
 $factory->define(App\Map::class, function (Faker\Generator $faker) {
 	return [
 		'name' => $faker->name,
@@ -29,3 +30,18 @@ $factory->define(App\Map::class, function (Faker\Generator $faker) {
 		'image' => $faker->name
 	];
 });
+=======
+$factory->define(App\Company::class, function (Faker\Generator $faker) {
+	return [
+		'route_id' => $faker->randomNumber(2),
+		'location_point' => $faker->randomNumber(2),
+		'default_person' => $faker->randomNumber(2),
+		'name' => $faker->name,
+		'logo' => $faker->image,
+		'building' => 'H',
+		'room_number' => $faker->randomFloat(2,0,3),
+		'description' => $faker->text,
+		'status' => 1
+	];
+});
+>>>>>>> companies

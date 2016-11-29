@@ -19,4 +19,12 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index');
 
+<<<<<<< HEAD
 Route::get('/map', 'MapController@index');
+=======
+Route::get('/list', 'ListController@index');
+
+Route::get('/api/companies', function(){
+	return App\Company::all();
+});
+>>>>>>> companies

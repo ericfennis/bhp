@@ -8,9 +8,7 @@
                     <div class="panel-body">
                         I'm an example component!
                     </div>
-                    <div class="message">
-                        {{ message }}
-                    </div>
+                   {{message}}
                 </div>
             </div>
         </div>
@@ -18,12 +16,18 @@
 </template>
 
 <script>
+    //console.log(this);
     export default {
-        data () {
+        data() {
             return {
-                message:"joooo"
+                list:[],
+                message:'afasdfasdf'
             }
-        }
+        },
+        created() {
+           
+            
+        },
         mounted() {
             console.log('Component ready.')
         }
