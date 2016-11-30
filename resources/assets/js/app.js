@@ -18,9 +18,8 @@ require('./bootstrap');
 
 // Vue.component('list', require('./components/List.vue'));
 
-import app from './components/App.vue';
+//import app from './components/App.vue';
 import list from './components/List.vue';
-import menu from './components/Menu.vue';
 // const app = new Vue({
 //     el: 'app',
 // });
@@ -29,9 +28,7 @@ new Vue({
     el: 'list',
 
     components: {
-        app,
         list,
-        menu
     },
 
     created() {

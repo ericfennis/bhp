@@ -2,10 +2,11 @@
 
 @section('content')
 <nav>
-	<app></app>
+
 </nav>
 <main>
-    <list></list>
+    
+	<list></list>
     
 </main>
 <script>

@@ -26,12 +26,7 @@
         },
        ready() {
 
-          // GET /someUrl
-          this.$http.get('/api/companies').then((response) => {
-              console.log('hello world');
-          }, (response) => {
-              // error callback
-          });
+          console.log('shfsdghiaosd')
 
         },
         mounted() {
