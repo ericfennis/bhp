@@ -19,6 +19,7 @@ class CreateCompaniesTable extends Migration
             $table->integer('location_point');
             $table->integer('default_person');
             $table->string('name');
+            $table->string('branch');
             $table->string('description');
             $table->string('logo');
             $table->char('building', 1);

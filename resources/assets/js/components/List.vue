@@ -27,34 +27,12 @@
             return {
                 list:[],
                 searchString: "",
-                people:[
-                    {
-                        "name": "Geert"
-                    },
-                    {
-                        "name": "Peter"
-                    },
-                    {
-                        "name": "frits" 
-                    },
-                    {
-                        "name": "Freek"
-                    },
-                    {
-                        "name": "Filip"
-                    },
-                    {
-                        "name": "Matthijs"
-                    },
-                    {
-                        "name": "Harm"
-                    },
-
-                ]
+                people:[],
             }
         },
         created() {
-           this.getList();
+           this.getCompanies();
+           this.getPeople();
         },
         computed: {
         // A computed property that holds only those articles that match the searchString.
@@ -81,13 +59,28 @@
             }
         },
         methods: {
-            getList: function() {
+            getCompanies: function() {
                 this.$http.get('/api/companies').then((response) => {
                 this.list = response.body;
                 }, (response) => {
                     console.error('Hij doet het niet');
                 });
-
+            },
+            getPeople: function() {
+                this.$http.get('/api/people').then((response) => {
+                    //combine firstname and surname to name
+                    for (var i = 0; i < response.body.length; i++) {
+                    
+                        //response.body[i].push({name: });
+                        response.body[i].name = response.body[i].firstname + ' ' + response.body[i].surname;
+                    }
+                this.people = response.body;
+                }, (response) => {
+                    console.error('Hij doet het niet');
+                });
+            },
+            getRoute: function() {
+                
             },
             // deleteItem: function(item) {
             //     Vue.delete(this.list, item);

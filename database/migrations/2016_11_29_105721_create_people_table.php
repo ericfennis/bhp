@@ -14,15 +14,15 @@ class CreatePeopleTable extends Migration
     public function up()
     {
         Schema::create('people', function (Blueprint $table) {
-		$table->increments('id');
-		$table->string("firstname",64);
-		$table->string("surname",64);
-		$table->string("profilepicture",64);
-		$table->unsignedInteger("telephone");	
-		$table->string("email",64);
-		$table->string("website",64);
-		$table->unsignedInteger("status");
-		$table->timestamps();
+    		$table->increments('id');
+    		$table->string("firstname",64);
+    		$table->string("surname",64);
+    		$table->string("profilepicture");
+    		$table->string("telephone");	
+    		$table->string("email",64);
+    		$table->string("website");
+    		$table->unsignedInteger("status");
+    		$table->timestamps();
         });
     }
 
