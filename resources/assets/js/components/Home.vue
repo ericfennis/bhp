@@ -24,9 +24,10 @@
                 message:'afasdfasdf'
             }
         },
-        created() {
-           
-            
+       ready() {
+
+          console.log('shfsdghiaosd')
+
         },
         mounted() {
             console.log('Component ready.')
