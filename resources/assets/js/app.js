@@ -6,23 +6,35 @@
  */
 
 require('./bootstrap');
-
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the body of the page. From here, you may begin adding components to
  * the application, or feel free to tweak this setup for your needs.
  */
 
-Vue.component('example', require('./components/Example.vue'));
+// Vue.component('example', require('./components/Example.vue'));
 
-Vue.component('app', require('./components/App.vue'));
+// Vue.component('app', require('./components/App.vue'));
 
-Vue.component('list', require('./components/List.vue'));
+// Vue.component('list', require('./components/List.vue'));
 
-const app = new Vue({
-    el: 'app',
-});
+import app from './components/App.vue';
+import list from './components/List.vue';
+import menu from './components/Menu.vue';
+// const app = new Vue({
+//     el: 'app',
+// });
+new Vue({
 
-const list = new Vue({
     el: 'list',
+
+    components: {
+        app,
+        list,
+        menu
+    },
+
+    created() {
+    	console.log('vue loaded');
+    },
 });

@@ -24,9 +24,15 @@
                 message:'afasdfasdf'
             }
         },
-        created() {
-           
-            
+       ready() {
+
+          // GET /someUrl
+          this.$http.get('/api/companies').then((response) => {
+              console.log('hello world');
+          }, (response) => {
+              // error callback
+          });
+
         },
         mounted() {
             console.log('Component ready.')

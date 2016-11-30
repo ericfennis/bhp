@@ -3,12 +3,17 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
-                    <ul class="list-group" v-for="company in list">
+                <form id="search">
+                    <input type="text" v-model="searchString" placeholder="Enter your search terms" />
+                </form>
+                    <ul class="list-group" v-for="company in filteredData">
                         <li class="list-group-item">
                             {{company.name}}
-                            <strong @click="delete(company.name)">x</strong>
+                            <a href="#" @click="deleteItem(company)"><strong>x</strong></a>
                         </li>
+
                     </ul>
+                    <a href="#" @click="test()"><strong>x</strong>
                 </div>
             </div>
         </div>
@@ -21,33 +26,75 @@
         data() {
             return {
                 list:[],
-                message:'afasdfasdf'
+                searchString: "",
+                people:[
+                    {
+                        "name": "Geert"
+                    },
+                    {
+                        "name": "Peter"
+                    },
+                    {
+                        "name": "frits" 
+                    },
+                    {
+                        "name": "Freek"
+                    },
+                    {
+                        "name": "Filip"
+                    },
+                    {
+                        "name": "Matthijs"
+                    },
+                    {
+                        "name": "Harm"
+                    },
+
+                ]
             }
         },
         created() {
-            this.getList();
+           this.getList();
+        },
+        computed: {
+        // A computed property that holds only those articles that match the searchString.
+            filteredData: function () {
+                var results_array = this.list,
+                    searchString = this.searchString,
+                    searchAll = this.people.concat(this.list);
+
+
+                if(!searchString){
+                    return results_array;
+                }
+
+                searchString = searchString.trim().toLowerCase();
+
+                results_array = searchAll.filter(function(item){
+                    if(item.name.toLowerCase().indexOf(searchString) !== -1){
+                        return item;
+                    }
+                })
+
+                // Return an array with the filtered data.
+                return results_array;
+            }
         },
         methods: {
             getList: function() {
-                var dt = this
-                var request = new XMLHttpRequest();
-                request.open('GET', '/api/companies', true);
-                request.onload = function() {
-                  if (request.status >= 200 && request.status < 400) {
-                    var data = JSON.parse(request.responseText);
-                    dt.list = data;
-                  } else {
-                    console.log('fackkkkk');
-                  }
-                };
-                request.onerror = function() {
-                  console.log('fackkkkk');
-                };
+                this.$http.get('/api/companies').then((response) => {
+                this.list = response.body;
+                }, (response) => {
+                    console.error('Hij doet het niet');
+                });
 
-                request.send();
             },
-            delete: function(company) {
-                this.list.$remove(company);
+            // deleteItem: function(item) {
+            //     Vue.delete(this.list, item);
+            //     console.log(item);
+            // },
+            test: function() {
+                console.log('test');
             }
         },
         mounted() {
