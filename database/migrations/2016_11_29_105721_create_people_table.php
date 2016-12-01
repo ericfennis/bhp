@@ -18,6 +18,7 @@ class CreatePeopleTable extends Migration
     		$table->string("firstname",64);
     		$table->string("surname",64);
     		$table->string("profilepicture");
+            $table->integer("company_id");
     		$table->string("telephone");	
     		$table->string("email",64);
     		$table->string("website");
