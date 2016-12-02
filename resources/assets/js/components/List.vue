@@ -33,6 +33,7 @@
 </template>
 
 <script>
+    var STORAGE_KEY = 'list-vuejs'
     export default {
         data() {
             return {
@@ -46,13 +47,16 @@
                 }
             }
         },
-        Mounted() {
+        beforeCreate() {
             console.log('Component ready.');
-               
+            this.data = localStorage.getItem(STORAGE_KEY);
         },
         created() {
+            
+            this.getAll();
             this.getJSON();
         },
+
         computed: {
         // A computed property that holds only those articles that match the searchString.
             filteredData: function () {
@@ -87,6 +91,7 @@
                 this.$http.get('/api/list').then((response) => {
                 //combine firstname and surname to name
                 this.data = response.body;
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(response.body))
                 this.getAll();
                 }, (response) => {
                     console.error('Hij doet het niet');
@@ -97,7 +102,6 @@
                 var companies = this.data.companies,
                     people = this.data.people,
                     all = people.concat(companies);
-
                 all = all.sort(function(a, b) {
                     var a = a.name.toUpperCase();
                     var b = b.name.toUpperCase();
