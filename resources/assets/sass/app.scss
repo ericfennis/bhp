@@ -7,3 +7,9 @@
 
 // Bootstrap
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+
+a.active {
+	font-weight: bold;
+	color:black;
+	background: #ccc;
+}

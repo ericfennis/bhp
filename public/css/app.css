@@ -7688,4 +7688,10 @@ button.close {
   }
 }
 
+a.active {
+  font-weight: bold;
+  color: black;
+  background: #ccc;
+}
+
 /*# sourceMappingURL=app.css.map */
