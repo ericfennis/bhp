@@ -1,7 +1,8 @@
 <template>
-    <div class="container">
+    <main-layout>
         <div class="row">
-            <div class="col-md-8 col-md-offset-2">
+            
+            <div class="col-md-4">
                 <div class="panel panel-default">
                     <form id="search">
                         <input type="text" v-model="searchString" placeholder="Zoek naar 'Kapper'" />
@@ -24,17 +25,22 @@
                             <i v-if="item.branch">{{item.branch}}</i>
                             <i v-if="item.company">{{item.company}}</i>
                         </li>
-
+                   
                     </ul>
                 </div>
             </div>
         </div>
-    </div>
+    </main-layout>
 </template>
 
 <script>
+    import MainLayout from '../Main.vue'
+
     var STORAGE_KEY = 'list-vuejs'
     export default {
+        components: {
+            MainLayout
+        },
         data() {
             return {
                 searchString: "",
@@ -44,17 +50,19 @@
                     people:[],
                     companies:[],
                     education:[]
-                }
+                },
+                hans: this.$parent.$root.hans
             }
         },
         beforeCreate() {
             console.log('Component ready.');
-            this.data = localStorage.getItem(STORAGE_KEY);
+            this.all = localStorage.getItem(STORAGE_KEY);
         },
         created() {
             
             this.getAll();
             this.getJSON();
+            //console.log(this.$parent.$root.hans);
         },
 
         computed: {
@@ -91,7 +99,7 @@
                 this.$http.get('/api/list').then((response) => {
                 //combine firstname and surname to name
                 this.data = response.body;
-                localStorage.setItem(STORAGE_KEY, JSON.stringify(response.body))
+                
                 this.getAll();
                 }, (response) => {
                     console.error('Hij doet het niet');
@@ -99,6 +107,7 @@
                 
             },
             getAll: function() {
+
                 var companies = this.data.companies,
                     people = this.data.people,
                     all = people.concat(companies);
@@ -107,7 +116,9 @@
                     var b = b.name.toUpperCase();
                     return (a < b) ? -1 : (a > b) ? 1 : 0;
                 });
+
                 this.all = all;
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(this.all));
             },
             selectTab: function(tab) {
                 this.visibility = tab;
@@ -115,5 +126,7 @@
         },
 
     }
+    
+   
 
 </script>

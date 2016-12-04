@@ -7694,4 +7694,10 @@ a.active {
   background: #ccc;
 }
 
+form input {
+  width: 100%;
+  padding: 12px;
+  line-height: 32px;
+}
+
 /*# sourceMappingURL=app.css.map */

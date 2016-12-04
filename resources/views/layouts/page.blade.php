@@ -21,6 +21,7 @@
 <body>
    @yield('content') 
    <!-- Scripts -->
+    <script src="/js/ol.js"></script>
     <script src="/js/app.js"></script>
     
     <script src="/js/main.js"></script>

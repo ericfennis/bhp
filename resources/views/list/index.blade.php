@@ -1,12 +1,8 @@
 @extends('layouts.page')
 
 @section('content')
-<nav>
-
-</nav>
-<main>
+<main id="app">
     
-	<list></list>
     
 </main>
 <script>
