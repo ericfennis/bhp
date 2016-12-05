@@ -29,7 +29,7 @@
           routes[this.href],
           this.href
         )
-      }
+      }   
     }
   }
 </script>

@@ -3,6 +3,7 @@
 @import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
 
 // Variables
+@import "reset";
 @import "variables";
 
 // Bootstrap
@@ -18,4 +19,8 @@ form input {
 	width: 100%;
 	padding: 12px;
 	line-height: 32px;
+	border: 1px solid #ccc;
+	&:focus {
+		border-color: red;
+	}
 }

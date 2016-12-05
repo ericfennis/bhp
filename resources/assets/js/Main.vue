@@ -1,14 +1,19 @@
 <template>
-
-    <ul>
-      <li>
-        <v-link href="/">Home</v-link>
-        <v-link href="/list">List</v-link>
-      </li>
+    <main>  
+        <nav> 
+            <ul>
+            <li>
+                <v-link href="/">Home</v-link>
+            </li>
+            <li>  
+                <v-link href="/list">List</v-link>
+            </li>
+          </ul>
+        </nav>
 
 
     <slot></slot>
-  </div>
+  </main>
 </template>
 
 <script>
