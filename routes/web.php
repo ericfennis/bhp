@@ -19,6 +19,20 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index');
 
-Auth::routes();
+Route::get('/map', 'MapController@index');
+Route::get('/list', 'ListController@index');
 
-Route::get('/home', 'HomeController@index');
+Route::get('/api/companies', function(){
+	return App\Company::all();
+});
+
+Route::get('/api/people', function(){
+	return App\Person::all();
+});
+
+Route::get('/api/list', 'ListController@getJSON');
+
+//crud
+Route::resource('company','CompanyController');
+Route::resource('person','PersonController');
+
