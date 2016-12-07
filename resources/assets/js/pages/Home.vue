@@ -1,16 +1,18 @@
 <template>
     <main-layout>
-        <div class="row">
-            <div class="col-md-4">
-                <div class="panel panel-default">
-                    <h1>Welkom bij de Blokhuispoort</h1>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="panel panel-default">
+                        <h1>Welkom bij de Blokhuispoort</h1>
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-8">
-                <div class="centered">
-                    <div class="row">
-                        <div class="col-md-4 col-md-offset-4">
-                            <v-link href="/list" class="btn btn-lg btn-block btn-primary">Bekijk de Plattegrond</v-link>
+                <div class="col-md-8">
+                    <div class="centered">
+                        <div class="row">
+                            <div class="col-md-4 col-md-offset-4">
+                                <v-link href="/list" class="btn btn-lg btn-block btn-primary">Bekijk de Plattegrond</v-link>
+                            </div>
                         </div>
                     </div>
                 </div>

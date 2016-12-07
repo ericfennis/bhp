@@ -1,32 +1,34 @@
 <template>
     <main-layout>
-        <div class="row">
+        <div class="container-fluid">
+            <div class="row">
             
-            <div class="col-md-4">
-                <div class="panel panel-default">
-                    <form id="search">
-                        <input type="text" v-model="searchString" placeholder="Zoek naar 'Kapper'" />
-                   
-                        <nav v-if="searchString.length == 0">
-                            <ul class="nav nav-tabs">
-                                <li><a href="#" :class="{ active: visibility == 'all' }" @click="selectTab('all')">Alles</a></li>
-                                <li><a href="#" :class="{ active: visibility == 'companies' }" @click="selectTab('companies')">Bedrijven</a></li>
-                                <li><a href="#" :class="{ active: visibility == 'people' }" @click="selectTab('people')">Medewerkers</a></li>
-                                <li><a href="#" :class="{ active: visibility == 'education' }" @click="selectTab('education')">Onderwijsinstellingen</a></li>
-                            </ul>
-                        </nav>
-    
-                    </form>
-                    <ul class="list-group" v-for="item in filteredData">
-                        <li class="list-group-item">
-                            <h4 v-if="item.branch"><b>{{item.name}}</b></h4>
-                            <h4 v-else>{{item.name}}</h4>
+                <div class="col-md-4">
+                    <div class="panel panel-default">
+                        <form id="search">
+                            <input type="text" v-model="searchString" placeholder="Zoek naar 'Kapper'" />
+                       
+                            <nav v-if="searchString.length == 0">
+                                <ul class="nav nav-tabs">
+                                    <li><a href="#" :class="{ active: visibility == 'all' }" @click="selectTab('all')">Alles</a></li>
+                                    <li><a href="#" :class="{ active: visibility == 'companies' }" @click="selectTab('companies')">Bedrijven</a></li>
+                                    <li><a href="#" :class="{ active: visibility == 'people' }" @click="selectTab('people')">Medewerkers</a></li>
+                                    <li><a href="#" :class="{ active: visibility == 'education' }" @click="selectTab('education')">Onderwijsinstellingen</a></li>
+                                </ul>
+                            </nav>
+        
+                        </form>
+                        <ul class="list-group" v-for="item in filteredData">
+                            <li class="list-group-item" @click="getWalkpath(item)">
+                                <h4 v-if="item.branch"><b>{{item.name}}</b></h4>
+                                <h4 v-else>{{item.name}}</h4>
 
-                            <i v-if="item.branch">{{item.branch}}</i>
-                            <i v-if="item.company">{{item.company}}</i>
-                        </li>
-                   
-                    </ul>
+                                <i v-if="item.branch">{{item.branch}}</i>
+                                <i v-if="item.company">{{item.company}}</i>
+                            </li>
+                       
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
@@ -51,7 +53,6 @@
                     companies:[],
                     education:[]
                 },
-                hans: this.$parent.$root.hans
             }
         },
         beforeCreate() {
@@ -119,6 +120,15 @@
 
                 this.all = all;
                 localStorage.setItem(STORAGE_KEY, JSON.stringify(this.all));
+            },
+            getWalkpath: function(item) {
+                this.$parent.$root.getWalkpath(item);
+                //console.log(this);
+                // if(item.company_id) {
+                //     console.log(item.company_id);
+                // } else if(item.id) {
+                //     console.log(item.id);
+                // }
             },
             selectTab: function(tab) {
                 this.visibility = tab;
