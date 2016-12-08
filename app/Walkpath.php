@@ -18,6 +18,6 @@ class Walkpath extends Model
 
     public function walkpathpoints()
     {
-    	return $this->hasMany('App\WalkpathPoint','walkpath_id','id');
+    	return $this->hasMany('App\WalkpathPoint','walkpath_id','id')->orderBy('point_order');
     }
 }

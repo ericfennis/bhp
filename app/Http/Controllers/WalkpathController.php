@@ -18,7 +18,10 @@ class WalkpathController extends Controller
         $walkpathpoints = $company->walkpath->walkpathpoints;
         $points = array();
         foreach ($walkpathpoints as $walkpath) {
-            array_push($points, Point::find($walkpath->id));
+            $point = Point::find($walkpath->id);
+            $coords = array($point->map_id ,$point->x,$point->y);
+            //array_pop(, 'asdadasdas');$coords
+            $points = array_merge($points,array($coords));
         }
         
         //return $points;
