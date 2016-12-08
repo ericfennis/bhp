@@ -1,6 +1,9 @@
 @extends('layouts.page')
 
 @section('content')
+<div id='popup'>
+	blablabla!!
+</div>
 <main>
     <div id="map" class="map"></div>
 	
