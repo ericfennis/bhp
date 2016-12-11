@@ -14,31 +14,22 @@ class WalkpathController extends Controller
 {
     public function getWalkpath($id)
     {
+        // load all walkpath for company
         $company = Company::findOrFail($id);
+        // load all Walkpath points for the walkpath
         $walkpathpoints = $company->walkpath->walkpathpoints;
+        // create array
         $points = array();
+        // looping walkpathpoints
         foreach ($walkpathpoints as $walkpath) {
+            // find each point with id.
             $point = Point::find($walkpath->id);
+            //make-up the array for JSON structure
             $coords = array($point->map_id ,$point->x,$point->y);
-            //array_pop(, 'asdadasdas');$coords
+            //Merge the coords with the points array
             $points = array_merge($points,array($coords));
         }
-        
-        //return $points;
-        //var_dump();
-
-    	// $returnArray = array(
-    	// 	array(100,200),
-    	// 	array(100,200),
-    	// 	array(120,180),
-    	// 	array(160,140),
-    	// 	array(190,120),
-    	// 	array(200,190),
-    	// 	array(110,140),
-    	// 	array($id),
-    	// );
-    
-
+        // return Points
     	return $points;
     }
 }

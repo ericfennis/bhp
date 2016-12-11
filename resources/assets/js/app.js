@@ -47,7 +47,7 @@ new Vue({
 	                }
 				  resource.get({id: itemID}).then((response) => {
 				    this.walkPath = response.body;
-                    console.log(this.walkPath);
+                    //console.log(this.walkPath);
 				  });
 				                
             },

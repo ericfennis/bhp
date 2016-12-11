@@ -18,6 +18,8 @@ class CreateCompaniesTable extends Migration
             $table->integer('walkpath_id');
             $table->integer('location_point');
             $table->integer('default_person');
+            $table->string("telephone");    
+            $table->string("email",64);
             $table->string('name');
             $table->string('branch');
             $table->string('description');

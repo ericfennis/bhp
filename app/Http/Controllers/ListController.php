@@ -36,7 +36,10 @@ class ListController extends Controller
  					foreach ($Companies as $Company) {
 
  						if($Company->id == $People[$i]->company_id) {
+
  							$People[$i]->company = $Company->name;
+                            $People[$i]->building = $Company->building;
+                            $People[$i]->room_number = number_format($Company->room_number,2);
  							break;
  						}
  					}
@@ -51,6 +54,7 @@ class ListController extends Controller
     			if ($Company->branch == 'onderwijsinstelling') {
     				array_push($Education, $Company);
     			}
+                
     		}
     		
     	}

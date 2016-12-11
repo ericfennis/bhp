@@ -42,9 +42,11 @@ $factory->define(App\Company::class, function (Faker\Generator $faker) {
 		'walkpath_id' => $faker->randomNumber(2),
 		'location_point' => $faker->randomNumber(2),
 		'default_person' => $faker->randomNumber(2),
+		'telephone' => $faker->phoneNumber,
+		'email' => $faker->email,
 		'name' => $faker->company,
 		'branch' => $branch[$b],
-		'logo' => $faker->image,
+		'logo' => $faker->imageUrl($width = 128, $height = 128),
 		'building' => $building[$l],
 		'room_number' => $faker->randomFloat(2,0,3),
 		'description' => $faker->text,
@@ -56,7 +58,7 @@ $factory->define(App\Person::class, function (Faker\Generator $faker) {
 	return [
 		'firstname' => $faker->firstName,
 		'surname' => $faker->lastName,
-		'profilepicture' => $faker->image,
+		'profilepicture' => $faker->imageUrl($width = 128, $height = 128),
 		'company_id'  => $faker->randomNumber(1),
 		'telephone' => $faker->phoneNumber,
 		'email' => $faker->email,
@@ -76,7 +78,7 @@ $factory->define(App\Point::class, function (Faker\Generator $faker) {
 $factory->define(App\WalkpathPoint::class, function (Faker\Generator $faker) {
 	return [
 		'walkpath_id' => $faker->randomNumber(1),
-		'point_id' => $faker->randomNumber(2),
+		'point_id' => $faker->randomNumber(1),
 		'point_order' => $faker->randomNumber(1),
 	];
 });

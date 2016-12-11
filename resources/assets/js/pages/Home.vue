@@ -1,13 +1,14 @@
 <template>
     <main-layout>
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-4">
+
+
+                <aside>
                     <div class="panel panel-default">
                         <h1>Welkom bij de Blokhuispoort</h1>
                     </div>
-                </div>
-                <div class="col-md-8">
+                </aside>
+
+                <section>
                     <div class="centered">
                         <div class="row">
                             <div class="col-md-4 col-md-offset-4">
@@ -15,9 +16,11 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
+                    <div class="map">
+                        
+                    </div>
+                </section>
+
     </main-layout>
 </template>
 
