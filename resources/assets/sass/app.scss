@@ -55,16 +55,24 @@ main {
 	aside {
 		flex: 1;
 		min-width: 480px;
-		height: 100vh;
-		overflow-y: auto;
 		position: relative;
 		form {
-			position: fixed;
+
 			z-index: 1;
 			background: #fff;
 		}
+		input {
+			&+div {
+				position: absolute;
+				right: 0;
+				top: 0;
+				height: 58px;
+			}
+		}
 		ul#results {
-			padding-top: 120px;	
+			height: 100vh;
+			//padding-top: 120px;	
+			overflow-y: auto;
 		}
 	}
 	section {
@@ -121,4 +129,16 @@ main {
 		}
 	}
 
+}
+
+.vue-keyboard {
+	position: absolute;
+	bottom: 0;
+	background: #777;
+	padding: 10px 40px;
+	z-index: 100;
+	display: none;
+	&.show {
+		display: block;
+	}
 }

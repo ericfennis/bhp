@@ -164,6 +164,12 @@ pre {
   background: #eee;
 }
 
+/*!
+ * Bootstrap v3.3.7 (http://getbootstrap.com)
+ * Copyright 2011-2016 Twitter, Inc.
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ */
+/*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
 html {
   font-family: sans-serif;
   -ms-text-size-adjust: 100%;
@@ -7863,7 +7869,6 @@ form input:focus {
   border-color: red;
 }
 
-
 .list-group-item:hover {
   background: #e9e9e9;
   cursor: pointer;
@@ -7893,19 +7898,24 @@ main aside {
   -webkit-box-flex: 1;
   flex: 1;
   min-width: 480px;
-  height: 100vh;
-  overflow-y: auto;
   position: relative;
 }
 
 main aside form {
-  position: fixed;
   z-index: 1;
   background: #fff;
 }
 
+main aside input + div {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 58px;
+}
+
 main aside ul#results {
-  padding-top: 120px;
+  height: 100vh;
+  overflow-y: auto;
 }
 
 main section {
@@ -7958,3 +7968,17 @@ main footer {
   padding: 8px 60px;
 }
 
+.vue-keyboard {
+  position: absolute;
+  bottom: 0;
+  background: #777;
+  padding: 10px 40px;
+  z-index: 100;
+  display: none;
+}
+
+.vue-keyboard.show {
+  display: block;
+}
+
+/*# sourceMappingURL=app.css.map */
