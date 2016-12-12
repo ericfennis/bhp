@@ -8,6 +8,14 @@
     <title>{{ config('app.name') }}</title>
 
     <!-- Styles -->
+  
+
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <title>{{ config('app.name') }}</title>
+
+    <!-- Styles -->
     <link href="/css/ol.css" rel="stylesheet">
     <link href="/css/app.css" rel="stylesheet">
 
@@ -19,8 +27,9 @@
 <body>
    @yield('content') 
    <!-- Scripts -->
-    <script src="/js/app.js"></script>
+
     <script src="/js/ol.js"></script>
+    <script src="/js/app.js"></script>
     <script src="/js/main.js"></script>
 </body>
 </html>

@@ -1,7 +1,6 @@
 @extends('layouts.page')
 
 @section('content')
-
 <main id="app">
     
     

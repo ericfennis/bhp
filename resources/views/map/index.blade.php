@@ -1,3 +1,4 @@
+
 @extends('layouts.page')
 
 @section('content')
@@ -15,3 +16,4 @@
 	@endforeach --}}
 </main>
 @endsection
+

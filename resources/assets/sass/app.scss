@@ -3,7 +3,24 @@
 @import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
 
 // Variables
+@import "reset";
 @import "variables";
 
 // Bootstrap
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+
+a.active {
+	font-weight: bold;
+	color:black;
+	background: #ccc;
+}
+
+form input {
+	width: 100%;
+	padding: 12px;
+	line-height: 32px;
+	border: 1px solid #ccc;
+	&:focus {
+		border-color: red;
+	}
+}
