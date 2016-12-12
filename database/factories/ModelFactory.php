@@ -48,6 +48,7 @@ $factory->define(App\Company::class, function (Faker\Generator $faker) {
 		'branch' => $branch[$b],
 		'logo' => $faker->imageUrl($width = 128, $height = 128),
 		'building' => $building[$l],
+
 		'room_number' => $faker->randomFloat(2,0,3),
 		'description' => $faker->text,
 		'status' => 1
@@ -66,6 +67,7 @@ $factory->define(App\Person::class, function (Faker\Generator $faker) {
 		'status' => 1
 	];
 });
+
 
 $factory->define(App\Point::class, function (Faker\Generator $faker) {
 	return [
@@ -90,3 +92,4 @@ $factory->define(App\Walkpath::class, function (Faker\Generator $faker) {
 		'status' => 1
 	];
 });
+

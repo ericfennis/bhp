@@ -17,6 +17,7 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:api');
 
+
 Route::get('/companies', function(){
 	return App\Company::all();
 });
@@ -39,3 +40,4 @@ Route::get('/walkpath/{id}', 'WalkpathController@getWalkpath');
 	
 // 	return $points;
 // });
+

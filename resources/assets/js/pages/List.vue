@@ -1,6 +1,7 @@
 <template>
     <main-layout>
 
+
                 <aside>
                     <div class="panel panel-default">
                         <form id="search">
@@ -61,12 +62,15 @@
             <v-link href="/">Terug</v-link>
         </footer>
 
+
     </main-layout>
 </template>
 
 <script>
     import MainLayout from '../Main.vue'
+
     import VLink from '../components/VLink.vue'
+
 
     var STORAGE_KEY = 'list-vuejs'
     export default {
@@ -154,6 +158,7 @@
                 this.all = all;
                 localStorage.setItem(STORAGE_KEY, JSON.stringify(this.all));
             },
+
             getWalkpath: function(item) {
                 this.$parent.$root.getWalkpath(item);
                 this.active = item;

@@ -35,6 +35,7 @@ class Company extends Model {
     public static function validationRules( $attributes = null )
     {
         $rules = [
+
             'walkpath_id' => 'required|integer',
             'location_point' => 'required|integer',
             'default_person' => 'required|integer',
@@ -67,9 +68,3 @@ class Company extends Model {
         return $this->hasOne('App\Walkpath','id','walkpath_id');
 
     }
-    // public function WalkpathPoint()
-    // {
-    //     return $this->
-    // }
-
-}

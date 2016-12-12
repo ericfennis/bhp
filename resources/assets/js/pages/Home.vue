@@ -2,6 +2,7 @@
     <main-layout>
 
 
+
                 <aside>
                     <div class="panel panel-default">
                         <h1>Welkom bij de Blokhuispoort</h1>
@@ -21,6 +22,7 @@
                     </div>
                 </section>
 
+
     </main-layout>
 </template>
 
@@ -37,8 +39,10 @@
         data() {
             return {
                 events:[
+
                         
                 ]
+
             }
         },
        ready() {

@@ -6,6 +6,7 @@
  */
 
 require('./bootstrap');
+
 require('./vue-keyboard');
 
 
@@ -13,12 +14,15 @@ import routes from './routes'
 
 const NotFound = { template: '<p>Page not found</p>' }
 
+
 new Vue({
 
     el: '#app',
     data: {
     	currentRoute: window.location.pathname,
+
     	walkPath: [],
+
   	},
 
     computed: {
@@ -32,6 +36,7 @@ new Vue({
 	created() {
     	console.log('vue loaded');
     },
+
     methods: {
     	getWalkpath: function(item) {
                 var resource = this.$resource('api/walkpath{/id}'),
@@ -95,3 +100,4 @@ $('input').focus(function (event) {
         	width:'auto'
 	});
 });
+
