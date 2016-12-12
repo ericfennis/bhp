@@ -1,57 +1,95 @@
 <template>
     <main-layout>
-        <div class="row">
-            
-            <div class="col-md-4">
-                <div class="panel panel-default">
-                    <form id="search">
-                        <input type="text" v-model="searchString" placeholder="Zoek naar 'Kapper'" />
-                   
-                        <nav v-if="searchString.length == 0">
-                            <ul class="nav nav-tabs">
-                                <li><a href="#" :class="{ active: visibility == 'all' }" @click="selectTab('all')">Alles</a></li>
-                                <li><a href="#" :class="{ active: visibility == 'companies' }" @click="selectTab('companies')">Bedrijven</a></li>
-                                <li><a href="#" :class="{ active: visibility == 'people' }" @click="selectTab('people')">Medewerkers</a></li>
-                                <li><a href="#" :class="{ active: visibility == 'education' }" @click="selectTab('education')">Onderwijsinstellingen</a></li>
-                            </ul>
-                        </nav>
-    
-                    </form>
-                    <ul class="list-group" v-for="item in filteredData">
-                        <li class="list-group-item">
-                            <h4 v-if="item.branch"><b>{{item.name}}</b></h4>
-                            <h4 v-else>{{item.name}}</h4>
 
-                            <i v-if="item.branch">{{item.branch}}</i>
-                            <i v-if="item.company">{{item.company}}</i>
-                        </li>
-                   
-                    </ul>
-                </div>
-            </div>
-        </div>
+
+                <aside>
+                    <div class="panel panel-default">
+                        <form id="search">
+                            <input type="text" @click="selectTab('all'),keyboard = true" v-model="searchString" placeholder="Zoek naar 'Kapper'" />
+                       
+                            <nav v-if="searchString.length == 0">
+                                <ul class="nav nav-tabs">
+                                    <li><a href="#" :class="{ active: visibility == 'all' }" @click="selectTab('all')">Alles</a></li>
+                                    <li><a href="#" :class="{ active: visibility == 'companies' }" @click="selectTab('companies')">Bedrijven</a></li>
+                                    <li><a href="#" :class="{ active: visibility == 'people' }" @click="selectTab('people')">Medewerkers</a></li>
+                                    <li><a href="#" :class="{ active: visibility == 'education' }" @click="selectTab('education')">Onderwijsinstellingen</a></li>
+                                </ul>
+                            </nav>
+        
+                        </form>
+                        <ul id="results" class="list-group" >
+                            <li class="list-group-item"  v-for="(item,index) in filteredData" @click="getWalkpath(item)" v-bind:class="{ active: active == item }">
+                                
+
+
+                                <img v-if="item.profilepicture" width="64" height="64" v-bind:src="item.profilepicture"/>
+                                <img v-else width="64" height="64" v-bind:src="item.logo"/>
+
+
+
+                                <h4 v-if="item.branch"><b>{{item.name}}</b></h4>
+                                <h4 v-else>{{item.name}}</h4>
+
+                                <i v-if="item.branch">{{item.branch}}</i>
+                                <i v-if="item.company">{{item.company}}</i>
+                                
+                                <div v-if="active == item" class="item-body">
+                                    <div class="info-location" v-if="item.room_number && item.building">Cel: {{ item.building+item.room_number }}</div>
+                                    <hr>
+                                    <div class="info-telephone" v-if="item.room_number">
+                                        {{ item.telephone }}
+                                    </div>
+                                    <div class="info-email" v-if="item.room_number">
+                                        {{ item.email }}
+                                    </div>
+                                </div>
+                            </li>
+                       
+                        </ul>
+                    </div>
+                </aside>
+                <section>
+                    <div class="map">
+                        
+                    </div>
+                </section>
+                <keyboard v-if="keyboard" v-model="searchString"
+    :layouts="[
+        '1234567890{delete:backspace}|qwertyuiop|asdfghjkl|zxcvbnm|{space:space}'
+    ]"
+></keyboard>
+        <footer>
+            <v-link href="/">Terug</v-link>
+        </footer>
+
+
     </main-layout>
 </template>
 
 <script>
     import MainLayout from '../Main.vue'
 
+    import VLink from '../components/VLink.vue'
+
+
     var STORAGE_KEY = 'list-vuejs'
     export default {
         components: {
-            MainLayout
+                MainLayout,
+                VLink
         },
         data() {
             return {
                 searchString: "",
                 all: [],
                 visibility: "all",
+                active: null,
+                keyboard: false,
                 data: {
                     people:[],
                     companies:[],
                     education:[]
                 },
-                hans: this.$parent.$root.hans
             }
         },
         beforeCreate() {
@@ -120,9 +158,17 @@
                 this.all = all;
                 localStorage.setItem(STORAGE_KEY, JSON.stringify(this.all));
             },
+
+            getWalkpath: function(item) {
+                this.$parent.$root.getWalkpath(item);
+                this.active = item;
+                //console.log(item);
+                
+            },
             selectTab: function(tab) {
                 this.visibility = tab;
-            }
+            },
+            
         },
 
     }

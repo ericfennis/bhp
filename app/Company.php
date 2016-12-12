@@ -13,7 +13,7 @@ class Company extends Model {
 
         // search results based on user input
         \Request::input('id') and $query->where('id',\Request::input('id'));
-        \Request::input('route_id') and $query->where('route_id',\Request::input('route_id'));
+        \Request::input('walkpath_id') and $query->where('walkpath_id',\Request::input('walkpath_id'));
         \Request::input('location_point') and $query->where('location_point',\Request::input('location_point'));
         \Request::input('default_person') and $query->where('default_person',\Request::input('default_person'));
         \Request::input('name') and $query->where('name','like','%'.\Request::input('name').'%');
@@ -35,7 +35,8 @@ class Company extends Model {
     public static function validationRules( $attributes = null )
     {
         $rules = [
-            'route_id' => 'required|integer',
+
+            'walkpath_id' => 'required|integer',
             'location_point' => 'required|integer',
             'default_person' => 'required|integer',
             'name' => 'required|string|max:255',
@@ -61,4 +62,9 @@ class Company extends Model {
         return $newRules;
     }
 
-}
+
+    public function walkpath()
+    {
+        return $this->hasOne('App\Walkpath','id','walkpath_id');
+
+    }
