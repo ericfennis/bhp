@@ -26,8 +26,6 @@ import routes from './routes'
 // import home from './components/Home.vue';
 // import list from './components/List.vue';
 
-
-
 const NotFound = { template: '<p>Page not found</p>' }
 //const nav = { template:'<nav><ul><li>hoi</li></ul></nav>'}
 // const Home = { template: '<p>home page</p>' }
@@ -55,7 +53,6 @@ new Vue({
     	console.log('vue loaded');
     },
 	render (h) { return h(this.ViewComponent) }
-    
 });
 
 // window.onpopstate = function(event) {
