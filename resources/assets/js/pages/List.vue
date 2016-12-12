@@ -4,7 +4,7 @@
                 <aside>
                     <div class="panel panel-default">
                         <form id="search">
-                            <input type="text" v-model="searchString" placeholder="Zoek naar 'Kapper'" />
+                            <input type="text" @click="selectTab('all'),keyboard = true" v-model="searchString" placeholder="Zoek naar 'Kapper'" />
                        
                             <nav v-if="searchString.length == 0">
                                 <ul class="nav nav-tabs">
@@ -52,9 +52,15 @@
                         
                     </div>
                 </section>
+                <keyboard v-if="keyboard" v-model="searchString"
+    :layouts="[
+        '1234567890{delete:backspace}|qwertyuiop|asdfghjkl|zxcvbnm|{space:space}'
+    ]"
+></keyboard>
         <footer>
             <v-link href="/">Terug</v-link>
         </footer>
+
     </main-layout>
 </template>
 
@@ -74,6 +80,7 @@
                 all: [],
                 visibility: "all",
                 active: null,
+                keyboard: false,
                 data: {
                     people:[],
                     companies:[],

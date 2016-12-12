@@ -37,9 +37,8 @@
         data() {
             return {
                 events:[
-
-                ],
-                message:'afasdfasdf'
+                        
+                ]
             }
         },
        ready() {
