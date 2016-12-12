@@ -7,22 +7,97 @@
 
 require('./bootstrap');
 
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the body of the page. From here, you may begin adding components to
- * the application, or feel free to tweak this setup for your needs.
- */
+require('./vue-keyboard');
 
-Vue.component('example', require('./components/Example.vue'));
 
-Vue.component('app', require('./components/App.vue'));
+import routes from './routes'
 
-Vue.component('list', require('./components/List.vue'));
+const NotFound = { template: '<p>Page not found</p>' }
 
-const app = new Vue({
-    el: 'app',
+
+new Vue({
+
+    el: '#app',
+    data: {
+    	currentRoute: window.location.pathname,
+
+    	walkPath: [],
+
+  	},
+
+    computed: {
+	    ViewComponent () {
+			const matchingView = routes[this.currentRoute]
+			return matchingView
+			? require('./pages/' + matchingView + '.vue')
+			: require('./pages/404.vue')
+		}
+	  },
+	created() {
+    	console.log('vue loaded');
+    },
+
+    methods: {
+    	getWalkpath: function(item) {
+                var resource = this.$resource('api/walkpath{/id}'),
+                	itemID = null;
+
+				  // GET someItem/1
+				  if(item.company_id) {
+                    	//console.log(item.company_id);
+                    	itemID = item.company_id;
+
+	                } else if(item.id) {
+	                    //console.log(item.id);
+	                    itemID = item.id;
+	                }
+				  resource.get({id: itemID}).then((response) => {
+				    this.walkPath = response.body;
+                    //console.log(this.walkPath);
+				  });
+				                
+            },
+    },
+	render (h) { return h(this.ViewComponent) }
+    
 });
 
-const list = new Vue({
-    el: 'list',
+var lastelement = 0;
+var letter = 0;
+
+$(document).ready(function() {
+$('#keyboard_element button').click(function (event) {
+	console.log('knop');	
+	//ahaa!!! een knopje van het toetsenbord! even bedenken welke letter ook alweer.
+	letter = $(this).attr('id');
+    
+	switch(letter) {
+		case "wis":
+			//het element dat zijn focus is verloren moet leeg.
+			lastelement.get(0).value = '';
+			break;
+
+		case "bs":
+			//het element dat zijn focus is verloren moet een letter af
+			lastelement.get(0).value = lastelement.get(0).value.slice(0,-1);
+			break;
+
+		default:
+			//het element dat zijn focus is verloren moet er een letter bij.
+			setTimeout(function () { lastelement.get(0).value+=letter; }, 10);
+	} 
 });
+});
+
+$('input').focus(function (event) {
+	//welk focussen we nu op?
+	lastelement = $(this);
+	lastelement.blur();
+	console.log('focus');
+	$('#keyboard_dialog').dialog({
+        	resizable: false,
+		title: 'Toetsenbord',
+        	width:'auto'
+	});
+});
+

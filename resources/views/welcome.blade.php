@@ -1,7 +1,11 @@
 @extends('layouts.page')
 
 @section('content')
-<main>
-    <app></app>
+<main id="app">
+    
+    
 </main>
+<script>
+    window.Laravel = { csrfToken: '{{ csrf_token() }}' };
+</script>
 @endsection

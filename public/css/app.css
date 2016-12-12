@@ -1,11 +1,169 @@
 @charset "UTF-8";
 @import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
-/*!
- * Bootstrap v3.3.7 (http://getbootstrap.com)
- * Copyright 2011-2016 Twitter, Inc.
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
- */
-/*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
+html, body, div, span, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+abbr, address, cite, code,
+del, dfn, em, img, ins, kbd, q, samp,
+small, strong, sub, sup, var,
+b, i,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+  background: transparent;
+}
+
+html {
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  font-size: 62.5%;
+}
+
+body {
+  line-height: 1;
+}
+
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+
+address {
+  font-style: normal;
+}
+
+nav ul, nav ul li {
+  list-style: none;
+}
+
+ul, ol {
+  margin: 0;
+  padding: 0;
+}
+
+ul li, ol li {
+  list-style: inside;
+}
+
+#content ul li {
+  list-style-type: disc;
+}
+
+#content ol li {
+  list-style-type: decimal;
+}
+
+blockquote, q {
+  quotes: none;
+}
+
+blockquote:before, blockquote:after, q:before, q:after {
+  content: '';
+  content: none;
+}
+
+a {
+  margin: 0;
+  padding: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+  background: transparent;
+}
+
+a:focus {
+  outline: none;
+  border: none;
+}
+
+ins {
+  background-color: #ff9;
+  color: #000;
+  text-decoration: none;
+}
+
+/* change colours to suit your needs */
+mark {
+  background-color: #ff9;
+  color: #000;
+  font-style: italic;
+  font-weight: bold;
+}
+
+del {
+  text-decoration: line-through;
+}
+
+abbr[title], dfn[title] {
+  border-bottom: 1px dotted;
+  cursor: help;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+input, textarea, select, button {
+  border-radius: 0;
+  -webkit-appearance: none;
+}
+
+input:focus, textarea:focus, select:focus, button:focus {
+  outline: none;
+  border: 1px solid #ccc;
+  -webkit-appearance: none;
+}
+
+input {
+  outline: none;
+  border: 1px solid #ccc;
+}
+
+input[type=submit] {
+  -webkit-appearance: none;
+  border: 1px solid #999;
+}
+
+input.middle:focus {
+  outline-width: 0;
+}
+
+input[type=text]:focus {
+  outline: none;
+}
+
+input, select {
+  vertical-align: middle;
+}
+
+/* change border colour to suit your needs */
+hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid #ccc;
+  margin: 1em 0;
+  padding: 0;
+}
+
+code, pre {
+  font-size: 1em;
+}
+
+pre {
+  font-size: 0.8em;
+  padding: 1em;
+  background: #eee;
+}
+
 html {
   font-family: sans-serif;
   -ms-text-size-adjust: 100%;
@@ -7688,4 +7846,115 @@ button.close {
   }
 }
 
-/*# sourceMappingURL=app.css.map */
+a.active {
+  font-weight: bold;
+  color: black;
+  background: #ccc;
+}
+
+form input {
+  width: 100%;
+  padding: 12px;
+  line-height: 32px;
+  border: 1px solid #ccc;
+}
+
+form input:focus {
+  border-color: red;
+}
+
+
+.list-group-item:hover {
+  background: #e9e9e9;
+  cursor: pointer;
+}
+
+html, body {
+  height: 100%;
+}
+
+main {
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  flex-direction: column;
+  height: 100vh;
+  flex-flow: row wrap;
+  overflow: hidden;
+}
+
+main header, main nav, main footer {
+  -webkit-box-flex: 1;
+  flex: 1 100%;
+}
+
+main aside {
+  -webkit-box-flex: 1;
+  flex: 1;
+  min-width: 480px;
+  height: 100vh;
+  overflow-y: auto;
+  position: relative;
+}
+
+main aside form {
+  position: fixed;
+  z-index: 1;
+  background: #fff;
+}
+
+main aside ul#results {
+  padding-top: 120px;
+}
+
+main section {
+  -webkit-box-flex: 2;
+  flex: 2;
+  height: 100%;
+}
+
+main footer {
+  position: fixed;
+  width: 100%;
+  height: 160px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #333;
+  color: #fff;
+}
+
+.vue-keyboard .row {
+  padding: 2px 0;
+  text-align: center;
+}
+
+.vue-keyboard button {
+  border: none;
+  outline: none;
+  padding: 8px 10px;
+  min-width: 40px;
+  margin: 0 2px;
+  background: #EEE;
+  color: #666;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: inherit;
+  border-radius: 2px;
+}
+
+.vue-keyboard button:hover {
+  background: #E0E0E0;
+}
+
+.vue-keyboard button:active {
+  background: #777;
+  color: #FFF;
+  box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.vue-keyboard button[data-action="space"] {
+  padding: 8px 60px;
+}
+

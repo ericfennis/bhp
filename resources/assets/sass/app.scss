@@ -3,7 +3,122 @@
 @import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
 
 // Variables
+@import "reset";
 @import "variables";
 
 // Bootstrap
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+
+a.active {
+	font-weight: bold;
+	color:black;
+	background: #ccc;
+}
+
+form input {
+	width: 100%;
+	padding: 12px;
+	line-height: 32px;
+	border: 1px solid #ccc;
+	&:focus {
+		border-color: red;
+	}
+
+}
+
+.list-group-item {
+	//margin-bottom: 10px;
+	&:hover {
+		background:#e9e9e9;
+		cursor: pointer;
+	}
+}
+html, body {
+  height: 100%;
+}
+ 
+main {
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;  
+	flex-direction: column;
+	height: 100vh;
+	-webkit-flex-flow: row wrap;
+	flex-flow: row wrap;
+	overflow: hidden;
+  	header, nav, footer {
+  		flex: 1 100%;
+  	}
+
+	aside {
+		flex: 1;
+		min-width: 480px;
+		height: 100vh;
+		overflow-y: auto;
+		position: relative;
+		form {
+			position: fixed;
+			z-index: 1;
+			background: #fff;
+		}
+		ul#results {
+			padding-top: 120px;	
+		}
+	}
+	section {
+		flex: 2;
+		height: 100%;
+	}
+	footer {
+		position: fixed;
+		width: 100%;
+		height: 160px;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background:#333;
+		color: #fff;
+	}
+}
+
+
+
+// Keyboard css
+
+.vue-keyboard {
+	.row {
+		padding: 2px 0;
+		text-align: center;
+	}
+
+	button {
+		border: none;
+		outline: none;
+		padding: 8px 10px;
+		min-width: 40px;
+		margin: 0 2px;
+		background: #EEE;
+		color: #666;
+		cursor: pointer;
+		font-family: inherit;
+		font-size: inherit;
+		border-radius: 2px;
+
+		&:hover {
+			background: #E0E0E0;
+		}
+
+		&:active {
+			background: #777;
+			color: #FFF;
+			box-shadow: inset 0 1px 4px rgba(#000, 0.1);
+		}
+
+		&[data-action="space"] {
+			padding: 8px 60px;
+		}
+	}
+
+}

@@ -22,7 +22,7 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
     ];
 });
 
-<<<<<<< HEAD
+
 $factory->define(App\Map::class, function (Faker\Generator $faker) {
 	return [
 		'name' => $faker->name,
@@ -30,18 +30,66 @@ $factory->define(App\Map::class, function (Faker\Generator $faker) {
 		'image' => $faker->name
 	];
 });
-=======
+
+
 $factory->define(App\Company::class, function (Faker\Generator $faker) {
+	$building = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'];
+	$l = array_rand($building);
+	$branch = ['Kapper','Onderwijsinstelling','Communicatiebureau','Café','Pottenbakker','Atelier','Tattooshop','Theater','Videoproductie','Advocatenbureau','Bakker','Flexplek','Sierraden','Winkel','Webbureau','Interieurarchitect'];
+	$b = array_rand($branch);
+
 	return [
-		'route_id' => $faker->randomNumber(2),
+		'walkpath_id' => $faker->randomNumber(2),
 		'location_point' => $faker->randomNumber(2),
 		'default_person' => $faker->randomNumber(2),
-		'name' => $faker->name,
-		'logo' => $faker->image,
-		'building' => 'H',
+		'telephone' => $faker->phoneNumber,
+		'email' => $faker->email,
+		'name' => $faker->company,
+		'branch' => $branch[$b],
+		'logo' => $faker->imageUrl($width = 128, $height = 128),
+		'building' => $building[$l],
+
 		'room_number' => $faker->randomFloat(2,0,3),
 		'description' => $faker->text,
 		'status' => 1
 	];
 });
->>>>>>> companies
+
+$factory->define(App\Person::class, function (Faker\Generator $faker) {
+	return [
+		'firstname' => $faker->firstName,
+		'surname' => $faker->lastName,
+		'profilepicture' => $faker->imageUrl($width = 128, $height = 128),
+		'company_id'  => $faker->randomNumber(1),
+		'telephone' => $faker->phoneNumber,
+		'email' => $faker->email,
+		'website' => $faker->url,
+		'status' => 1
+	];
+});
+
+
+$factory->define(App\Point::class, function (Faker\Generator $faker) {
+	return [
+		'map_id' => $faker->randomNumber(1),
+		'x' => $faker->randomNumber(2),
+		'y' => $faker->randomNumber(2)
+	];
+});
+
+$factory->define(App\WalkpathPoint::class, function (Faker\Generator $faker) {
+	return [
+		'walkpath_id' => $faker->randomNumber(1),
+		'point_id' => $faker->randomNumber(1),
+		'point_order' => $faker->randomNumber(1),
+	];
+});
+
+$factory->define(App\Walkpath::class, function (Faker\Generator $faker) {
+	return [
+		'name' => $faker->name,
+		'description' => $faker->text,
+		'status' => 1
+	];
+});
+
