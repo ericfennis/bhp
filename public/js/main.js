@@ -2,7 +2,14 @@
 window.app = {};
 var app = window.app;
 
-//verscheidene bijnodigdheden
+//verscheidene bijnodigdheden voor routetekenen e.d.
+var drawRoutes = false;
+var drawIcons = false;
+var iNum = 0;
+var prevXY = [0, 0];
+var prevPoint = 0;
+var newRoute = [];
+
 var currentFloor = 0;
 var extent = [0, 0, 1024, 1024];
 var projection = new ol.proj.Projection({
@@ -28,10 +35,10 @@ var routeLayer = new ol.layer.Vector({
 	source: routeSource[currentFloor],
 	style: new ol.style.Style({
 		stroke: new ol.style.Stroke({
-			color: '#ff0000',
-			width: 10,
+			color: '#222222',
+			width: 5,
 			lineCap: 0,	      
-			lineDash: [10,5] 
+			lineDash: [5,2.5]
 		})
 	})
 });
@@ -44,6 +51,23 @@ var letterLayer = new ol.layer.Image({
 		imageExtent: extent
 	})
 });
+
+function drawLine(x, y, point){
+	if(prevXY[0] == 0 && prevXY[1] == 0){
+		newRoute.push(point);
+		prevXY = [x, y];
+		prevPoint = point;
+	}
+	else{
+		//grafisch uitbeelden!
+		addRoute(currentFloor, prevXY[0], prevXY[1], x, y);
+	
+		console.info('from ' + prevPoint + ' to ' + point);
+		newRoute.push(point);
+		prevXY = [x, y];
+		prevPoint = point;
+	}
+}
 
 //de functies die de map inkleuren of besturen
 function addRoute(floorNum, x1, y1, x2, y2){
@@ -61,6 +85,8 @@ function addIcon(floorNum, icon, action, val, x, y){
 	var tempIconFeature = 
 		new ol.Feature({
 			geometry: new ol.geom.Point([x, y]),
+			x: x,
+			y: y,
 			name: icon,
 			action: action,
 			value: val,
@@ -81,7 +107,7 @@ function addIcon(floorNum, icon, action, val, x, y){
 	  }))
 	});
 
-
+	console.info('Adding icon');
 	tempIconFeature.setStyle(tempIconStyle);
 	iconSource[floorNum].addFeature(tempIconFeature);
 }
@@ -126,15 +152,13 @@ function setFloor(floorNum){
 							floorNum = 0; 
 		break;
 	} 
-	
+	currentFloor = floorNum;	
+
 	//afbeeldingen zijn omgezet, pak nu ook de juiste routes en iconen
 	setRouteIconSource(floorNum);
 	console.info("Switched to floor " + floorNum);	
 }
 
-//setMapSource("/img/plattegrond.png");
-
-//var coordinates = [[[78.65, 800], [800, 800]], [[78.65, 800], [800, 100]]]; 
 var map = new ol.Map({
   	layers: [mapLayer, routeLayer, iconLayer, letterLayer],
   	target: 'map',
@@ -170,7 +194,8 @@ map.on('click', function(evt){
 					setFloor(feature.get('value'))
 					break;
 				case 'draw-line':
-					console.info('[Click] Feature draw-line');
+					console.info('[Click] Feature draw-line ' + feature.get('geometry')[0]);
+					drawLine(feature.get('x'), feature.get('y'), feature.get('value'));
 					break;
 				case 'popup-sightseeing':
 					console.info('[Click] Feature sightsee');
@@ -182,7 +207,9 @@ map.on('click', function(evt){
 	}
 	else {
 		console.info('[Click] No features at pixel, lonlat ' + lon + ', ' + lat);
-		//addIcon('icon', 'draw-line', 0, lon, lat);
+		if(drawIcons == true){
+			addIcon(currentFloor, 'img/icons/blackdot.png', 'draw-line', iNum++, lon, lat);
+		}
 	}
 	
 });
