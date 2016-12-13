@@ -5,13 +5,11 @@
 		$(document).ready(function() {
 			setFloor(0);
 			setMode('drawIcons');
-			getAllIcons();
 		});
 	</script>
 
 	<main>
 		<div id="map" class="map"></div>
 	</main>
-	
 @endsection
 
