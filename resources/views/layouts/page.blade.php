@@ -28,12 +28,12 @@
     </script>-->
 </head>
 <body>
-   @yield('content') 
-   <!-- Scripts -->
+	@yield('content') 
 
-    <script src="/js/ol.js"></script>
-    <script src="/js/app.js"></script>
-
-    <script src="/js/main.js"></script>
+	<!-- Scripts -->
+	<script src="/js/ol.js"></script>
+	<script src="/js/app.js"></script>
+	<script src="/js/main.js"></script>
+	<script src="/js/jquery-3.1.1.js"></script>
 </body>
 </html>

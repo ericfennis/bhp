@@ -11,6 +11,6 @@ class MapController extends Controller
     public function index() {
 
 		$maps = Map::all();
-		return view('map.index', compact('maps'));;
+		return view('map.index', compact('maps'));
 	}
 }
