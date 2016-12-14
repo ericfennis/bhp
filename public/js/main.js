@@ -113,7 +113,7 @@ function addIcon(floorNum, icon, action, val, x, y){
 	iconSource[floorNum].addFeature(tempIconFeature);	
 }
 function delIcon(feature){
-	$.get( "api/point/del/" + feature.get('value'), function( data ) {
+	$.get( "/api/point/del/" + feature.get('value'), function( data ) {
 		if(data == "success"){			iconSource[feature.get('map_id')].removeFeature(feature);		}
 		else{							alert(data);													}
 	});
@@ -125,10 +125,10 @@ function getAllIcons(){
 	}
 
 	//vullen met db-punten
-	$.get( "api/point/list", function( data ) {
+	$.get( "/api/point/list", function( data ) {
 		data = JSON.parse(data);
 		$.each(data, function(i, item) {
-			addIcon(item['map_id'], 'img/icons/blackdot.png', defaultIconAction, item['id'], item['x'], item['y']);
+			addIcon(item['map_id'], '/img/icons/blackdot.png', defaultIconAction, item['id'], item['x'], item['y']);
 		});
 	});
 }
@@ -267,8 +267,8 @@ map.on('click', function(evt){
 		console.info('[Click] No features at pixel, lonlat ' + lon + ', ' + lat);
 		if(mode == 'drawIcons'){
 			//toevoegen en ID instellen op het icoon als VAL
-			$.get( "api/point/add/" + currentFloor + "/" + lon + "/" + lat, function( data ) {
-				addIcon(currentFloor, 'img/icons/blackdot.png', 'del-icon', data, lon, lat);
+			$.get( "/api/point/add/" + currentFloor + "/" + lon + "/" + lat, function( data ) {
+				addIcon(currentFloor, '/img/icons/blackdot.png', 'del-icon', data, lon, lat);
 			});
 		}
 	}

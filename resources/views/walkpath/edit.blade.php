@@ -1,8 +1,9 @@
-@extends('vendor.crud.single-page-templates.common.app')
+
+@extends('layouts.app')
 
 @section('content')
 
-    <h2>Update Walkpath: {{$walkpath->name}}</h2>
+    <!--<h2>Update Walkpath: {{$walkpath->name}}</h2>-->
 
     <form action="/walkpath/{{$walkpath->id}}" method="post">
 
@@ -15,6 +16,18 @@
         {!! \Nvd\Crud\Form::input('description','text')->model($walkpath)->show() !!}
 
         {!! \Nvd\Crud\Form::input('status','text')->model($walkpath)->show() !!}
+	
+		<!-- onder crud: map -->
+		<script type='text/javascript'>
+			$(document).ready(function() {
+				setFloor(0);
+				setMode('drawRoutes');
+			});
+		</script>
+
+		<main>
+			<div id="map" class="map"></div>
+		</main>
 
         <button type="submit" class="btn btn-default">Submit</button>
 

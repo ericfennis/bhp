@@ -35,6 +35,15 @@ body {
   line-height: 1;
 }
 
+.container {
+	text-align: center;
+}
+
+.content {
+	margin: auto;
+	width: 80vw;
+}
+
 article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
   display: block;
