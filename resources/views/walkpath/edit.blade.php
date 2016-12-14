@@ -25,7 +25,7 @@
 			});
 		</script>
 
-		<main>
+		<main class="col-lg-12">
 			<div id="map" class="map"></div>
 		</main>
 
