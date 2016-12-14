@@ -7,17 +7,19 @@
 
 require('./bootstrap');
 
+var ol = require('./ol');
+
+window.Vue = Vue;
+//require('./modules/vue-click-outside');
+
 require('./modules/vue-keyboard');
-
-require('./modules/vue-click-outside');
-
 
 import routes from './routes'
 
 const NotFound = { template: '<p>Page not found</p>' }
 
 
-new Vue({
+var App = window.App = new Vue({
 
     el: '#app',
     data: {
@@ -32,13 +34,13 @@ new Vue({
 			const matchingView = routes[this.currentRoute]
 			return matchingView
 			? require('./pages/' + matchingView + '.vue')
-			: require('./pages/404.vue')
+			: require('./pages/404.vue');
+			console.log("asdbfkjasbdjfbasjdbfsd");
 		}
 	  },
 	created() {
     	console.log('vue loaded');
     },
-
     methods: {
     	getWalkpath: function(item) {
                 var resource = this.$resource('api/walkpath{/id}'),
@@ -56,10 +58,14 @@ new Vue({
 				  resource.get({id: itemID}).then((response) => {
 				    this.walkPath = response.body;
                     //console.log(this.walkPath);
-				  });
-				                
-            },
+				  });                
+        },
+        loadMap: function() {
+        	console.log("rsadASFasfun");
+        }
+
     },
 	render (h) { return h(this.ViewComponent) }
     
 });
+

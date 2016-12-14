@@ -5,6 +5,7 @@
 // Variables
 @import "reset";
 @import "variables";
+@import "ol";
 
 // Bootstrap
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
@@ -51,7 +52,7 @@ main {
   	header, nav, footer {
   		flex: 1 100%;
   	}
-
+	
 	aside {
 		flex: 1;
 		min-width: 480px;
@@ -75,9 +76,10 @@ main {
 			overflow-y: auto;
 		}
 	}
-	section {
+	& > figure, section {
 		flex: 2;
 		height: 100%;
+		position: relative;
 	}
 	footer {
 		position: fixed;
@@ -141,4 +143,18 @@ main {
 	&.show {
 		display: block;
 	}
+}
+
+.map {
+	height: 100%;
+}
+.overlay {
+	height: 100%;
+	width: 100%;
+	position: absolute;
+	z-index: 99;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
 }
