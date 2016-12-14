@@ -5,7 +5,7 @@
 
                 <aside>
                     <div class="panel panel-default">
-                        <h1>Welkom bij de Blokhuispoort</h1>
+                        <h1 class="welkom">welkom bij de</h1>
                     </div>
                 </aside>
 
