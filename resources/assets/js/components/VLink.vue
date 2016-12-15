@@ -29,6 +29,7 @@
           routes[this.href],
           this.href
         )
+        //this.$parent.loadMap();
       }   
     }
   }
