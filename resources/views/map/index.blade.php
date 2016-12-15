@@ -6,7 +6,7 @@
 	blablabla!!
 </div>
 <main>
-    <div id="map" class="map"></div>
+    
 	
     {{-- @foreach($maps as $map)
 	<li>{{$map->id}}</li>
