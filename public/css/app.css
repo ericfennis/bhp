@@ -173,6 +173,7 @@ pre {
   background: #eee;
 }
 
+
 .ol-control,
 .ol-scale-line {
   position: absolute;
@@ -8320,6 +8321,7 @@ h1.welkom {
   text-align: center;
 }
 
+
 .vue-keyboard {
   position: absolute;
   bottom: 0;
@@ -8347,6 +8349,7 @@ h1.welkom {
   bottom: 0;
   left: 0;
 }
+
 
 .panel {
   background-color: none;
