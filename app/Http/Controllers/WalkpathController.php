@@ -28,7 +28,9 @@ class WalkpathController extends Controller
             $coords = array($point->map_id ,$point->x,$point->y);
             //Merge the coords with the points array
             $points = array_merge($points,array($coords));
+
         }
+        ksort($points);
         // return Points
     	return $points;
     }

@@ -8168,6 +8168,7 @@ form input:focus {
 
 html, body {
   height: 100%;
+  position: relative;
 }
 
 main {
@@ -8189,9 +8190,10 @@ main header, main nav, main footer {
 main aside {
   -webkit-box-flex: 1;
   flex: 1;
-  min-width: 480px;
+  max-width: 480px;
   position: relative;
   height: 100%;
+  z-index: 20;
 }
 
 main aside form {
@@ -8231,6 +8233,7 @@ main aside div.panel {
 }
 
 main aside footer {
+  z-index: 20;
   -webkit-box-flex: 1;
   flex: 1;
   height: 160px;
@@ -8258,9 +8261,10 @@ main section footer {
   bottom: 0;
   background: #333;
   color: #fff;
+  z-index: 20;
 }
 
-main.home #map canvas {
+main.home + #map canvas {
   -webkit-filter: blur(10px);
   -moz-filter: blur(10px);
   -o-filter: blur(10px);
@@ -8268,13 +8272,24 @@ main.home #map canvas {
   filter: blur(10px);
 }
 
-main #map canvas {
+main + #map canvas {
   transition: 2s -webkit-filter linear;
   -webkit-filter: blur(0px);
   -moz-filter: blur(0px);
   -o-filter: blur(0px);
   -ms-filter: blur(0px);
   filter: blur(0px);
+}
+
+#map {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  z-index: 0;
 }
 
 .vue-keyboard .row {
