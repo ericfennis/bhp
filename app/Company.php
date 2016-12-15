@@ -68,3 +68,4 @@ class Company extends Model {
         return $this->hasOne('App\Walkpath','id','walkpath_id');
 
     }
+}
