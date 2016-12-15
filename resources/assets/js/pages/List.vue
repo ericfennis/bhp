@@ -44,9 +44,19 @@
                             </li>
                        
                         </ul>
+                        <footer>
+                            <v-link href="/">Terug</v-link>
+                        </footer>
                     </div>
+                    
                 </aside>
-                <open-layers keep-alive></open-layers>
+                <section>
+                    <open-layers keep-alive></open-layers>
+                    <footer>
+                        <div class="contrast">aosbdfbsdjfbjasdbfjkabsdkfjn</div>
+                    </footer>
+                </section>
+                
                 
                 <keyboard :class="{ show: screenKeyboard == true }" v-model="searchString"
     :layouts="[
@@ -54,9 +64,7 @@
     ]"
 ></keyboard>
 
-        <footer>
-            <v-link href="/">Terug</v-link>
-        </footer>
+        
         <div v-if="screenKeyboard" @click="screenKeyboard = false" class="overlay close-keyboard">
             
         </div>

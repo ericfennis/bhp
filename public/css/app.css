@@ -8182,10 +8182,12 @@ main aside {
   flex: 1;
   min-width: 480px;
   position: relative;
+  height: 100%;
 }
 
 main aside form {
-  z-index: 1;
+  -webkit-box-flex: 1;
+  flex: 1;
   background: #fff;
 }
 
@@ -8197,8 +8199,37 @@ main aside input + div {
 }
 
 main aside ul#results {
-  height: 100vh;
   overflow-y: auto;
+  -webkit-box-flex: 1;
+  flex: auto;
+}
+
+main aside div.panel {
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  flex-direction: column;
+  -webkit-box-pack: start;
+  justify-content: flex-start;
+  /* align items in Main Axis */
+  -webkit-box-align: stretch;
+  align-items: stretch;
+  /* align items in Cross Axis */
+  align-content: stretch;
+  /* Extra space in Cross Axis */
+}
+
+main aside footer {
+  -webkit-box-flex: 1;
+  flex: 1;
+  height: 160px;
+  background: #333;
+}
+
+main aside footer a {
+  display: block;
+  height: 160px;
 }
 
 main > figure, main section {
@@ -8208,8 +8239,8 @@ main > figure, main section {
   position: relative;
 }
 
-main footer {
-  position: fixed;
+main section footer {
+  position: absolute;
   width: 100%;
   height: 160px;
   left: 0;
@@ -8217,6 +8248,23 @@ main footer {
   bottom: 0;
   background: #333;
   color: #fff;
+}
+
+main.home #map canvas {
+  -webkit-filter: blur(10px);
+  -moz-filter: blur(10px);
+  -o-filter: blur(10px);
+  -ms-filter: blur(10px);
+  filter: blur(10px);
+}
+
+main #map canvas {
+  transition: 2s -webkit-filter linear;
+  -webkit-filter: blur(0px);
+  -moz-filter: blur(0px);
+  -o-filter: blur(0px);
+  -ms-filter: blur(0px);
+  filter: blur(0px);
 }
 
 .vue-keyboard .row {

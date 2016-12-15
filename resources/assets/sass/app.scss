@@ -57,9 +57,9 @@ main {
 		flex: 1;
 		min-width: 480px;
 		position: relative;
+    	height: 100%;
 		form {
-
-			z-index: 1;
+			flex: 1;	
 			background: #fff;
 		}
 		input {
@@ -71,9 +71,25 @@ main {
 			}
 		}
 		ul#results {
-			height: 100vh;
-			//padding-top: 120px;	
 			overflow-y: auto;
+			flex: auto;
+		}
+		div.panel {
+			display: flex;
+			flex-direction: column;
+
+			justify-content: flex-start; /* align items in Main Axis */
+			align-items: stretch; /* align items in Cross Axis */
+			align-content: stretch; /* Extra space in Cross Axis */
+		}
+		footer {
+				flex: 1;
+				height: 160px;
+				background: #333;
+			a {
+				display: block;
+				height: 160px;
+			}
 		}
 	}
 	& > figure, section {
@@ -81,15 +97,38 @@ main {
 		height: 100%;
 		position: relative;
 	}
-	footer {
-		position: fixed;
-		width: 100%;
-		height: 160px;
-		left: 0;
-		right: 0;
-		bottom: 0;
-		background:#333;
-		color: #fff;
+	section {
+		footer {
+			position: absolute;
+			width: 100%;
+			height: 160px;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			background:#333;
+			color: #fff;
+		}
+	}
+	&.home {
+		#map {
+			canvas {
+				-webkit-filter: blur(10px);
+				-moz-filter: blur(10px);
+				-o-filter: blur(10px);
+				-ms-filter: blur(10px);
+				filter: blur(10px);
+			}
+		}
+	}
+	#map {
+		canvas {
+			transition: 2s -webkit-filter linear;
+			-webkit-filter: blur(0px);
+				-moz-filter: blur(0px);
+				-o-filter: blur(0px);
+				-ms-filter: blur(0px);
+				filter: blur(0px);
+		}
 	}
 }
 

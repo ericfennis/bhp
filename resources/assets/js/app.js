@@ -35,7 +35,6 @@ var App = window.App = new Vue({
 			return matchingView
 			? require('./pages/' + matchingView + '.vue')
 			: require('./pages/404.vue');
-			console.log("asdbfkjasbdjfbasjdbfsd");
 		}
 	  },
 	created() {
@@ -62,6 +61,9 @@ var App = window.App = new Vue({
         },
         loadMap: function() {
         	console.log("rsadASFasfun");
+        },
+        currentView: function() {
+            return routes[this.currentRoute];
         }
 
     },
