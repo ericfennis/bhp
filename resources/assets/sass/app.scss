@@ -1,6 +1,14 @@
-
 // Fonts
-@import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
+@font-face {
+    font-family: childFontBHP;
+    src: url(/fonts/alternate-gothic.ttf);
+}
+
+@font-face {
+	font-family: parentFontBHP;
+    src: url(/fonts/norwester.otf);
+}
+
 
 // Variables
 @import "reset";
@@ -169,6 +177,16 @@ main {
 			padding: 8px 60px;
 		}
 	}
+}
+
+h1 {
+    font-family: parentFontBHP;
+    text-transform:uppercase;
+    &.welkom {
+    	text-align: center;
+    }
+}
+
 
 }
 
@@ -197,3 +215,10 @@ main {
 	bottom: 0;
 	left: 0;
 }
+
+.panel {
+	background-color: none;
+	border: none;
+	box-shadow: none;
+}
+
