@@ -8210,6 +8210,7 @@ main aside div.panel {
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
   flex-direction: column;
+  height: 100%;
   -webkit-box-pack: start;
   justify-content: flex-start;
   /* align items in Main Axis */
@@ -8224,6 +8225,7 @@ main aside footer {
   -webkit-box-flex: 1;
   flex: 1;
   height: 160px;
+  max-height: 160px;
   background: #333;
 }
 
