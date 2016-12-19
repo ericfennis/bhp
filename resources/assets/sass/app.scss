@@ -67,6 +67,7 @@ main {
 		position: relative;
     	height: 100%;
     	z-index: 20;
+
 		form {
 			flex: 1;	
 			background: #fff;
@@ -75,6 +76,14 @@ main {
 					height:58px;
 					max-height:58px;
 				}
+			}
+		}
+		input {
+			&+div {
+				position: absolute;
+				right: 0;
+				top: 0;
+				height: 58px;
 			}
 		}
 		input {
@@ -99,6 +108,7 @@ main {
 		}
 		footer {
 			z-index: 20;
+
 				flex: 1;
 				height: 160px;
 				max-height: 160px;

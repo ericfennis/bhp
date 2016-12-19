@@ -2,8 +2,10 @@
     <main-layout>
                 <aside>
                     <div class="panel panel-default">
+
                         <form id="search" v-bind:class="{ filled: searchString.length !== 0 }">
                             <input type="text" @click="selectTab('all'),screenKeyboard = true" v-model="searchString" placeholder="Zoek naar bv: 'Kapper, naam, bedrijf etc.'" />
+
 
                             <div class="btn btn-primary" role="button" @click="searchString = '',clearKeyboard()">X</div>
                             <nav v-if="searchString.length == 0">
@@ -52,18 +54,22 @@
                     
                 </aside>
                 <section>
-                    
+
                     <footer>
                         <div class="contrast">aosbdfbsdjfbjasdbfjkabsdkfjn</div>
                     </footer>
                 </section>
                 
                 
+
                 <keyboard :class="{ show: screenKeyboard == true }" @close="screenKeyboard = false" v-model="searchString"
+
     :layouts="[
         '{close:close}|1234567890{delete:backspace}|qwertyuiop|asdfghjkl|zxcvbnm|{space:space}'
     ]"
-><div class="hoi"></div></keyboard>
+
+></keyboard>
+
 
         
         <div v-if="screenKeyboard" @click="screenKeyboard = false" class="overlay close-keyboard">
@@ -75,7 +81,7 @@
 
 <script>
     import MainLayout from '../Main.vue'
-    //import OpenLayers from '../components/OpenLayers.vue'
+
     import VLink from '../components/VLink.vue'
 
 
@@ -85,7 +91,6 @@
         components: {
                 MainLayout,
                 VLink,
-                //OpenLayers
         },
         data() {
             return {

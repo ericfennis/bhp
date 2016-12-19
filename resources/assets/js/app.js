@@ -57,6 +57,7 @@ var App = window.App = new Vue({
 				  resource.get({id: itemID}).then((response) => {
 				    this.walkPath = response.body;
                     //console.log(this.walkPath);
+
                     drawWalkpath();
 				  });                
         },
@@ -68,6 +69,7 @@ var App = window.App = new Vue({
 	render (h) { return h(this.ViewComponent) }
     
 });
+
 
 
                     //iets met namespace
@@ -347,3 +349,4 @@ var App = window.App = new Vue({
 
 
        
+

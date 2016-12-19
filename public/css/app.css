@@ -173,6 +173,7 @@ pre {
   background: #eee;
 }
 
+
 .ol-control,
 .ol-scale-line {
   position: absolute;
@@ -8189,6 +8190,7 @@ main header, main nav, main footer {
 main aside {
   -webkit-box-flex: 1;
   flex: 1;
+
   max-width: 480px;
   position: relative;
   height: 100%;
@@ -8201,10 +8203,12 @@ main aside form {
   background: #fff;
 }
 
+
 main aside form#search.filled {
   height: 58px;
   max-height: 58px;
 }
+
 
 main aside input + div {
   position: absolute;
@@ -8249,6 +8253,7 @@ main aside footer a {
   display: block;
   height: 160px;
 }
+
 
 main > figure, main section {
   -webkit-box-flex: 2;
@@ -8295,6 +8300,23 @@ main + #map canvas {
   height: 100vh;
   width: 100vw;
   z-index: 0;
+}
+
+main.home #map canvas {
+  -webkit-filter: blur(10px);
+  -moz-filter: blur(10px);
+  -o-filter: blur(10px);
+  -ms-filter: blur(10px);
+  filter: blur(10px);
+}
+
+main #map canvas {
+  transition: 2s -webkit-filter linear;
+  -webkit-filter: blur(0px);
+  -moz-filter: blur(0px);
+  -o-filter: blur(0px);
+  -ms-filter: blur(0px);
+  filter: blur(0px);
 }
 
 .vue-keyboard .row {
@@ -8366,6 +8388,7 @@ h1.welkom {
   bottom: 0;
   left: 0;
 }
+
 
 .panel {
   background-color: none;

@@ -10,6 +10,7 @@
         mounted() {
             this.createMap();
         },
+
         created() {
         	console.log(this.$root.walkpath);
         	console.log("wakkalasnfdkljasb");
@@ -17,7 +18,3 @@
         methods: {
 
 	            
-        }
-    };
-</script>
-</script>

@@ -31,7 +31,6 @@
 
    @yield('content')
    <figure id="map" class="map"></figure> 
-
    <!-- Scripts -->
     <script src="/js/app.js"></script>
     
