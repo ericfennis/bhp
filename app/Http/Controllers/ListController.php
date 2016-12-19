@@ -53,7 +53,7 @@ class ListController extends Controller
     	if(!empty($Companies)) {
 			// Filter companies with branch onderwijsinstelling and add them to $education
     		foreach ($Companies as $Company) {
-    			if ($Company->branch == 'onderwijsinstelling') {
+    			if ($Company->branch == 'onderwijsinstelling' || $Company->branch == 'Onderwijsinstelling') {
     				array_push($Education, $Company);
     			}
     		}

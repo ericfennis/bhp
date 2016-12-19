@@ -2,9 +2,8 @@
     <main :class="currentPath()">  
   
     <slot></slot>
-    <!-- <section>
-      <open-layers keep-alive></open-layers>
-    </section> -->
+
+
   </main>
 </template>
 

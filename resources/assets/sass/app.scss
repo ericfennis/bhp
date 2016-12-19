@@ -19,7 +19,6 @@
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
 
 a.active {
-	font-weight: bold;
 	color:black;
 	background: #ccc;
 }
@@ -44,6 +43,7 @@ form input {
 }
 html, body {
   height: 100%;
+  position: relative;
 }
  
 main {
@@ -63,12 +63,28 @@ main {
 	
 	aside {
 		flex: 1;
-		min-width: 480px;
+		max-width: 480px;
 		position: relative;
     	height: 100%;
+    	z-index: 20;
+
 		form {
 			flex: 1;	
 			background: #fff;
+			&#search {
+				&.filled {
+					height:58px;
+					max-height:58px;
+				}
+			}
+		}
+		input {
+			&+div {
+				position: absolute;
+				right: 0;
+				top: 0;
+				height: 58px;
+			}
 		}
 		input {
 			&+div {
@@ -91,6 +107,8 @@ main {
 			align-content: stretch; /* Extra space in Cross Axis */
 		}
 		footer {
+			z-index: 20;
+
 				flex: 1;
 				height: 160px;
 				max-height: 160px;
@@ -116,10 +134,11 @@ main {
 			bottom: 0;
 			background:#333;
 			color: #fff;
+			z-index: 20;
 		}
 	}
 	&.home {
-		#map {
+		& + #map {
 			canvas {
 				-webkit-filter: blur(10px);
 				-moz-filter: blur(10px);
@@ -129,7 +148,7 @@ main {
 			}
 		}
 	}
-	#map {
+	& + #map {
 		canvas {
 			transition: 2s -webkit-filter linear;
 			-webkit-filter: blur(0px);
@@ -140,7 +159,16 @@ main {
 		}
 	}
 }
-
+#map {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	height: 100vh;
+	width: 100vw;
+	z-index: 0;
+}
 
 
 // Keyboard css

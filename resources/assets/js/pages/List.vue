@@ -2,8 +2,11 @@
     <main-layout>
                 <aside>
                     <div class="panel panel-default">
-                        <form id="search">
-                            <input type="text" @click="selectTab('all'),screenKeyboard = true" v-model="searchString" placeholder="Zoek naar 'Kapper'" />
+
+                        <form id="search" v-bind:class="{ filled: searchString.length !== 0 }">
+                            <input type="text" @click="selectTab('all'),screenKeyboard = true" v-model="searchString" placeholder="Zoek naar bv: 'Kapper, naam, bedrijf etc.'" />
+
+
                             <div class="btn btn-primary" role="button" @click="searchString = '',clearKeyboard()">X</div>
                             <nav v-if="searchString.length == 0">
                                 <ul class="nav nav-tabs">
@@ -51,18 +54,22 @@
                     
                 </aside>
                 <section>
-                    <open-layers keep-alive></open-layers>
+
                     <footer>
                         <div class="contrast">aosbdfbsdjfbjasdbfjkabsdkfjn</div>
                     </footer>
                 </section>
                 
                 
-                <keyboard :class="{ show: screenKeyboard == true }" v-model="searchString"
+
+                <keyboard :class="{ show: screenKeyboard == true }" @close="screenKeyboard = false" v-model="searchString"
+
     :layouts="[
-        '1234567890{delete:backspace}|qwertyuiop|asdfghjkl|zxcvbnm|{space:space}'
+        '{close:close}|1234567890{delete:backspace}|qwertyuiop|asdfghjkl|zxcvbnm|{space:space}'
     ]"
+
 ></keyboard>
+
 
         
         <div v-if="screenKeyboard" @click="screenKeyboard = false" class="overlay close-keyboard">
@@ -74,7 +81,7 @@
 
 <script>
     import MainLayout from '../Main.vue'
-    import OpenLayers from '../components/OpenLayers.vue'
+
     import VLink from '../components/VLink.vue'
 
 
@@ -84,7 +91,6 @@
         components: {
                 MainLayout,
                 VLink,
-                OpenLayers
         },
         data() {
             return {
@@ -170,7 +176,7 @@
             },
 
             getWalkpath: function(item) {
-                this.$parent.$root.getWalkpath(item);
+                this.$root.getWalkpath(item);
                 this.active = item;
                 //console.log(item);
                 
@@ -180,13 +186,6 @@
             },
             clearKeyboard:function () {
                 this.$children[0].$children[2].clear();
-            },
-            hideKeyboard: function() {
-                // if(this.screenKeyboard == true) {
-                //     this.screenKeyboard == false;
-                // }
-
-                console.log("sfkjasfkjasbkfb");
             }
         },
 

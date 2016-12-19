@@ -19,7 +19,7 @@
                             </div>
                         </div>
                     </div>
-                    <open-layers keep-alive></open-layers>
+
                 </section>
            
 
@@ -29,14 +29,14 @@
 <script>
     //console.log(this);
     import MainLayout from '../Main.vue'
-    import OpenLayers from '../components/OpenLayers.vue';
+
     import VLink from '../components/VLink.vue'
 
     export default {
         components: {
                 MainLayout,
                 VLink,
-                OpenLayers
+
         },
         data() {
             return {
@@ -47,8 +47,7 @@
 
             }
         },
-       created() {
-      
+        created() {
         },
         mounted() {
             console.log('Component ready.')

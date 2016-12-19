@@ -8146,7 +8146,6 @@ button.close {
 }
 
 a.active {
-  font-weight: bold;
   color: black;
   background: #ccc;
 }
@@ -8169,6 +8168,7 @@ form input:focus {
 
 html, body {
   height: 100%;
+  position: relative;
 }
 
 main {
@@ -8190,9 +8190,11 @@ main header, main nav, main footer {
 main aside {
   -webkit-box-flex: 1;
   flex: 1;
-  min-width: 480px;
+
+  max-width: 480px;
   position: relative;
   height: 100%;
+  z-index: 20;
 }
 
 main aside form {
@@ -8200,6 +8202,13 @@ main aside form {
   flex: 1;
   background: #fff;
 }
+
+
+main aside form#search.filled {
+  height: 58px;
+  max-height: 58px;
+}
+
 
 main aside input + div {
   position: absolute;
@@ -8232,6 +8241,7 @@ main aside div.panel {
 }
 
 main aside footer {
+  z-index: 20;
   -webkit-box-flex: 1;
   flex: 1;
   height: 160px;
@@ -8243,6 +8253,7 @@ main aside footer a {
   display: block;
   height: 160px;
 }
+
 
 main > figure, main section {
   -webkit-box-flex: 2;
@@ -8260,6 +8271,35 @@ main section footer {
   bottom: 0;
   background: #333;
   color: #fff;
+  z-index: 20;
+}
+
+main.home + #map canvas {
+  -webkit-filter: blur(10px);
+  -moz-filter: blur(10px);
+  -o-filter: blur(10px);
+  -ms-filter: blur(10px);
+  filter: blur(10px);
+}
+
+main + #map canvas {
+  transition: 2s -webkit-filter linear;
+  -webkit-filter: blur(0px);
+  -moz-filter: blur(0px);
+  -o-filter: blur(0px);
+  -ms-filter: blur(0px);
+  filter: blur(0px);
+}
+
+#map {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  z-index: 0;
 }
 
 main.home #map canvas {
@@ -8320,7 +8360,6 @@ h1 {
 h1.welkom {
   text-align: center;
 }
-
 
 .vue-keyboard {
   position: absolute;
