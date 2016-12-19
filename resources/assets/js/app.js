@@ -56,12 +56,9 @@ var App = window.App = new Vue({
 	                }
 				  resource.get({id: itemID}).then((response) => {
 				    this.walkPath = response.body;
-                    console.log(this.walkPath);
+                    //console.log(this.walkPath);
                     drawWalkpath();
 				  });                
-        },
-        loadMap: function() {
-        	console.log("rsadASFasfun");
         },
         currentView: function() {
             return routes[this.currentRoute];
@@ -317,31 +314,31 @@ var App = window.App = new Vue({
                 //herkenninspunt op verdieping 1
                 addIcon(1, 'img/icons/WC (Fill).png', 'popup-sightseeing', 0, 425.8198910658566, 276.94793979000525);
 
-                function drawWalkpath(argument) {
-                    var drawF0 = [];
-                    var drawF1 = [];
-                    var drawF2 = [];
-                    var drawF3 = [];
-                    console.log(App.walkPath);
-                    if(App.walkPath.length !== 0) {
-                        for (var i = 0; i < App.walkPath.length; i++) {
-                            if(App.walkPath[i][0] == 0) {
-                                drawF0.push([App.walkPath[i][1],App.walkPath[i][2]])
+                function drawWalkpath(item, index) {
+                    // var drawF0 = [];
+                    // var drawF1 = [];
+                    // var drawF2 = [];
+                    // var drawF3 = [];
+
+                    console.log(item);
+
+                    if(item.length !== 0) {
+
+                        for (var i = 0; i < item.length; i++) {
+
+                            if (item[i+1][0].length !== 0) {
+                                addRoute(index, item[i][0], item[i][1], item[i][1], item[i][1]);
                             }
-                            if(App.walkPath[i][1] == 1) {
-                                drawF1.push([App.walkPath[i][1],App.walkPath[i][2]])
-                            }
-                            if(App.walkPath[i][2] == 2) {
-                                drawF2.push([App.walkPath[i][1],App.walkPath[i][2]])
-                            }
-                            if(App.walkPath[i][3] == 3) {
-                                drawF3.push([App.walkPath[i][1],App.walkPath[i][2]])
-                            }
-                            
+                            // if (i % 2 == 0) {
+                            //     console.log("hoo");
+                            //     //addRoute(index, item[i], 369.28755355025527, 436.9001907859601, 371.7499432498958);
+                            // } else {
+                            //     console.log("haa");
+                            // }
                             //addRoute(App.walkPath[i][0], 436.9001907859601, 371.7499432498958, 426.32169461714, 464.5669774843762);
                         }
                         
-                        console.log(drawF0);
+                        //console.log(drawF0);
                     }
                 }
 

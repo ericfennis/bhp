@@ -19,7 +19,6 @@
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
 
 a.active {
-	font-weight: bold;
 	color:black;
 	background: #ccc;
 }
@@ -71,6 +70,12 @@ main {
 		form {
 			flex: 1;	
 			background: #fff;
+			&#search {
+				&.filled {
+					height:58px;
+					max-height:58px;
+				}
+			}
 		}
 		input {
 			&+div {

@@ -8145,7 +8145,6 @@ button.close {
 }
 
 a.active {
-  font-weight: bold;
   color: black;
   background: #ccc;
 }
@@ -8200,6 +8199,11 @@ main aside form {
   -webkit-box-flex: 1;
   flex: 1;
   background: #fff;
+}
+
+main aside form#search.filled {
+  height: 58px;
+  max-height: 58px;
 }
 
 main aside input + div {

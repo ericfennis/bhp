@@ -2,8 +2,9 @@
     <main-layout>
                 <aside>
                     <div class="panel panel-default">
-                        <form id="search">
-                            <input type="text" @click="selectTab('all'),screenKeyboard = true" v-model="searchString" placeholder="Zoek naar 'Kapper'" />
+                        <form id="search" v-bind:class="{ filled: searchString.length !== 0 }">
+                            <input type="text" @click="selectTab('all'),screenKeyboard = true" v-model="searchString" placeholder="Zoek naar bv: 'Kapper, naam, bedrijf etc.'" />
+
                             <div class="btn btn-primary" role="button" @click="searchString = '',clearKeyboard()">X</div>
                             <nav v-if="searchString.length == 0">
                                 <ul class="nav nav-tabs">
