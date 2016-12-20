@@ -9,11 +9,20 @@
     src: url(/fonts/norwester.otf);
 }
 
+// Animations
+
+@-webkit-keyframes orangePulse {
+  from { background-color: #DF4206; -webkit-box-shadow: 0 0 12px #333; }
+  50% { background-color: #FF6A0D; -webkit-box-shadow: 0 0 20px #FF6A0D; }
+  to { background-color: #DF4206; -webkit-box-shadow: 0 0 12px #333; }
+}
+
 
 // Variables
 @import "reset";
 @import "variables";
 @import "ol";
+@import "mixins";
 
 // Bootstrap
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
@@ -44,6 +53,7 @@ form input {
 html, body {
   height: 100%;
   position: relative;
+  color: black;
 }
  
 main {
@@ -63,7 +73,7 @@ main {
 	
 	aside {
 		flex: 1;
-		max-width: 480px;
+		max-width: 520px;
 		position: relative;
     	height: 100%;
     	z-index: 20;
@@ -208,14 +218,6 @@ main {
 	}
 }
 
-h1 {
-    font-family: parentFontBHP;
-    text-transform:uppercase;
-    &.welkom {
-    	text-align: center;
-    }
-}
-
 .vue-keyboard {
 	position: absolute;
 	bottom: 0;
@@ -228,9 +230,84 @@ h1 {
 	}
 }
 
+// Standard
+
+h1 {
+    font-family: parentFontBHP;
+    &.welkom {
+    	text-transform:uppercase;
+    	text-align: center;
+    	font-size: 36px;
+		margin-top: 60px;
+		margin-bottom: 16px;
+	}
+}
+
+.maptitel {
+	font-size: 64px;
+	color: white;
+	text-transform:uppercase;
+	text-align: center;
+	margin-top: 400px;
+	text-shadow: 2px 2px 8px black;
+}
+
+.mapparagraph {
+	@include margin-all(0px,400px,0px,400px);
+	font-family: childFontBHP;
+	text-align: center;
+	color: white;
+	font-size: 40px;
+	text-shadow: 2px 2px 8px black;
+	letter-spacing: 1px;
+}
+
+// Home left
+
+.logobhp {
+	height: 240px;
+	width: 50%;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.agenda {
+	@include margin-all(120px,40px,40px,40px);
+}
+
+// Home right
+
+.btn-primary {
+	@include margin-all(200px, auto, 0, auto);
+	border-radius: 0px;
+	border: none;              
+	background-color: #DF4206;
+	font-family: childFontBHP;
+	font-size: 34px;
+	text-transform: uppercase;
+	width: 75%;
+	padding: 16px;
+	-webkit-animation-name: orangePulse;
+  	-webkit-animation-duration: 2s;
+  	-webkit-animation-iteration-count: infinite;
+}
+
+#clock {
+	background-color:black;
+	color:white;
+	display:inline;
+	font-size:60px;
+	padding:10px;
+	float: right;
+	width: 200px;
+	text-align: center;
+	}
+
 .map {
 	height: 100%;
 }
+
 .overlay {
 	height: 100%;
 	width: 100%;
@@ -240,6 +317,7 @@ h1 {
 	right: 0;
 	bottom: 0;
 	left: 0;
+	background:rgba(100,100,100,0.5);
 }
 
 .panel {
@@ -247,4 +325,3 @@ h1 {
 	border: none;
 	box-shadow: none;
 }
-

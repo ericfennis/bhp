@@ -9,6 +9,21 @@
   src: url(/fonts/norwester.otf);
 }
 
+@-webkit-keyframes orangePulse {
+  from {
+    background-color: #DF4206;
+    -webkit-box-shadow: 0 0 12px #333;
+  }
+  50% {
+    background-color: #FF6A0D;
+    -webkit-box-shadow: 0 0 20px #FF6A0D;
+  }
+  to {
+    background-color: #DF4206;
+    -webkit-box-shadow: 0 0 12px #333;
+  }
+}
+
 html, body, div, span, object, iframe,
 h2, h3, h4, h5, h6, p, blockquote, pre,
 abbr, address, cite, code,
@@ -172,7 +187,6 @@ pre {
   padding: 1em;
   background: #eee;
 }
-
 
 .ol-control,
 .ol-scale-line {
@@ -8169,6 +8183,7 @@ form input:focus {
 html, body {
   height: 100%;
   position: relative;
+  color: black;
 }
 
 main {
@@ -8190,8 +8205,7 @@ main header, main nav, main footer {
 main aside {
   -webkit-box-flex: 1;
   flex: 1;
-
-  max-width: 480px;
+  max-width: 520px;
   position: relative;
   height: 100%;
   z-index: 20;
@@ -8203,12 +8217,17 @@ main aside form {
   background: #fff;
 }
 
-
 main aside form#search.filled {
   height: 58px;
   max-height: 58px;
 }
 
+main aside input + div {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 58px;
+}
 
 main aside input + div {
   position: absolute;
@@ -8253,7 +8272,6 @@ main aside footer a {
   display: block;
   height: 160px;
 }
-
 
 main > figure, main section {
   -webkit-box-flex: 2;
@@ -8302,23 +8320,6 @@ main + #map canvas {
   z-index: 0;
 }
 
-main.home #map canvas {
-  -webkit-filter: blur(10px);
-  -moz-filter: blur(10px);
-  -o-filter: blur(10px);
-  -ms-filter: blur(10px);
-  filter: blur(10px);
-}
-
-main #map canvas {
-  transition: 2s -webkit-filter linear;
-  -webkit-filter: blur(0px);
-  -moz-filter: blur(0px);
-  -o-filter: blur(0px);
-  -ms-filter: blur(0px);
-  filter: blur(0px);
-}
-
 .vue-keyboard .row {
   padding: 2px 0;
   text-align: center;
@@ -8352,15 +8353,6 @@ main #map canvas {
   padding: 8px 60px;
 }
 
-h1 {
-  font-family: parentFontBHP;
-  text-transform: uppercase;
-}
-
-h1.welkom {
-  text-align: center;
-}
-
 .vue-keyboard {
   position: absolute;
   bottom: 0;
@@ -8372,6 +8364,84 @@ h1.welkom {
 
 .vue-keyboard.show {
   display: block;
+}
+
+h1 {
+  font-family: parentFontBHP;
+}
+
+h1.welkom {
+  text-transform: uppercase;
+  text-align: center;
+  font-size: 36px;
+  margin-top: 60px;
+  margin-bottom: 16px;
+}
+
+.maptitel {
+  font-size: 64px;
+  color: white;
+  text-transform: uppercase;
+  text-align: center;
+  margin-top: 400px;
+  text-shadow: 2px 2px 8px black;
+}
+
+.mapparagraph {
+  margin-top: 0px;
+  margin-right: 400px;
+  margin-bottom: 0px;
+  margin-left: 400px;
+  font-family: childFontBHP;
+  text-align: center;
+  color: white;
+  font-size: 40px;
+  text-shadow: 2px 2px 8px black;
+  letter-spacing: 1px;
+}
+
+.logobhp {
+  height: 240px;
+  width: 50%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.agenda {
+  margin-top: 120px;
+  margin-right: 40px;
+  margin-bottom: 40px;
+  margin-left: 40px;
+}
+
+.btn-primary {
+  margin-top: 200px;
+  margin-right: auto;
+  margin-bottom: 0;
+  margin-left: auto;
+  border-radius: 0px;
+  border: none;
+  background-color: #DF4206;
+  font-family: childFontBHP;
+  font-size: 34px;
+  text-transform: uppercase;
+  width: 75%;
+  padding: 16px;
+  -webkit-animation-name: orangePulse;
+  -webkit-animation-duration: 2s;
+  -webkit-animation-iteration-count: infinite;
+}
+
+#clock {
+  background-color: black;
+  color: white;
+  display: inline;
+  font-size: 60px;
+  padding: 10px;
+  float: right;
+  width: 200px;
+  text-align: center;
 }
 
 .map {
@@ -8387,8 +8457,8 @@ h1.welkom {
   right: 0;
   bottom: 0;
   left: 0;
+  background: rgba(100, 100, 100, 0.5);
 }
-
 
 .panel {
   background-color: none;

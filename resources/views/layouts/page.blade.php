@@ -33,6 +33,7 @@
    <figure id="map" class="map"></figure> 
    <!-- Scripts -->
     <script src="/js/app.js"></script>
+    <script src="/js/clock.js"></script>
     
 </body>
 </html>
