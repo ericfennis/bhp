@@ -314,21 +314,46 @@ var App = window.App = new Vue({
                 //herkenninspunt op verdieping 1
                 addIcon(1, 'img/icons/WC (Fill).png', 'popup-sightseeing', 0, 425.8198910658566, 276.94793979000525);
 
-                function drawWalkpath(item, index) {
+                function drawWalkpath() {
                     // var drawF0 = [];
                     // var drawF1 = [];
                     // var drawF2 = [];
                     // var drawF3 = [];
+                    var points = App.walkPath;
 
-                    console.log(item);
+                   //console.log(item);
 
-                    if(item.length !== 0) {
+                    if(points.length !== 0) {
 
-                        for (var i = 0; i < item.length; i++) {
+                        for (var i = 0; i < 2; i++) {
+                            var floor = points[i];
+                            //console.log(floor);
+                            for (var j = 0; j < floor.length; j++) {
+                                var x1 = floor[j][0],
+                                    y1 = floor[j][1],
+                                    x2 = floor[2][0],
+                                    y2 = floor[2][1];
 
-                            if (item[i+1][0].length !== 0) {
-                                addRoute(index, item[i][0], item[i][1], item[i][1], item[i][1]);
+                                // var x1 = 230,
+                                //     y1 = 540,
+                                //     x2 = 230,
+                                //     y2 = 210;
+
+                                 // console.log(floor[j][0]);
+                                addRoute(i, x1, y1 , x2, y2);
+                                // if (floor[j+1][0].length !== 0) {
+                                //     addRoute(i, floor[j][0], floor[j][1], floor[j+1][0], floor[j+1][1]);
+                                // }
+                                // if (i % 2 == 0) {
+                                //     console.log("hoo");
+                                //     //addRoute(index, item[i], 369.28755355025527, 436.9001907859601, 371.7499432498958);
+                                // } else {
+                                //     console.log("haa");
+                                // }
                             }
+                            // if (item[i+1][0].length !== 0) {
+                            //     addRoute(index, item[i][0], item[i][1], item[i][1], item[i][1]);
+                            // }
                             // if (i % 2 == 0) {
                             //     console.log("hoo");
                             //     //addRoute(index, item[i], 369.28755355025527, 436.9001907859601, 371.7499432498958);
@@ -339,6 +364,7 @@ var App = window.App = new Vue({
                         }
                         
                         //console.log(drawF0);
+                        setFloor(0);
                     }
                 }
 
