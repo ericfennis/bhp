@@ -57,10 +57,18 @@ var App = window.App = new Vue({
 				  resource.get({id: itemID}).then((response) => {
 				    this.walkPath = response.body;
                     //console.log(this.walkPath);
+<<<<<<< HEAD
 
                     drawWalkpath();
 				  });                
         },
+=======
+				  });                
+        },
+        loadMap: function() {
+        	console.log("rsadASFasfun");
+        },
+>>>>>>> d6d38ae61e420ffc38bf76cfabb87e4076beda8f
         currentView: function() {
             return routes[this.currentRoute];
         }
@@ -70,6 +78,7 @@ var App = window.App = new Vue({
     
 });
 
+<<<<<<< HEAD
 
 
                     //iets met namespace
@@ -350,3 +359,5 @@ var App = window.App = new Vue({
 
        
 
+=======
+>>>>>>> d6d38ae61e420ffc38bf76cfabb87e4076beda8f

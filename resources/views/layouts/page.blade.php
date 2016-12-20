@@ -28,12 +28,20 @@
     </script>-->
 </head>
 <body>
+<<<<<<< HEAD
 
    @yield('content')
    <figure id="map" class="map"></figure> 
    <!-- Scripts -->
     <script src="/js/app.js"></script>
     <script src="/js/clock.js"></script>
+=======
+
+   @yield('content') 
+
+   <!-- Scripts -->
+    <script src="/js/app.js"></script>
+>>>>>>> d6d38ae61e420ffc38bf76cfabb87e4076beda8f
     
 </body>
 </html>

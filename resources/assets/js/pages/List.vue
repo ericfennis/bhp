@@ -2,11 +2,16 @@
     <main-layout>
                 <aside>
                     <div class="panel panel-default">
+<<<<<<< HEAD
 
                         <form id="search" v-bind:class="{ filled: searchString.length !== 0 }">
                             <input type="text" @click="selectTab('all'),screenKeyboard = true" v-model="searchString" placeholder="Zoek naar bv: 'Kapper, naam, bedrijf etc.'" />
 
 
+=======
+                        <form id="search">
+                            <input type="text" @click="selectTab('all'),screenKeyboard = true" v-model="searchString" placeholder="Zoek naar 'Kapper'" />
+>>>>>>> d6d38ae61e420ffc38bf76cfabb87e4076beda8f
                             <div class="btn btn-primary" role="button" @click="searchString = '',clearKeyboard()">X</div>
                             <nav v-if="searchString.length == 0">
                                 <ul class="nav nav-tabs">
@@ -54,22 +59,34 @@
                     
                 </aside>
                 <section>
+<<<<<<< HEAD
 
+=======
+                    <open-layers keep-alive></open-layers>
+>>>>>>> d6d38ae61e420ffc38bf76cfabb87e4076beda8f
                     <footer>
                         <div class="contrast">aosbdfbsdjfbjasdbfjkabsdkfjn</div>
                     </footer>
                 </section>
                 
                 
+<<<<<<< HEAD
 
                 <keyboard :class="{ show: screenKeyboard == true }" @close="screenKeyboard = false" v-model="searchString"
 
+=======
+                <keyboard :class="{ show: screenKeyboard == true }" v-model="searchString"
+>>>>>>> d6d38ae61e420ffc38bf76cfabb87e4076beda8f
     :layouts="[
         '{close:close}|1234567890{delete:backspace}|qwertyuiop|asdfghjkl|zxcvbnm|{space:space}'
     ]"
 
 ></keyboard>
 
+        
+        <div v-if="screenKeyboard" @click="screenKeyboard = false" class="overlay close-keyboard">
+            
+        </div>
 
         
         <div v-if="screenKeyboard" @click="screenKeyboard = false" class="overlay close-keyboard">
@@ -81,7 +98,7 @@
 
 <script>
     import MainLayout from '../Main.vue'
-
+    import OpenLayers from '../components/OpenLayers.vue'
     import VLink from '../components/VLink.vue'
 
 
@@ -91,6 +108,10 @@
         components: {
                 MainLayout,
                 VLink,
+<<<<<<< HEAD
+=======
+                OpenLayers
+>>>>>>> d6d38ae61e420ffc38bf76cfabb87e4076beda8f
         },
         data() {
             return {
@@ -186,6 +207,16 @@
             },
             clearKeyboard:function () {
                 this.$children[0].$children[2].clear();
+<<<<<<< HEAD
+=======
+            },
+            hideKeyboard: function() {
+                // if(this.screenKeyboard == true) {
+                //     this.screenKeyboard == false;
+                // }
+
+                console.log("sfkjasfkjasbkfb");
+>>>>>>> d6d38ae61e420ffc38bf76cfabb87e4076beda8f
             }
         },
 
