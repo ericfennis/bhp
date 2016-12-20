@@ -28,7 +28,6 @@
     </script>-->
 </head>
 <body>
-
    @yield('content')
    <figure id="map" class="map"></figure> 
    <!-- Scripts -->
