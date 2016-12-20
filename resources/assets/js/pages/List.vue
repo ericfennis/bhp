@@ -53,7 +53,6 @@
 
                 </aside>
                 <section>
-                    <open-layers keep-alive></open-layers>
                     <footer>
                         <div class="contrast">
                           <div class="legenda_container">
@@ -82,11 +81,6 @@
     ]"></keyboard>
 
 
-        
-        <div v-if="screenKeyboard" @click="screenKeyboard = false" class="overlay close-keyboard">
-            
-        </div>
-
         <div v-if="screenKeyboard" @click="screenKeyboard = false" class="overlay close-keyboard">
 
         </div>
@@ -96,7 +90,6 @@
 
 <script>
     import MainLayout from '../Main.vue'
-    import OpenLayers from '../components/OpenLayers.vue'
     import VLink from '../components/VLink.vue'
 
 
@@ -105,8 +98,7 @@
     export default {
         components: {
                 MainLayout,
-                VLink,
-                OpenLayers
+                VLink
         },
         data() {
             return {

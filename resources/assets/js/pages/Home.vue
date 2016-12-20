@@ -16,13 +16,12 @@
                         <div class="centered">
                             <div class="row">
 
-                            <p id="clock">HH:MM</p>  
+                             
                                 <h1 class="maptitel">bedrijven & Personen zoeken</h1>
                                     <p class="mapparagraph">Ga verder naar de plattegrond om de locatie te vinden van het bedrijf of persoon waar u naar op zoek bent.</p>
-                                <div class="col-md-4 col-md-offset-4">
-                                    <v-link href="/list" class="btn btn-lg btn-block btn-primary">KLIK HIER VOOR DE PLATTEGROND</v-link>
+                         
+                                    <v-link href="/list" class="btn btn-lg btn-block btn-primary plattegrond-button">Klik hier voor de plattegrond</v-link>
 
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -35,18 +34,16 @@
 <script>
     //console.log(this);
     import MainLayout from '../Main.vue'
-    import OpenLayers from '../components/OpenLayers.vue';
     import VLink from '../components/VLink.vue'
 
     export default {
         components: {
                 MainLayout,
-                VLink,
+                VLink
         },
         data() {
             return {
                 events:[
-
                         
                 ]
 

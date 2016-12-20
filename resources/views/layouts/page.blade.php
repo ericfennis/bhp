@@ -28,6 +28,7 @@
     </script>-->
 </head>
 <body>
+<div id="clock">HH:MM</div> 
    @yield('content')
    <figure id="map" class="map"></figure> 
    <!-- Scripts -->
