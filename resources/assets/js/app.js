@@ -57,9 +57,11 @@ var App = window.App = new Vue({
 				  resource.get({id: itemID}).then((response) => {
 				    this.walkPath = response.body;
                     //console.log(this.walkPath);
-
                     drawWalkpath();
 				  });                
+        },
+        loadMap: function() {
+        	console.log("rsadASFasfun");
         },
         currentView: function() {
             return routes[this.currentRoute];
@@ -70,7 +72,10 @@ var App = window.App = new Vue({
     
 });
 
-
+                // Timer
+                var myTimer = setInterval(setClock,1000);
+                function setClock(){    
+                document.getElementById("clock").innerHTML=new Date().toLocaleTimeString();}
 
                     //iets met namespace
                 window.app = {};
@@ -347,6 +352,4 @@ var App = window.App = new Vue({
                 //alles bedacht, stel zichtbare verdieping in
                 setFloor(1);
 
-
-       
 

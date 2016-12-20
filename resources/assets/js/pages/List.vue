@@ -6,7 +6,6 @@
                         <form id="search" v-bind:class="{ filled: searchString.length !== 0 }">
                             <input type="text" @click="selectTab('all'),screenKeyboard = true" v-model="searchString" placeholder="Zoek naar bv: 'Kapper, naam, bedrijf etc.'" />
 
-
                             <div class="btn btn-primary" role="button" @click="searchString = '',clearKeyboard()">X</div>
                             <nav v-if="searchString.length == 0">
                                 <ul class="nav nav-tabs">
@@ -54,22 +53,18 @@
                     
                 </aside>
                 <section>
-
+                    
                     <footer>
                         <div class="contrast">aosbdfbsdjfbjasdbfjkabsdkfjn</div>
                     </footer>
                 </section>
                 
                 
-
                 <keyboard :class="{ show: screenKeyboard == true }" @close="screenKeyboard = false" v-model="searchString"
-
     :layouts="[
         '{close:close}|1234567890{delete:backspace}|qwertyuiop|asdfghjkl|zxcvbnm|{space:space}'
     ]"
-
-></keyboard>
-
+><div class="hoi"></div></keyboard>
 
         
         <div v-if="screenKeyboard" @click="screenKeyboard = false" class="overlay close-keyboard">
@@ -90,7 +85,7 @@
     export default {
         components: {
                 MainLayout,
-                VLink,
+                VLink
         },
         data() {
             return {
@@ -186,6 +181,13 @@
             },
             clearKeyboard:function () {
                 this.$children[0].$children[2].clear();
+            },
+            hideKeyboard: function() {
+                // if(this.screenKeyboard == true) {
+                //     this.screenKeyboard == false;
+                // }
+
+                console.log("sfkjasfkjasbkfb");
             }
         },
 
