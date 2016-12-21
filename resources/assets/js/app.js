@@ -26,9 +26,7 @@ var App = window.App = new Vue({
     	currentRoute: window.location.pathname,
 
     	walkPath: [],
-
   	},
-
     computed: {
 	    ViewComponent () {
 			const matchingView = routes[this.currentRoute]
@@ -70,7 +68,7 @@ var App = window.App = new Vue({
 });
 
 
-                    //iets met namespace
+                //iets met namespace
                 window.app = {};
                 var app = window.app;
 
@@ -320,47 +318,42 @@ var App = window.App = new Vue({
                     // var drawF2 = [];
                     // var drawF3 = [];
                     var points = App.walkPath;
-
-                   //console.log(item);
-
+                    //for (var i = 0; i <= 2; i++) {
+                        //routeSource[0].removeFeatures('route');
+                   // }
+                    //console.log(item);
+                    
                     if(points.length !== 0) {
+                        
+                        for (var floor = 0; floor <= 2; floor++) {
 
-                        for (var i = 0; i < 2; i++) {
-                            var floor = points[i];
-                            //console.log(floor);
-                            for (var j = 0; j < floor.length; j++) {
-                                var x1 = floor[j][0],
-                                    y1 = floor[j][1],
-                                    x2 = floor[2][0],
-                                    y2 = floor[2][1];
+                            var lastInArray = points[floor].length-1;
 
-                                // var x1 = 230,
-                                //     y1 = 540,
-                                //     x2 = 230,
-                                //     y2 = 210;
-
-                                 // console.log(floor[j][0]);
-                                addRoute(i, x1, y1 , x2, y2);
-                                // if (floor[j+1][0].length !== 0) {
-                                //     addRoute(i, floor[j][0], floor[j][1], floor[j+1][0], floor[j+1][1]);
-                                // }
-                                // if (i % 2 == 0) {
-                                //     console.log("hoo");
-                                //     //addRoute(index, item[i], 369.28755355025527, 436.9001907859601, 371.7499432498958);
-                                // } else {
-                                //     console.log("haa");
-                                // }
+                            if(floor == 0) {
+                                //set startpunt
+                                addIcon(0, 'img/icons/Beginpunt (Fill).png', 'route-begin', 0, points[floor][0][0], points[floor][0][1]);
                             }
-                            // if (item[i+1][0].length !== 0) {
-                            //     addRoute(index, item[i][0], item[i][1], item[i][1], item[i][1]);
-                            // }
-                            // if (i % 2 == 0) {
-                            //     console.log("hoo");
-                            //     //addRoute(index, item[i], 369.28755355025527, 436.9001907859601, 371.7499432498958);
-                            // } else {
-                            //     console.log("haa");
-                            // }
-                            //addRoute(App.walkPath[i][0], 436.9001907859601, 371.7499432498958, 426.32169461714, 464.5669774843762);
+                            if(points.length > 1) {
+                                //console.log(points[floor][last_obj][0]);
+                                if((points.length - 1) !== floor){
+                                    addIcon(floor, 'img/icons/Trap (Line).png', 'switch-floor', floor+1, points[floor][lastInArray][0], points[floor][lastInArray][1]);
+                                }
+                                
+
+                                if(floor !== 0) {
+                                    addIcon(floor, 'img/icons/Trap (Line).png', 'switch-floor', floor-1, points[floor][0][0], points[floor][0][1]);
+                                }
+                                
+                            }
+                            if((points.length - 1) == floor) {
+                                //addIcon(floor, 'img/icons/Eindbestemming (Fill).png', 'route-end', 0, points[floor][lastInArray][0], points[floor][lastInArray][1]);
+                                console.log(points[floor]);
+                            }
+                            var tempRouteFeature = new ol.Feature({
+                                    geometry: new ol.geom.LineString(points[floor]),
+                                    name: 'Route'
+                            });
+                            routeSource[floor].addFeature(tempRouteFeature);
                         }
                         
                         //console.log(drawF0);
@@ -369,7 +362,7 @@ var App = window.App = new Vue({
                 }
 
                 //alles bedacht, stel zichtbare verdieping in
-                setFloor(1);
+                setFloor(0);
 
 
        
