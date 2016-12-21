@@ -1,12 +1,13 @@
 <template>
     <main-layout>
-
-
                 <aside>
                     <div class="panel panel-default">
-                        <form id="search">
-                            <input type="text" @click="selectTab('all'),keyboard = true" v-model="searchString" placeholder="Zoek naar 'Kapper'" />
-                       
+
+                        <form id="search" v-bind:class="{ filled: searchString.length !== 0 }">
+                            <input type="text" @click="selectTab('all'),screenKeyboard = true" v-model="searchString" placeholder="Zoek naar bv: 'Kapper, naam, bedrijf etc.'" />
+
+
+                            <div class="btn btn-primary" role="button" @click="searchString = '',clearKeyboard()">X</div>
                             <nav v-if="searchString.length == 0">
                                 <ul class="nav nav-tabs">
                                     <li><a href="#" :class="{ active: visibility == 'all' }" @click="selectTab('all')">Alles</a></li>
@@ -46,22 +47,34 @@
                             </li>
                        
                         </ul>
+                        <footer>
+                            <v-link href="/">Terug</v-link>
+                        </footer>
                     </div>
+                    
                 </aside>
                 <section>
-                    <div class="map">
-                        
-                    </div>
-                </section>
-                <keyboard v-if="keyboard" v-model="searchString"
-    :layouts="[
-        '1234567890{delete:backspace}|qwertyuiop|asdfghjkl|zxcvbnm|{space:space}'
-    ]"
-></keyboard>
-        <footer>
-            <v-link href="/">Terug</v-link>
-        </footer>
 
+                    <footer>
+                        <div class="contrast">aosbdfbsdjfbjasdbfjkabsdkfjn</div>
+                    </footer>
+                </section>
+                
+                
+
+                <keyboard :class="{ show: screenKeyboard == true }" @close="screenKeyboard = false" v-model="searchString"
+
+    :layouts="[
+        '{close:close}|1234567890{delete:backspace}|qwertyuiop|asdfghjkl|zxcvbnm|{space:space}'
+    ]"
+
+></keyboard>
+
+
+        
+        <div v-if="screenKeyboard" @click="screenKeyboard = false" class="overlay close-keyboard">
+            
+        </div>
 
     </main-layout>
 </template>
@@ -73,10 +86,11 @@
 
 
     var STORAGE_KEY = 'list-vuejs'
+    var list_vue = "";
     export default {
         components: {
                 MainLayout,
-                VLink
+                VLink,
         },
         data() {
             return {
@@ -84,7 +98,7 @@
                 all: [],
                 visibility: "all",
                 active: null,
-                keyboard: false,
+                screenKeyboard: false,
                 data: {
                     people:[],
                     companies:[],
@@ -97,12 +111,14 @@
             this.all = localStorage.getItem(STORAGE_KEY);
         },
         created() {
-            
             this.getAll();
             this.getJSON();
-            //console.log(this.$parent.$root.hans);
+            list_vue = this;
+            
         },
-
+        mounted() {
+            console.log(this);
+        },
         computed: {
         // A computed property that holds only those articles that match the searchString.
             filteredData: function () {
@@ -160,7 +176,7 @@
             },
 
             getWalkpath: function(item) {
-                this.$parent.$root.getWalkpath(item);
+                this.$root.getWalkpath(item);
                 this.active = item;
                 //console.log(item);
                 
@@ -168,7 +184,9 @@
             selectTab: function(tab) {
                 this.visibility = tab;
             },
-            
+            clearKeyboard:function () {
+                this.$children[0].$children[2].clear();
+            }
         },
 
     }
