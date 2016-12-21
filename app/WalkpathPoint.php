@@ -14,7 +14,8 @@ class WalkpathPoint extends Model
     {
     	return $this->belongsTo('App\Walkpath');
     }
-     public function point()
+
+	public function point()
     {
         return $this->hasOne('App\Point','point_id','id');
     }

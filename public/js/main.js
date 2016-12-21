@@ -3,8 +3,8 @@ window.app = {};
 var app = window.app;
 
 //verscheidene bijnodigdheden voor routetekenen e.d.
-var drawRoutes = false;
-var drawIcons = false;
+var mode = '';
+var defaultIconAction = 'none'
 var iNum = 0;
 var prevXY = [0, 0];
 var prevPoint = 0;
@@ -37,7 +37,7 @@ var routeLayer = new ol.layer.Vector({
 		stroke: new ol.style.Stroke({
 			color: '#222222',
 			width: 5,
-			lineCap: 0,	      
+			lineCap: 0,
 			lineDash: [5,2.5]
 		})
 	})
@@ -61,17 +61,20 @@ function drawLine(x, y, point){
 	else{
 		//grafisch uitbeelden!
 		addRoute(currentFloor, prevXY[0], prevXY[1], x, y);
-	
+
 		console.info('from ' + prevPoint + ' to ' + point);
 		newRoute.push(point);
 		prevXY = [x, y];
 		prevPoint = point;
 	}
+	if($("#json").length > 0){
+		$("#json").val(JSON.stringify(newRoute));
+	}
 }
 
 //de functies die de map inkleuren of besturen
 function addRoute(floorNum, x1, y1, x2, y2){
-	var coordinates = [[x1, y1], [x2, y2]]; 
+	var coordinates = [[x1, y1], [x2, y2]];
 
 	//de feature van deze route
 	tempRouteFeature = new ol.Feature({
@@ -82,12 +85,13 @@ function addRoute(floorNum, x1, y1, x2, y2){
 }
 function addIcon(floorNum, icon, action, val, x, y){
 	//de feature van dit icoon
-	var tempIconFeature = 
+	var tempIconFeature =
 		new ol.Feature({
 			geometry: new ol.geom.Point([x, y]),
 			x: x,
 			y: y,
 			name: icon,
+			map_id: floorNum,
 			action: action,
 			value: val,
 		});
@@ -107,9 +111,29 @@ function addIcon(floorNum, icon, action, val, x, y){
 	  }))
 	});
 
-	console.info('Adding icon');
+	console.info('Adding icon at ' + x + '/' + y);
 	tempIconFeature.setStyle(tempIconStyle);
 	iconSource[floorNum].addFeature(tempIconFeature);
+}
+function delIcon(feature){
+	$.get( "/api/point/del/" + feature.get('value'), function( data ) {
+		if(data == "success"){			iconSource[feature.get('map_id')].removeFeature(feature);		}
+		else{							alert(data);													}
+	});
+}
+function getAllIcons(){
+	//alle icons verwijderen door de icon-sources leeg te maken.
+	for (i = 0; i < iconSource.length; i++) {
+		iconSource[i].clear();
+	}
+
+	//vullen met db-punten
+	$.get( "/api/point/list", function( data ) {
+		data = JSON.parse(data);
+		$.each(data, function(i, item) {
+			addIcon(item['map_id'], '/img/icons/blackdot.png', defaultIconAction, item['id'], item['x'], item['y']);
+		});
+	});
 }
 function setMapSource(url){
 	mapSource = new ol.source.ImageStatic({
@@ -127,36 +151,59 @@ function setLetterSource(url){
 	})
 	letterLayer.setSource(letterSource);
 }
+function setMode(newMode){
+	switch(newMode) {
+		case 'drawIcons':
+			console.info("Switched to draw-icon-mode");
+			mode = "drawIcons";
+			defaultIconAction = "del-icon";
+			getAllIcons(); //in deze modus hebben we de points nodig
+			break;
+
+		case 'drawRoutes':
+			console.info("Switched to draw-route-mode");
+			mode = "drawRoutes";
+			defaultIconAction = "draw-line";
+			getAllIcons(); //in deze modus hebben we de points nodig
+			break;
+
+		case '':	default:
+			mode = '';
+			defaultAction = '';
+		break;
+	}
+
+}
 function setRouteIconSource(floorNum){
 	routeLayer.setSource(routeSource[floorNum]);
 	iconLayer.setSource(iconSource[floorNum]);
 }
 function setFloor(floorNum){
-	
+
 	switch(floorNum) {
 		case 2: 			//switch naar verdieping 2
-							setMapSource("/img/floor2.png"); 
-							setLetterSource("/img/letters1.png"); 
-							floorNum = 2; 
+							setMapSource("/img/floor2.png");
+							setLetterSource("/img/letters1.png");
+							floorNum = 2;
 		break;
 
 		case 1: 			//switch naar verdieping 1
-							setMapSource("/img/floor1.png"); 
-							setLetterSource("/img/letters1.png"); 
-							floorNum = 1; 
+							setMapSource("/img/floor1.png");
+							setLetterSource("/img/letters1.png");
+							floorNum = 1;
 		break;
 
 		case 0:	default:	//switch naar beganegrond
-							setMapSource("/img/floor0.png"); 
-							setLetterSource("/img/letters2.png"); 
-							floorNum = 0; 
+							setMapSource("/img/floor0.png");
+							setLetterSource("/img/letters2.png");
+							floorNum = 0;
 		break;
-	} 
-	currentFloor = floorNum;	
+	}
+	currentFloor = floorNum;
 
 	//afbeeldingen zijn omgezet, pak nu ook de juiste routes en iconen
 	setRouteIconSource(floorNum);
-	console.info("Switched to floor " + floorNum);	
+	console.info("Switched to floor " + floorNum);
 }
 
 var map = new ol.Map({
@@ -181,10 +228,10 @@ map.on('click', function(evt){
 	var lat = lonlat[1]*111324.05140791999;//omhoog is kleiner
 
 	//console.info('Click lonlat [' + lon + ', ' + lat + ']');
-	
+
 	//check of er een icoon op deze locatie staat
 	if(map.hasFeatureAtPixel(evt.pixel)){
-		
+
 		//kijk per feature (op deze pixel) wat er moet gebeuren.
 		map.forEachFeatureAtPixel(evt.pixel, function (feature, layer) {
 			//heeft deze feature een actie? zo ja: uitvoeren.
@@ -192,11 +239,25 @@ map.on('click', function(evt){
 				case 'switch-floor':
 					console.info('[Click] Feature switch-floor');
 					setFloor(feature.get('value'))
-					break;
+				break;
 				case 'draw-line':
-					console.info('[Click] Feature draw-line ' + feature.get('geometry')[0]);
-					drawLine(feature.get('x'), feature.get('y'), feature.get('value'));
-					break;
+					if(mode == 'drawRoutes'){
+						console.info('[Click] Feature draw-line ' + feature.get('geometry')[0]);
+						drawLine(feature.get('x'), feature.get('y'), feature.get('value'));
+					}
+					else {
+						console.info('[Click] Line has not been drawn; check mapmode!');
+					}
+				break;
+				case 'del-icon':
+					if(mode == 'drawIcons'){
+						console.info('[Click] Feature remove ' + feature.get('value'));
+						delIcon(feature);
+					}
+					else {
+						console.info('[Click] Feature has not been removed; check mapmode!');
+					}
+				break;
 				case 'popup-sightseeing':
 					console.info('[Click] Feature sightsee');
 					break;
@@ -207,35 +268,19 @@ map.on('click', function(evt){
 	}
 	else {
 		console.info('[Click] No features at pixel, lonlat ' + lon + ', ' + lat);
-		if(drawIcons == true){
-			addIcon(currentFloor, 'img/icons/blackdot.png', 'draw-line', iNum++, lon, lat);
+		if(mode == 'drawIcons'){
+			//toevoegen en ID instellen op het icoon als VAL
+			$.get( "/api/point/add/" + currentFloor + "/" + lon + "/" + lat, function( data ) {
+				addIcon(currentFloor, '/img/icons/blackdot.png', 'del-icon', data, lon, lat);
+			});
 		}
 	}
-	
+
 });
 
-//teken de toiletten
-addIcon(0, 'img/icons/WC (Fill).png', 'toilet', 0, 182.8882180970813, 269.8107913554641);
-addIcon(0, 'img/icons/WC (Fill).png', 'toilet', 0, 359.6649133937186, 454.37322191372243);
 
-//teken alles op de begane grond
-addIcon(0, 'img/icons/Beginpunt (Fill).png', 'route-begin', 0, 87.25517739600188, 515.7997405507241);
-addRoute(0, 87.25517739600188, 515.7997405507241, 181.77255084989517, 520.089303008371);
-addRoute(0, 181.77255084989517, 520.089303008371, 191.12767140564603, 425.24956209240486);
-addRoute(0, 191.12767140564603, 425.24956209240486, 211.60076314383846, 331.1205132058271);
-addIcon(0, 'img/icons/Trap (Line).png', 'switch-floor', 1, 211.60076314383846, 331.1205132058271);//trap omhoog naar v1
-
-//teken alles op de eerste verdieping
-addIcon(1, 'img/icons/Trap (Line).png', 'switch-floor', 0, 211.60076314383846, 331.1205132058271);//trap omlaag naar bg
-addRoute(1, 211.60076314383846, 331.1205132058271, 217.8126787429306, 260.46886477583973);
-addRoute(1, 217.8126787429306, 260.46886477583973, 425.8198910658566, 276.94793979000525);
-addRoute(1, 425.8198910658566, 276.94793979000525, 415.9707357590965, 369.28755355025527);
-addRoute(1, 415.9707357590965, 369.28755355025527, 436.9001907859601, 371.7499432498958);
-addRoute(1, 436.9001907859601, 371.7499432498958, 426.32169461714, 464.5669774843762);
-addIcon(1, 'img/icons/Eindbestemming (Fill).png', 'route-end', 0, 426.32169461714, 464.5669774843762);
-
-//herkenninspunt op verdieping 1
-addIcon(1, 'img/icons/WC (Fill).png', 'popup-sightseeing', 0, 425.8198910658566, 276.94793979000525);
-
-//alles bedacht, stel zichtbare verdieping in
-setFloor(0);
+$(document).ready(function(){
+	if($("#json").length > 0){
+		$("#json").parent().parent().hide();
+	}
+});
