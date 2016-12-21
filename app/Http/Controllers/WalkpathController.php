@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
+use DB;
 use App\Company;
 use App\Walkpath;
 use App\WalkpathPoint;
@@ -101,13 +102,30 @@ class WalkpathController extends Controller
             if($validator->fails())
                 return response($validator->errors()->first( $request->name),403);
             $walkpath->update($data);
-            return "Record updated";
+            return "Record updated {$walkpath->json}.";
         }
 
         $this->validate($request, Walkpath::validationRules());
 
         $walkpath->update($request->all());
 
+
+		/*
+			$table->integer('point_id');
+            $table->integer('point_order');
+		*/
+
+		$walkpathpoints = json_decode($request->json);
+		//oude walkpathpoints verwijderen
+		WalkpathPoint::where('walkpath_id', $walkpath->id)->delete();
+		foreach($walkpathpoints as $order => $point_id){
+			//huppakee! nieuwe dinkjes erin :D
+			DB::table('walkpath_points')->insertGetId(
+				array('walkpath_id' => $walkpath->id, 'point_id' => $point_id, 'point_order' => $order)
+			);
+		}
+
+		//return $request->json;
         return redirect('/walkpath');
     }
 

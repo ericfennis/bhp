@@ -4,8 +4,13 @@
 @section('content')
 
     <!--<h2>Update Walkpath: {{$walkpath->name}}</h2>-->
+	<div class="row">
+		<button class="btn btn-default col-lg-1" onClick="javascript:history.back();">Vorige</button>
+		<div class="col-lg-10" name="placeholder"></div>
+		<button type="submit" class="btn btn-default col-lg-1" form="form">Opslaan!</button>
+	</div>
 
-    <form action="/walkpath/{{$walkpath->id}}" method="post">
+    <form id="form" action="/walkpath/{{$walkpath->id}}" class="row" method="post">
 
         {{ csrf_field() }}
 
@@ -16,7 +21,10 @@
         {!! \Nvd\Crud\Form::input('description','text')->model($walkpath)->show() !!}
 
         {!! \Nvd\Crud\Form::input('status','text')->model($walkpath)->show() !!}
-	
+
+		{!! \Nvd\Crud\Form::input('json','text')->show() !!}
+
+
 		<!-- onder crud: map -->
 		<script type='text/javascript'>
 			$(document).ready(function() {
@@ -29,7 +37,7 @@
 			<div id="map" class="map"></div>
 		</main>
 
-        <button type="submit" class="btn btn-default">Submit</button>
+
 
     </form>
 

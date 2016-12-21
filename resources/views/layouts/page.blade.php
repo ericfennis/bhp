@@ -11,7 +11,7 @@
     <title>{{ config('app.name') }}</title>
 
     <!-- Styles -->
-  
+
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -25,9 +25,9 @@
 </head>
 <body>
 	<!-- Libraries -->
-	<script src="/js/jquery-3.1.1.js"></script>
+	<script src="/js/jquery-2.2.0.min.js"></script>
 
-	@yield('content') 
+	@yield('content')
 
 	<!-- Scripts -->
 	<script src="/js/ol.js"></script>

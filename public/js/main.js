@@ -37,7 +37,7 @@ var routeLayer = new ol.layer.Vector({
 		stroke: new ol.style.Stroke({
 			color: '#222222',
 			width: 5,
-			lineCap: 0,	      
+			lineCap: 0,
 			lineDash: [5,2.5]
 		})
 	})
@@ -61,17 +61,20 @@ function drawLine(x, y, point){
 	else{
 		//grafisch uitbeelden!
 		addRoute(currentFloor, prevXY[0], prevXY[1], x, y);
-	
+
 		console.info('from ' + prevPoint + ' to ' + point);
 		newRoute.push(point);
 		prevXY = [x, y];
 		prevPoint = point;
 	}
+	if($("#json").length > 0){
+		$("#json").val(JSON.stringify(newRoute));
+	}
 }
 
 //de functies die de map inkleuren of besturen
 function addRoute(floorNum, x1, y1, x2, y2){
-	var coordinates = [[x1, y1], [x2, y2]]; 
+	var coordinates = [[x1, y1], [x2, y2]];
 
 	//de feature van deze route
 	tempRouteFeature = new ol.Feature({
@@ -82,7 +85,7 @@ function addRoute(floorNum, x1, y1, x2, y2){
 }
 function addIcon(floorNum, icon, action, val, x, y){
 	//de feature van dit icoon
-	var tempIconFeature = 
+	var tempIconFeature =
 		new ol.Feature({
 			geometry: new ol.geom.Point([x, y]),
 			x: x,
@@ -110,7 +113,7 @@ function addIcon(floorNum, icon, action, val, x, y){
 
 	console.info('Adding icon at ' + x + '/' + y);
 	tempIconFeature.setStyle(tempIconStyle);
-	iconSource[floorNum].addFeature(tempIconFeature);	
+	iconSource[floorNum].addFeature(tempIconFeature);
 }
 function delIcon(feature){
 	$.get( "/api/point/del/" + feature.get('value'), function( data ) {
@@ -150,14 +153,14 @@ function setLetterSource(url){
 }
 function setMode(newMode){
 	switch(newMode) {
-		case 'drawIcons': 
+		case 'drawIcons':
 			console.info("Switched to draw-icon-mode");
 			mode = "drawIcons";
 			defaultIconAction = "del-icon";
 			getAllIcons(); //in deze modus hebben we de points nodig
 			break;
 
-		case 'drawRoutes': 
+		case 'drawRoutes':
 			console.info("Switched to draw-route-mode");
 			mode = "drawRoutes";
 			defaultIconAction = "draw-line";
@@ -165,42 +168,42 @@ function setMode(newMode){
 			break;
 
 		case '':	default:
-			mode = '';	
+			mode = '';
 			defaultAction = '';
 		break;
-	} 
-	
+	}
+
 }
 function setRouteIconSource(floorNum){
 	routeLayer.setSource(routeSource[floorNum]);
 	iconLayer.setSource(iconSource[floorNum]);
 }
 function setFloor(floorNum){
-	
+
 	switch(floorNum) {
 		case 2: 			//switch naar verdieping 2
-							setMapSource("/img/floor2.png"); 
-							setLetterSource("/img/letters1.png"); 
-							floorNum = 2; 
+							setMapSource("/img/floor2.png");
+							setLetterSource("/img/letters1.png");
+							floorNum = 2;
 		break;
 
 		case 1: 			//switch naar verdieping 1
-							setMapSource("/img/floor1.png"); 
-							setLetterSource("/img/letters1.png"); 
-							floorNum = 1; 
+							setMapSource("/img/floor1.png");
+							setLetterSource("/img/letters1.png");
+							floorNum = 1;
 		break;
 
 		case 0:	default:	//switch naar beganegrond
-							setMapSource("/img/floor0.png"); 
-							setLetterSource("/img/letters2.png"); 
-							floorNum = 0; 
+							setMapSource("/img/floor0.png");
+							setLetterSource("/img/letters2.png");
+							floorNum = 0;
 		break;
-	} 
-	currentFloor = floorNum;	
+	}
+	currentFloor = floorNum;
 
 	//afbeeldingen zijn omgezet, pak nu ook de juiste routes en iconen
 	setRouteIconSource(floorNum);
-	console.info("Switched to floor " + floorNum);	
+	console.info("Switched to floor " + floorNum);
 }
 
 var map = new ol.Map({
@@ -225,10 +228,10 @@ map.on('click', function(evt){
 	var lat = lonlat[1]*111324.05140791999;//omhoog is kleiner
 
 	//console.info('Click lonlat [' + lon + ', ' + lat + ']');
-	
+
 	//check of er een icoon op deze locatie staat
 	if(map.hasFeatureAtPixel(evt.pixel)){
-		
+
 		//kijk per feature (op deze pixel) wat er moet gebeuren.
 		map.forEachFeatureAtPixel(evt.pixel, function (feature, layer) {
 			//heeft deze feature een actie? zo ja: uitvoeren.
@@ -272,5 +275,12 @@ map.on('click', function(evt){
 			});
 		}
 	}
-	
+
+});
+
+
+$(document).ready(function(){
+	if($("#json").length > 0){
+		$("#json").parent().parent().hide();
+	}
 });

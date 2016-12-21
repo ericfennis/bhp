@@ -19,7 +19,7 @@ class Walkpath extends Model {
         \Request::input('status') and $query->where('status',\Request::input('status'));
         \Request::input('created_at') and $query->where('created_at',\Request::input('created_at'));
         \Request::input('updated_at') and $query->where('updated_at',\Request::input('updated_at'));
-        
+
         // sort results
         \Request::input("sort") and $query->orderBy(\Request::input("sort"),\Request::input("sortType","asc"));
 
@@ -55,8 +55,17 @@ class Walkpath extends Model {
     	return $this->belongsTo('App\Company');
     }
 
-    public function walkpathpoints()
+    public function WalkpathPoint()
     {
     	return $this->hasMany('App\WalkpathPoint','walkpath_id','id')->orderBy('point_order');
     }
+
+	public function Point()
+	{
+		$books = WalkpathPoint::with('point')->get();
+
+		foreach ($books as $book) {
+			echo $book->WalkpathPoint->point;
+		}
+	}
 }

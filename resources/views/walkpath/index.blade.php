@@ -1,13 +1,13 @@
-@extends('vendor.crud.single-page-templates.common.app')
+@extends('layouts.app')
 
 @section('content')
 
-	<h2>Walkpaths</h2>
+	<h2>Routebeheer</h2>
 
 	@include('walkpath.create')
 
 	<table class="table table-striped grid-view-tbl">
-	    
+
 	    <thead>
 		<tr class="header-row">
 			{!!\Nvd\Crud\Html::sortableTh('id','walkpath.index','Id')!!}

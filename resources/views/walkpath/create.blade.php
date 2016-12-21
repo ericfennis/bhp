@@ -4,7 +4,7 @@
             <h4 class="panel-title">
                 <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
                     <i class="fa fa-plus"></i>
-                    Add a New Walkpath                </a>
+                    Nieuwe route                </a>
             </h4>
         </div>
         <div id="collapseOne" class="panel-collapse collapse">
@@ -18,7 +18,8 @@
 
                     {!! \Nvd\Crud\Form::input('description','text')->show() !!}
 
-                    {!! \Nvd\Crud\Form::input('status','text')->show() !!}
+					<!-- deze maar even verstoppen.. -->
+					<input id="status" name="status" value="0" disabled="disabled" style="display:none;" />
 
                     <button type="submit" class="btn btn-primary">Create</button>
 
