@@ -1,4 +1,4 @@
-@extends('vendor.crud.single-page-templates.common.app')
+@extends('layouts.app')
 
 @section('content')
 
@@ -54,7 +54,7 @@
             <h4>Updated At</h4>
             <h5>{{$company->updated_at}}</h5>
         </li>
-        
+
     </ul>
 
 @endsection

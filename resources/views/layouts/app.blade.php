@@ -56,15 +56,38 @@
                     </button>
 
                     <!-- Branding Image -->
-                    <a class="navbar-brand" href="{{ url('/') }}">
+                    <a class="navbar-brand" href="{{ url('/admin') }}">
                         {{ config('app.name', 'Laravel') }}
                     </a>
                 </div>
 
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- Left Side Of Navbar -->
-                    <ul class="nav navbar-nav">
-                        &nbsp;
+                    <ul id="navButtons" class="nav navbar-nav">
+                         	<li><a href="{{ url('/walkpath') }}">
+								<i class="fa fa-location-arrow" aria-hidden="true"></i>
+								Routes</a>
+							</li>
+
+							<li><a href="{{ url('/point') }}">
+								<i class="fa fa-thumb-tack" aria-hidden="true"></i>
+								Punten</a>
+							</li>
+
+							<li><a href="{{ url('/point') }}">
+								<i class="fa fa-map-o" aria-hidden="true"></i>
+								Faciliteiten</a>
+							</li>
+
+							<li><a href="{{ url('/company') }}">
+								<i class="fa fa-building-o" aria-hidden="true"></i>
+								Bedrijven</a>
+							</li>
+
+							<li><a href="{{ url('/person') }}">
+								<i class="fa fa-users" aria-hidden="true"></i>
+								Personen</a>
+							</li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->

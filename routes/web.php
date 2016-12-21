@@ -15,6 +15,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get("/admin", function(){
+   return View::make("adminhome");
+})->middleware('auth');
+
 
 Route::get('/home', 'HomeController@index');
 
@@ -25,10 +29,13 @@ Route::get('/map', 'MapController@index');
 
 Route::get('/list', 'ListController@index');
 
-//gegenereerde crud
-Route::resource('company','CompanyController');
-Route::resource('person','PersonController');
-Route::resource('walkpath','WalkpathController');
+Route::group(['middleware' => 'auth'], function()
+{
+	//gegenereerde crud
+	Route::resource('company','CompanyController');
+	Route::resource('person','PersonController');
+	Route::resource('walkpath','WalkpathController');
 
-//automatische crud
-Route::resource('point','PointController');
+	//automatische crud
+	Route::resource('point','PointController');
+});

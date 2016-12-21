@@ -1,8 +1,8 @@
-@extends('vendor.crud.single-page-templates.common.app')
+@extends('layouts.app')
 
 @section('content')
 
-    <h2>Update Person: {{$person->firstname}}</h2>
+    <h2>Persoonsgegevens aanpassen: {{$person->firstname}}</h2>
 
     <form action="/person/{{$person->id}}" method="post">
 

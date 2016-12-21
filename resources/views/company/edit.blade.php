@@ -1,8 +1,8 @@
-@extends('vendor.crud.single-page-templates.common.app')
+@extends('layouts.app')
 
 @section('content')
 
-    <h2>Update Company: {{$company->route_id}}</h2>
+    <h2>Bedrijfsgegevens aanpassen: {{$company->route_id}}</h2>
 
     <form action="/company/{{$company->id}}" method="post">
 

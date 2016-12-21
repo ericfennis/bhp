@@ -1,13 +1,13 @@
-@extends('vendor.crud.single-page-templates.common.app')
+@extends('layouts.app')
 
 @section('content')
 
-	<h2>Companies</h2>
+	<h2>Bedrijven</h2>
 
 	@include('company.create')
 
 	<table class="table table-striped grid-view-tbl">
-	    
+
 	    <thead>
 		<tr class="header-row">
 			{!!\Nvd\Crud\Html::sortableTh('id','company.index','Id')!!}
