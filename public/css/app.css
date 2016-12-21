@@ -236,7 +236,7 @@ pre {
 
 .ol-zoom {
   top: .5em;
-  left: .5em;
+  right: .5em;
 }
 
 .ol-rotate {
@@ -8295,6 +8295,33 @@ main + #map canvas {
   height: 100vh;
   width: 100vw;
   z-index: 0;
+}
+
+.ol-control button {
+  display: block;
+  margin: 1px;
+  padding: 0;
+  color: #DF4206;
+  font-size: 1.14em;
+  font-weight: 700;
+  text-decoration: none;
+  text-align: center;
+  height: 1.375em;
+  width: 1.375em;
+  line-height: .4em;
+  background-color: #fff;
+  border: none;
+  border-radius: 2px;
+}
+
+.ol-control.select-floor {
+  right: 0;
+  bottom: 200px;
+}
+
+.ol-control.select-floor button.active, .ol-control.select-floor button:hover, .ol-control.select-floor button:focus {
+  color: #fff;
+  background-color: #DF4206;
 }
 
 .vue-keyboard .row {

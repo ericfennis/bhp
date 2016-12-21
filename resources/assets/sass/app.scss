@@ -160,6 +160,34 @@ main {
 	z-index: 0;
 }
 
+.ol-control {
+	button {
+	    display: block;
+	    margin: 1px;
+	    padding: 0;
+	    color: #DF4206;
+	    font-size: 1.14em;
+	    font-weight: 700;
+	    text-decoration: none;
+	    text-align: center;
+	    height: 1.375em;
+	    width: 1.375em;
+	    line-height: .4em;
+	    background-color: #fff;
+	    border: none;
+	    border-radius: 2px
+	}
+	&.select-floor {
+		right: 0;
+		bottom: 200px;
+		button {
+			&.active, &:hover, &:focus {
+				color: #fff;
+				background-color: #DF4206;
+			}
+		}
+	}
+}
 
 // Keyboard css
 
