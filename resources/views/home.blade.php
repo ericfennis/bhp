@@ -1,4 +1,7 @@
+
+@extends('elements.keyboard')
 @extends('layouts.app')
+
 
 @section('content')
 <div class="container">
@@ -8,8 +11,14 @@
                 <div class="panel-heading">Dashboard</div>
 
                 <div class="panel-body">
+<<<<<<< HEAD
+               		<input></input><input></input> 
+
+		</div>
+=======
                     You are logged in!
                 </div>
+>>>>>>> d1fbf538f3bcc47cbfc4ccd05693d4b3e72a51ca
             </div>
         </div>
     </div>
