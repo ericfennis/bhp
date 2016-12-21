@@ -17,16 +17,9 @@ Route::get('/', function () {
 
 
 Route::get('/home', 'HomeController@index');
-<<<<<<< HEAD
+
 Auth::routes();
 
-
-
-//wtf 2x??
-/*Auth::routes();
-
-Route::get('/home', 'HomeController@index');*/
-=======
 
 Route::get('/map', 'MapController@index');
 
@@ -39,4 +32,3 @@ Route::resource('walkpath','WalkpathController');
 
 //automatische crud
 Route::resource('point','PointController');
->>>>>>> d1fbf538f3bcc47cbfc4ccd05693d4b3e72a51ca
