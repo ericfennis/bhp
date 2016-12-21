@@ -12,6 +12,6 @@ class Point extends Model
 
     public function WalkpathPoint()
     {
-    	return $this->belongsToMany('App\WalkpathPoints');
+    	return $this->belongsToMany('App\WalkpathPoint');
     }
 }
