@@ -24,8 +24,10 @@
 
 </head>
 <body>
-  <!-- Libraries -->
-	<script src="/js/jquery-2.2.0.min.js"></script>
+
+<div id="clock">HH:MM</div> 
+  <!-- Libraries 
+	<script src="/js/jquery-2.2.0.min.js"></script>-->
   
    @yield('content')
    <figure id="map" class="map"></figure> 
