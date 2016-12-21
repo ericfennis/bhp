@@ -23,7 +23,10 @@ Route::get('/map', 'MapController@index');
 
 Route::get('/list', 'ListController@index');
 
-//crud
+//gegenereerde crud
 Route::resource('company','CompanyController');
 Route::resource('person','PersonController');
+Route::resource('walkpath','WalkpathController');
 
+//automatische crud
+Route::resource('point','PointController');
