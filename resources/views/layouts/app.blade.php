@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- achterkant -->
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -23,7 +24,7 @@
 	<script src="/js/jquery-ui.js"></script>
 	<script src="/js/bootstrap-editable.min.js"></script>
 	<script src="/js/bootstrap.min.js"	integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-	
+
 
     <script>
         window.Laravel = <?php echo json_encode([
