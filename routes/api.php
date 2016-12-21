@@ -16,3 +16,31 @@ use Illuminate\Http\Request;
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:api');
+
+
+Route::get('/companies', function(){
+	return App\Company::all();
+});
+
+Route::get('/people', function(){
+	return App\Person::all();
+});
+
+Route::get('/list', 'ListController@getJSON');
+Route::get('/walkpath/{id}', 'WalkpathController@getWalkpath');
+
+Route::get('/point/list', 'PointController@getAll');
+Route::get('/point/add/{map}/{x}/{y}', 'PointController@addPoint');
+Route::get('/point/del/{id}', 'PointController@delPoint');
+
+// Route::get('/walkpath/{id}', function($id){
+// 	$company = App\Company::findOrFail($id);
+// 	$walkpathpoints = $company->walkpath->walkpathpoints;
+// 	$points = array();
+// 	foreach ($walkpathpoints as $walkpath) {
+// 		array_push($points, App\Point::find($walkpath->id));
+// 	}
+	
+// 	return $points;
+// });
+
