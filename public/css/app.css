@@ -316,14 +316,6 @@ pre {
   background-color: rgba(0, 60, 136, 0.7);
 }
 
-.ol-zoom .ol-zoom-in {
-  border-radius: 2px 2px 0 0;
-}
-
-.ol-zoom .ol-zoom-out {
-  border-radius: 0 0 2px 2px;
-}
-
 .ol-attribution {
   text-align: right;
   bottom: .5em;
@@ -8277,13 +8269,37 @@ main.home + #map canvas {
   filter: blur(10px);
 }
 
+main.home + #map .ol-control.ol-zoom {
+  /* IE 9 */
+  -webkit-transform: translateX(120px);
+  /* Safari */
+  transform: translateX(120px);
+}
+
+main.home + #map .ol-control.select-floor {
+  /* IE 9 */
+  -webkit-transform: translateX(260px);
+  /* Safari */
+  transform: translateX(260px);
+}
+
 main + #map canvas {
-  transition: 2s -webkit-filter linear;
+  -webkit-transition: .4s -webkit-filter linear;
+  transition: .4s -webkit-filter linear;
   -webkit-filter: blur(0px);
   -moz-filter: blur(0px);
   -o-filter: blur(0px);
   -ms-filter: blur(0px);
   filter: blur(0px);
+}
+
+main + #map .ol-control {
+  /* IE 9 */
+  -webkit-transform: translate(0);
+  /* Safari */
+  transform: translate(0);
+  -webkit-transition: .5s transform ease-in;
+  transition: .5s transform ease-in;
 }
 
 #map {
@@ -8297,31 +8313,42 @@ main + #map canvas {
   z-index: 0;
 }
 
+.ol-control {
+  background: none;
+}
+
+.ol-control:hover {
+  background: none;
+}
+
 .ol-control button {
   display: block;
-  margin: 1px;
+  margin: 5px;
   padding: 0;
   color: #DF4206;
-  font-size: 1.14em;
+  font-size: 36px;
   font-weight: 700;
   text-decoration: none;
   text-align: center;
-  height: 1.375em;
-  width: 1.375em;
-  line-height: .4em;
+  height: 48px;
+  width: 48px;
   background-color: #fff;
   border: none;
-  border-radius: 2px;
+  border-radius: 0;
+}
+
+.ol-control button.active, .ol-control button:hover, .ol-control button:focus {
+  color: #fff;
+  background-color: #DF4206;
 }
 
 .ol-control.select-floor {
-  right: 0;
-  bottom: 200px;
+  right: 20px;
+  bottom: 180px;
 }
 
-.ol-control.select-floor button.active, .ol-control.select-floor button:hover, .ol-control.select-floor button:focus {
-  color: #fff;
-  background-color: #DF4206;
+.ol-control.select-floor button {
+  display: inline-block;
 }
 
 .vue-keyboard .row {

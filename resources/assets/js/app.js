@@ -202,35 +202,38 @@ var App = window.App = new Vue({
                     iconLayer.setSource(iconSource[floorNum]);
                 }
                 function setFloor(floorNum){
-                    var floor_buttons = document.getElementsByClassName("select-floor");
-                    floor_buttons.className = "select-floor";
+                    var floor_buttons = document.getElementsByClassName("select-floor-button");
+                    for (var fl = 0; fl <= 3; fl++) {
+                        floor_buttons[fl].className = "select-floor-button";
+                    }
+                    console.log(floor_buttons);
                     switch(floorNum) {
                         case 3:             //switch naar verdieping 2
                                             setMapSource("/img/floor2.png"); 
                                             setLetterSource("/img/letters1.png"); 
                                             floorNum = 3;
-                                            document.getElementById("select-floor-3").className = "select-floor active";
+                                            document.getElementById('select-floor-3').className = "select-floor-button active";
                         break;
 
                         case 2:             //switch naar verdieping 2
                                             setMapSource("/img/floor2.png"); 
                                             setLetterSource("/img/letters1.png"); 
                                             floorNum = 2;
-                                            document.getElementById("select-floor-2").className = "select-floor active"; 
+                                            document.getElementById("select-floor-2").className = "select-floor-button active"; 
                         break;
 
                         case 1:             //switch naar verdieping 1
                                             setMapSource("/img/floor1.png"); 
                                             setLetterSource("/img/letters1.png"); 
                                             floorNum = 1;
-                                            document.getElementById("select-floor-1").className = "select-floor active"; 
+                                            document.getElementById("select-floor-1").className = "select-floor-button active"; 
                         break;
 
                         case 0: default:    //switch naar beganegrond
                                             setMapSource("/img/floor0.png"); 
                                             setLetterSource("/img/letters2.png"); 
                                             floorNum = 0;
-                                            document.getElementById("select-floor-0").className = "select-floor active"; 
+                                            document.getElementById("select-floor-0").className = "select-floor-button active"; 
                         break;
                     } 
                     currentFloor = floorNum;    
@@ -297,29 +300,41 @@ var App = window.App = new Vue({
                     }
                     
                 });
-                var fl_buttons = [];
+        
                 var setFloor_buttons = document.createElement('div');
+                setFloor_buttons.id = "floor-controll";
                 setFloor_buttons.className = 'select-floor ol-control ol-unselectable';
 
                 for (var fl_button = 0; fl_button <= 3; fl_button++) {
-                    //var floorButton = "<button class='select-floor-button' id='select-floor-"+fl_button+"'>"+fl_button+"</button>";
                     var floorButton = document.createElement('button');
-                    floorButton.className = 'rotate-north ol-unselectable ol-control select-floor-button';
-                    floor_button.id = 'select-floor'+fl_button;
+                    floorButton.className = 'ol-unselectable select-floor-button';
+                    floorButton.id = 'select-floor-'+fl_button;
+                    floorButton.setAttribute('data',fl_button);
                     floorButton.innerHTML = fl_button;
-                    floorButton.appendChild(button);
-
-                    floorButton.addEventListener('click', setFloor(fl_button), false);
-                    floorButton.addEventListener('touchstart', setFloor(fl_button), false);
-                    /setFloor_buttons.innerHTML += floorButton;
+                    setFloor_buttons.appendChild(floorButton);
+                    
                 }
-                //console.log(fl_buttons);
-
+             
+                function selectFloor(f) {
+                    document.getElementById("select-floor-"+f).onclick=function() {
+                        setFloor(f);
+                    };
+                    document.getElementById("select-floor-"+f).touchstart=function() {
+                        setFloor(f);
+                    };
+                }
                 var button_overlay = new ol.control.Control({
                     element: setFloor_buttons
                 });
                 map.addControl(button_overlay);
 
+                for (var floorEl = 0; floorEl <= 3; floorEl++) {
+                    selectFloor(floorEl);
+                }
+                //document.getElementById('select-floor-3').addEventListener('click', setFloor(3));
+                //console.log(fl_buttons);
+                //document.getElementById("floor-controll").children.addEventListener('click', setFloor(this.innerHTML));
+                
                 // var floor0 = document.createElement('button');
                 // var floor1 = document.createElement('button');
                 // var floor2 = document.createElement('button');
