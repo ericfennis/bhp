@@ -209,29 +209,29 @@ var App = window.App = new Vue({
                     console.log(floor_buttons);
                     switch(floorNum) {
                         case 3:             //switch naar verdieping 2
-                                            setMapSource("/img/floor2.png"); 
-                                            setLetterSource("/img/letters1.png"); 
+                                            setMapSource("/img/floor3.png"); 
+                                            setLetterSource("/img/letters3.png"); 
                                             floorNum = 3;
                                             document.getElementById('select-floor-3').className = "select-floor-button active";
                         break;
 
                         case 2:             //switch naar verdieping 2
                                             setMapSource("/img/floor2.png"); 
-                                            setLetterSource("/img/letters1.png"); 
+                                            setLetterSource("/img/letters2.png"); 
                                             floorNum = 2;
                                             document.getElementById("select-floor-2").className = "select-floor-button active"; 
                         break;
 
                         case 1:             //switch naar verdieping 1
                                             setMapSource("/img/floor1.png"); 
-                                            setLetterSource("/img/letters1.png"); 
+                                            setLetterSource("/img/letters2.png"); 
                                             floorNum = 1;
                                             document.getElementById("select-floor-1").className = "select-floor-button active"; 
                         break;
 
                         case 0: default:    //switch naar beganegrond
                                             setMapSource("/img/floor0.png"); 
-                                            setLetterSource("/img/letters2.png"); 
+                                            setLetterSource("/img/letters1.png"); 
                                             floorNum = 0;
                                             document.getElementById("select-floor-0").className = "select-floor-button active"; 
                         break;
