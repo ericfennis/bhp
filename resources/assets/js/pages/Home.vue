@@ -45,13 +45,23 @@
 
             }
         },
-       ready() {
-
-          console.log('shfsdghiaosd')
-
+        created() {
+            
+            this.getJSON();
         },
         mounted() {
             console.log('Component ready.')
+        },
+        methods: {
+            getJSON: function () {
+                this.$http.get('/api/events').then((response) => {
+        
+                this.events = response.body;
+                }, (response) => {
+                    console.error('Hij doet het niet');
+                });
+                
+            },
         }
     }
 </script>

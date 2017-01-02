@@ -30,6 +30,8 @@ Route::get('/list', 'ListController@getJSON');
 
 Route::get('/walkpath/{id}', 'WalkpathController@getWalkpath');
 
+Route::get('/events', 'gCalendarController@getEvents');
+
 // Route::get('/walkpath/{id}', function($id){
 // 	$company = App\Company::findOrFail($id);
 // 	$walkpathpoints = $company->walkpath->walkpathpoints;

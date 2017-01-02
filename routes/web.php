@@ -27,3 +27,6 @@ Route::get('/list', 'ListController@index');
 Route::resource('company','CompanyController');
 Route::resource('person','PersonController');
 
+//Events
+Route::resource('calendar','gCalendarController');
+Route::get('oauth','gCalendarController@oauth');
