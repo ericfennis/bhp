@@ -2,7 +2,6 @@
     <main-layout>
                 <aside>
                     <div class="panel panel-default">
-
                         <form id="search" v-bind:class="{ filled: searchString.length !== 0 }">
                             <input type="text" @click="selectTab('all'),screenKeyboard = true" v-model="searchString" placeholder="Zoek naar bv: 'Kapper, naam, bedrijf etc.'" />
 
@@ -73,11 +72,11 @@
                         </div>
                     </footer>
                 </section>
-
-                <keyboard :class="{ show: screenKeyboard == true }" v-model="searchString"
+                <keyboard :class="{ show: screenKeyboard == true }" @close="screenKeyboard = false" v-model="searchString"
     :layouts="[
         '{close:close}|1234567890{delete:backspace}|qwertyuiop|asdfghjkl|zxcvbnm|{space:space}'
-    ]"></keyboard>
+    ]"
+></keyboard>
 
         <div v-if="screenKeyboard" @click="screenKeyboard = false" class="overlay close-keyboard">
 
@@ -189,13 +188,6 @@
             },
             clearKeyboard:function () {
                 this.$children[0].$children[2].clear();
-            },
-            hideKeyboard: function() {
-                // if(this.screenKeyboard == true) {
-                //     this.screenKeyboard == false;
-                // }
-
-                console.log("sfkjasfkjasbkfb");
             }
         },
 

@@ -31,6 +31,7 @@
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
 
 a.active {
+
 	color: #DF4206;
 	background: #4A4A4A;
 }
@@ -53,11 +54,14 @@ a.active {
 }
 
 .btn {
-border-radius: 0px;
-width: 56px;
-height: 56px;
-margin-top: 10px;
-margin-right: 10px;
+	border-radius: 0px;
+	width: 56px;
+	height: 56px;
+	margin-top: 10px;
+	margin-right: 10px;
+	color:black;
+	background: #ccc;
+
 }
 
 form input {
@@ -112,6 +116,7 @@ main {
 		min-width: 480px;
 		position: relative;
     	height: 100%;
+    	z-index: 20;
 		form {
 			flex: 1;
 			background: #fff;
@@ -130,18 +135,10 @@ main {
 				height: 58px;
 			}
 		}
-		input {
-			&+div {
-				position: absolute;
-				right: 0;
-				top: 0;
-				height: 58px;
-			}
-		}
 		ul#results {
 			overflow-y: auto;
 			flex: auto;
-      color: black;
+      		color: #000;
 		}
 		div.panel {
 			display: flex;
@@ -187,6 +184,18 @@ main {
 				-ms-filter: blur(8px);
 				filter: blur(8px);
 			}
+			.ol-control {
+				&.ol-zoom {
+					-ms-transform: translateX(120px); /* IE 9 */
+					-webkit-transform: translateX(120px); /* Safari */
+					transform: translateX(120px);
+				}
+				&.select-floor {
+					-ms-transform: translateX(260px); /* IE 9 */
+					-webkit-transform: translateX(260px); /* Safari */
+					transform: translateX(260px);
+				}
+			}
 		}
 	}
 	& + #map {
@@ -197,6 +206,12 @@ main {
 				-o-filter: blur(0px);
 				-ms-filter: blur(0px);
 				filter: blur(0px);
+		}
+		.ol-control {
+			-ms-transform: translate(0); /* IE 9 */
+			-webkit-transform: translate(0); /* Safari */
+			transform: translate(0);
+			transition: .5s transform ease-in;
 		}
 	}
 }
@@ -210,7 +225,38 @@ main {
 	width: 100vw;
 	z-index: 0;
 }
-
+.ol-control {
+	background:none;
+	&:hover {
+		background:none;
+	}
+	button {
+	    display: block;
+	    margin: 5px;
+	    padding: 0;
+	    color: #DF4206;
+	    font-size: 36px;
+	    font-weight: 700;
+	    text-decoration: none;
+	    text-align: center;
+	    height: 48px;
+	    width: 48px;
+	    background-color: #fff;
+	    border: none;
+	    border-radius: 0;
+	    &.active, &:hover, &:focus {
+			color: #fff;
+			background-color: #DF4206;
+		}
+	}
+	&.select-floor {
+		right: 20px;
+		bottom: 180px;
+		button {
+			display: inline-block;
+		}
+	}
+}
 
 // Keyboard css
 
@@ -248,7 +294,6 @@ main {
 		}
 	}
 }
-
 .vue-keyboard {
 	position: absolute;
 	bottom: 0;
@@ -473,4 +518,9 @@ h2 {
   height: 32px;
   padding-left:45px;
   line-height:35px;
+}
+.panel {
+	background-color: none;
+	border: none;
+	box-shadow: none;
 }
