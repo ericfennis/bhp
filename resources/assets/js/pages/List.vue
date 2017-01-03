@@ -9,10 +9,10 @@
                             <div class="btn btn-primary" role="button" @click="searchString = '',clearKeyboard()">X</div>
                             <nav v-if="searchString.length == 0">
                                 <ul class="nav nav-tabs">
-                                    <li><a href="#" :class="{ active: visibility == 'all' }" @click="selectTab('all')">Alles</a></li>
-                                    <li><a href="#" :class="{ active: visibility == 'companies' }" @click="selectTab('companies')">Bedrijven</a></li>
-                                    <li><a href="#" :class="{ active: visibility == 'people' }" @click="selectTab('people')">Medewerkers</a></li>
-                                    <li><a href="#" :class="{ active: visibility == 'education' }" @click="selectTab('education')">Onderwijsinstellingen</a></li>
+                                    <li><a href="#" :class="{ active: visibility == 'all' }" @click="selectTab('all')">ALLE</a></li>
+                                    <li><a href="#" :class="{ active: visibility == 'companies' }" @click="selectTab('companies')">BEDRIJVEN</a></li>
+                                    <li><a href="#" :class="{ active: visibility == 'people' }" @click="selectTab('people')">MEDEWERKERS</a></li>
+                                    <li><a href="#" :class="{ active: visibility == 'education' }" @click="selectTab('education')">SCHOLEN</a></li>
                                 </ul>
                             </nav>
 
@@ -74,12 +74,10 @@
                     </footer>
                 </section>
 
-
                 <keyboard :class="{ show: screenKeyboard == true }" v-model="searchString"
     :layouts="[
         '{close:close}|1234567890{delete:backspace}|qwertyuiop|asdfghjkl|zxcvbnm|{space:space}'
     ]"></keyboard>
-
 
         <div v-if="screenKeyboard" @click="screenKeyboard = false" class="overlay close-keyboard">
 
@@ -94,7 +92,6 @@
 
 
     var STORAGE_KEY = 'list-vuejs'
-    var list_vue = "";
     export default {
         components: {
                 MainLayout,
@@ -121,7 +118,6 @@
         created() {
             this.getAll();
             this.getJSON();
-            list_vue = this;
         },
         mounted() {
             console.log(this);
