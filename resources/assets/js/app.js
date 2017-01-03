@@ -67,13 +67,13 @@ var App = window.App = new Vue({
 });
                 // Timer
                 
-                var clock = document.getElementById("clock");
-                if (clock.length !== 0) {
-                    var myTimer = setInterval(setClock,1000);
-                    function setClock(){    
-                        clock.innerHTML=new Date().toLocaleTimeString();
-                    }
-                }
+                // var clock = document.getElementById("clock");
+                // if (clock.length !== 0) {
+                //     var myTimer = setInterval(setClock,1000);
+                //     function setClock(){    
+                //         clock.innerHTML=new Date().toLocaleTimeString();
+                //     }
+                // }
                 window.app = {};
                 var app = window.app;
 
@@ -374,14 +374,14 @@ var App = window.App = new Vue({
                 // addRoute(0, 87.25517739600188, 515.7997405507241, 181.77255084989517, 520.089303008371);
                 // addRoute(0, 181.77255084989517, 520.089303008371, 191.12767140564603, 425.24956209240486);
                 // addRoute(0, 191.12767140564603, 425.24956209240486, 211.60076314383846, 331.1205132058271);
-                 addIcon(0, 'img/icons/Trap (Line).png', 'switch-floor', 1, 211.60076314383846, 331.1205132058271);//trap omhoog naar v1
+                 addIcon(0, 'img/icons/Trap (Fill).png', 'switch-floor', 1, 211.60076314383846, 331.1205132058271);//trap omhoog naar v1
 
                 // //teken alles op de eerste verdieping
-                 addIcon(1, 'img/icons/Trap (Line).png', 'switch-floor', 0, 211.60076314383846, 331.1205132058271);//trap omlaag naar bg
-                 addIcon(1, 'img/icons/Trap (Line).png', 'switch-floor', 2, 260.60076314383846, 351.1205132058271);//trap omhoog naar v1
+                 addIcon(1, 'img/icons/Trap (Fill).png', 'switch-floor', 0, 211.60076314383846, 331.1205132058271);//trap omlaag naar bg
+                 addIcon(1, 'img/icons/Trap (Fill).png', 'switch-floor', 2, 260.60076314383846, 351.1205132058271);//trap omhoog naar v1
 
                 // //teken alles op de eerste verdieping
-                 addIcon(2, 'img/icons/Trap (Line).png', 'switch-floor', 1, 260.60076314383846, 351.1205132058271);//trap omlaag naar bg
+                 addIcon(2, 'img/icons/Trap (Fill).png', 'switch-floor', 1, 260.60076314383846, 351.1205132058271);//trap omlaag naar bg
                 // addRoute(1, 211.60076314383846, 331.1205132058271, 217.8126787429306, 260.46886477583973);
                 // addRoute(1, 217.8126787429306, 260.46886477583973, 425.8198910658566, 276.94793979000525);
                 // addRoute(1, 425.8198910658566, 276.94793979000525, 415.9707357590965, 369.28755355025527);

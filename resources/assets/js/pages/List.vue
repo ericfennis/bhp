@@ -8,10 +8,10 @@
                             <div class="btn btn-primary" role="button" @click="searchString = '',clearKeyboard()">X</div>
                             <nav v-if="searchString.length == 0">
                                 <ul class="nav nav-tabs">
-                                    <li><a href="#" :class="{ active: visibility == 'all' }" @click="selectTab('all')">ALLE</a></li>
-                                    <li><a href="#" :class="{ active: visibility == 'companies' }" @click="selectTab('companies')">BEDRIJVEN</a></li>
-                                    <li><a href="#" :class="{ active: visibility == 'people' }" @click="selectTab('people')">MEDEWERKERS</a></li>
-                                    <li><a href="#" :class="{ active: visibility == 'education' }" @click="selectTab('education')">SCHOLEN</a></li>
+                                    <li><a href="#" :class="{ active: visibility == 'all' }" @click="selectTab('all')">Alle</a></li>
+                                    <li><a href="#" :class="{ active: visibility == 'companies' }" @click="selectTab('companies')">Bedrijven</a></li>
+                                    <li><a href="#" :class="{ active: visibility == 'people' }" @click="selectTab('people')">Medewerkers</a></li>
+                                    <li><a href="#" :class="{ active: visibility == 'education' }" @click="selectTab('education')">Scholen</a></li>
                                 </ul>
                             </nav>
 
@@ -46,7 +46,7 @@
 
                         </ul>
                         <footer>
-                            <v-link href="/" class="button_return">wtf is dit</v-link>
+                            <v-link href="/" class="button_return">Terug</v-link>
                         </footer>
                     </div>
 

@@ -8161,6 +8161,7 @@ a.active {
   color: #fff;
   border-style: solid;
   margin-left: 14px;
+  text-transform: uppercase;
 }
 
 .nav-tabs > li {
@@ -8390,6 +8391,11 @@ main + #map .ol-control {
   background-color: #DF4206;
 }
 
+.ol-control.ol-zoom {
+  right: 20px;
+  top: 90px;
+}
+
 .ol-control.select-floor {
   right: 20px;
   bottom: 180px;
@@ -8515,10 +8521,10 @@ h1.welkom {
   background-color: black;
   color: white;
   display: inline;
-  font-size: 60px;
+  font-size: 48px;
   padding: 10px;
   float: right;
-  width: 200px;
+  width: 120px;
   text-align: center;
   position: absolute;
   right: 0;
