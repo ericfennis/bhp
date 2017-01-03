@@ -29,9 +29,12 @@ Route::get('/people', function(){
 Route::get('/list', 'ListController@getJSON');
 Route::get('/walkpath/{id}', 'WalkpathController@getWalkpath');
 
+
 Route::get('/point/list', 'PointController@getAll');
-Route::get('/point/add/{map}/{x}/{y}', 'PointController@addPoint');
-Route::get('/point/del/{id}', 'PointController@delPoint');
+Route::put('/point/add/{map}/{x}/{y}', 'PointController@addPoint');
+Route::put('/point/del/{id}', 'PointController@delPoint');
+
+Route::get('/events', 'gCalendarController@getEvents');
 
 // Route::get('/walkpath/{id}', function($id){
 // 	$company = App\Company::findOrFail($id);

@@ -35,7 +35,10 @@ Route::group(['middleware' => 'auth'], function()
 	Route::resource('company','CompanyController');
 	Route::resource('person','PersonController');
 	Route::resource('walkpath','WalkpathController');
-
 	//automatische crud
 	Route::resource('point','PointController');
 });
+
+//Events
+Route::resource('calendar','gCalendarController');
+Route::get('oauth','gCalendarController@oauth');

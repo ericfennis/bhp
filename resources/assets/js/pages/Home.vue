@@ -50,10 +50,21 @@
             }
         },
         created() {
-      
+            this.getEvents();
         },
         mounted() {
             console.log('Component ready.')
+        },
+        methods: {
+            getEvents: function () {
+                this.$http.get('/api/events').then((response) => {
+        
+                this.events = response.body;
+                }, (response) => {
+                    console.error('Hij doet het niet');
+                });
+                
+            },
         }
     }
 </script>
