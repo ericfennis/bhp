@@ -31,15 +31,40 @@
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
 
 a.active {
-	color:black;
-	background: #ccc;
+	color: #DF4206;
+	background: #4A4A4A;
+}
+
+.nav-tabs > li > a {
+  border-radius:0px !important;
+  color: #fff;
+  border-style: solid;
+  margin-left: 14px;
+}
+
+.nav-tabs > li {
+  background-color: #DF4206;
+  color: #fff;
+}
+.btn-primary {
+  background-color: #DF4206;
+  border-style: none !important;
+
+}
+
+.btn {
+border-radius: 0px;
+width: 56px;
+height: 56px;
+margin-top: 10px;
+margin-right: 10px;
 }
 
 form input {
 	width: 100%;
 	padding: 12px;
 	line-height: 32px;
-	border: 1px solid #ccc;
+	border: 10px solid #4A4A4A;
 	&:focus {
 		border-color: red;
 	}
@@ -73,7 +98,7 @@ main {
   	header, nav, footer {
   		flex: 1 100%;
   	}
-	
+
 	aside {
 		flex: 1;
 		max-width: 480px;
@@ -88,7 +113,7 @@ main {
 		position: relative;
     	height: 100%;
 		form {
-			flex: 1;	
+			flex: 1;
 			background: #fff;
 			&#search {
 				&.filled {
@@ -116,6 +141,7 @@ main {
 		ul#results {
 			overflow-y: auto;
 			flex: auto;
+      color: black;
 		}
 		div.panel {
 			display: flex;
@@ -362,7 +388,6 @@ h2 {
 	border: none;
 	box-shadow: none;
 }
-
 .button_return {
     height: 80px;
     width: 150px;

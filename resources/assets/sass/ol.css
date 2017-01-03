@@ -18,7 +18,7 @@
 
 .ol-scale-line {
     background: rgba(0, 60, 136, .3);
-    border-radius: 4px;
+    border-radius: 0px;
     bottom: 8px;
     left: 8px
 }
