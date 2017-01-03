@@ -170,6 +170,7 @@ return [
         //
         Nvd\Crud\Providers\NvdCrudServiceProvider::class,
 
+        App\Providers\GoogleClientServiceProvider::class,
         /*
          * Application Service Providers...
          */
