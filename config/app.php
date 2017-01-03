@@ -168,7 +168,7 @@ return [
          */
 
         //
-	Nvd\Crud\Providers\NvdCrudServiceProvider::class,
+        Nvd\Crud\Providers\NvdCrudServiceProvider::class,
 
         /*
          * Application Service Providers...
