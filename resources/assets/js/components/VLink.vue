@@ -29,6 +29,9 @@
           routes[this.href],
           this.href
         )
+        if(this.func !== null) {
+            this.func;
+        }
         //this.$parent.loadMap();
       }   
     }

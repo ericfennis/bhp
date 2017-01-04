@@ -49,7 +49,7 @@
 
                         </ul>
                         <footer>
-                            <v-link href="/" class="button_return">Terug</v-link>
+                            <v-link backHome="true" href="/" class="button_return">Terug</v-link>
                         </footer>
                     </div>
 

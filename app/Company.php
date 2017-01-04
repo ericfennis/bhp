@@ -66,5 +66,10 @@ class Company extends Model {
             $newRules[$attr] = $rules[$attr];
         return $newRules;
     }
+    
+    public function walkpath()
+    {
+        return $this->hasOne('App\Walkpath','id','walkpath_id');
+    }
 
 }

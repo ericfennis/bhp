@@ -59,6 +59,9 @@ var App = window.App = new Vue({
         },
         currentView: function() {
             return routes[this.currentRoute];
+        },
+        exitMap: function() {
+            flyToCenter();
         }
 
     },
@@ -74,8 +77,7 @@ var App = window.App = new Vue({
                 //         clock.innerHTML=new Date().toLocaleTimeString();
                 //     }
                 // }
-                window.app = {};
-                var app = window.app;
+       
 
                 //verscheidene bijnodigdheden voor routetekenen e.d.
                 var drawRoutes = false;
@@ -87,6 +89,7 @@ var App = window.App = new Vue({
 
                 var currentFloor = 0;
                 var extent = [0, 0, 1024, 1024];
+                var center = [240, 485];
                 var projection = new ol.proj.Projection({
                     code: 'static-image',
                     units: 'pixels',
@@ -211,7 +214,6 @@ var App = window.App = new Vue({
                     for (var fl = 0; fl <= 3; fl++) {
                         floor_buttons[fl].className = "select-floor-button";
                     }
-                    console.log(floor_buttons);
                     switch(floorNum) {
                         case 3:             //switch naar verdieping 2
                                             setMapSource("/img/floor3.png"); 
@@ -247,19 +249,18 @@ var App = window.App = new Vue({
                     setRouteIconSource(floorNum);
                     console.info("Switched to floor " + floorNum);  
                 }
-
-                var map = new ol.Map({
-                    layers: [mapLayer, routeLayer, iconLayer, letterLayer],
-                    target: 'map',
-                    view: new ol.View({
+                 var view = new ol.View({
                         projection: projection,
-                        center: ol.extent.getCenter(extent),
                         minZoom: 1.5,
                         maxZoom: 3,
                         zoom: 1.7,
-                        center: [240, 485],
+                        center: center,
                         extent: extent
-                    })
+                    });
+                var map = new ol.Map({
+                    layers: [mapLayer, routeLayer, iconLayer, letterLayer],
+                    target: 'map',
+                    view: view
                 });
 
                 var mapReload = '';
@@ -336,33 +337,6 @@ var App = window.App = new Vue({
                 for (var floorEl = 0; floorEl <= 3; floorEl++) {
                     selectFloor(floorEl);
                 }
-                //document.getElementById('select-floor-3').addEventListener('click', setFloor(3));
-                //console.log(fl_buttons);
-                //document.getElementById("floor-controll").children.addEventListener('click', setFloor(this.innerHTML));
-                
-                // var floor0 = document.createElement('button');
-                // var floor1 = document.createElement('button');
-                // var floor2 = document.createElement('button');
-                // var floor3 = document.createElement('button');
-                // floor0.innerHTML = '0';
-                // floor1.innerHTML = '1';
-                // floor2.innerHTML = '2';
-                // floor3.innerHTML = '3';
-
-                // var selectFloor = function(e) {
-                //     setFloor(e);
-                // };
-
-                
-                
-                // var setFloor_buttons = document.createElement('div');
-                // setFloor_buttons.className = 'select-floor ol-control';
-                // setFloor_buttons.appendChild(fl_buttons);
-
-                
-                
-
-
 
                 //teken de toiletten
                 addIcon(0, 'img/icons/WC (Fill).png', 'toilet', 0, 182.8882180970813, 269.8107913554641);
@@ -431,10 +405,40 @@ var App = window.App = new Vue({
                             });
                             routeSource[floor].addFeature(tempRouteFeature);
                         }
-                        
+                        flyToCenter();
                         setFloor(0);
                     }
                 }
+
+                function flyToCenter() {
+                    console.log(view.getCenter());
+                    var duration = 2000;
+                    var zoom = 1.7;
+                    var parts = 2;
+                    var called = false;
+                    if (center !== view.getCenter()) {
+                        function callback(complete) {
+                          --parts;
+                          if (called) {
+                            return;
+                          }
+                          if (parts === 0 || !complete) {
+                            called = true;
+                          }
+                        }
+                        view.animate({
+                          center: center,
+                          duration: duration
+                        }, callback);
+                        view.animate({
+                          zoom: zoom - .1,
+                          duration: duration / 2
+                        }, {
+                          zoom: zoom,
+                          duration: duration / 2
+                        }, callback);
+                    }
+                  }
 
                 //alles bedacht, stel zichtbare verdieping in
                 setFloor(0);

@@ -4,11 +4,15 @@
 
 <script>
     let now = new Date();
+    
+    function getZeroPad (n) {
+      return (parseInt(n, 10) >= 10 ? '' : '0') + n
+    }
     export default {
         data() {
             return {
                 hours: now.getHours(),
-                minutes: now.getMinutes(),
+                minutes: getZeroPad(now.getMinutes()),
 
             }
         },
@@ -18,7 +22,7 @@
         methods: {
             updateDateTime () {
                 this.hours = now.getHours()
-                this.minutes = now.getMinutes() 
+                this.minutes = getZeroPad(now.getMinutes()) 
             }
         }
     }
