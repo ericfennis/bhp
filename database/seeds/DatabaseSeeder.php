@@ -19,5 +19,6 @@ class DatabaseSeeder extends Seeder
         // personen 150
         factory(App\Person::class, 70)->create();
 
+        factory(App\WalkpathPoint::class, 200)->create();
     }
 }

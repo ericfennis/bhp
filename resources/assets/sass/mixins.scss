@@ -11,3 +11,11 @@
   padding-bottom: $bottom;
   padding-left: $left;
 }
+
+@mixin clearfix {
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}

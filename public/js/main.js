@@ -20,8 +20,8 @@ var projection = new ol.proj.Projection({
 
 //de sources waar we later nog dingen aan toe willen voegen staan hier.
 var mapSource = new ol.source.ImageStatic({});
-var routeSource = [new ol.source.Vector({}), new ol.source.Vector({}), new ol.source.Vector({})];
-var iconSource = [new ol.source.Vector({}), new ol.source.Vector({}), new ol.source.Vector({})];
+var routeSource = [new ol.source.Vector({}), new ol.source.Vector({}), new ol.source.Vector({}), new ol.source.Vector({})];
+var iconSource = [new ol.source.Vector({}), new ol.source.Vector({}), new ol.source.Vector({}), new ol.source.Vector({})];
 var letterSource = new ol.source.ImageStatic({});
 
 //layers waar we later misschien nog aanspraak op willen maken?
@@ -181,25 +181,35 @@ function setRouteIconSource(floorNum){
 function setFloor(floorNum){
 
 	switch(floorNum) {
-		case 2: 			//switch naar verdieping 2
-							setMapSource("/img/floor2.png");
-							setLetterSource("/img/letters1.png");
-							floorNum = 2;
-		break;
+        case 3:             //switch naar verdieping 2
+                            setMapSource("/img/floor3.png"); 
+                            setLetterSource("/img/letters3.png"); 
+                            floorNum = 3;
+                            document.getElementById('select-floor-3').className = "select-floor-button active";
+        break;
 
-		case 1: 			//switch naar verdieping 1
-							setMapSource("/img/floor1.png");
-							setLetterSource("/img/letters1.png");
-							floorNum = 1;
-		break;
+        case 2:             //switch naar verdieping 2
+                            setMapSource("/img/floor2.png"); 
+                            setLetterSource("/img/letters2.png"); 
+                            floorNum = 2;
+                            document.getElementById("select-floor-2").className = "select-floor-button active"; 
+        break;
 
-		case 0:	default:	//switch naar beganegrond
-							setMapSource("/img/floor0.png");
-							setLetterSource("/img/letters2.png");
-							floorNum = 0;
-		break;
-	}
-	currentFloor = floorNum;
+        case 1:             //switch naar verdieping 1
+                            setMapSource("/img/floor1.png"); 
+                            setLetterSource("/img/letters2.png"); 
+                            floorNum = 1;
+                            document.getElementById("select-floor-1").className = "select-floor-button active"; 
+        break;
+
+        case 0: default:    //switch naar beganegrond
+                            setMapSource("/img/floor0.png"); 
+                            setLetterSource("/img/letters1.png"); 
+                            floorNum = 0;
+                            document.getElementById("select-floor-0").className = "select-floor-button active"; 
+        break;
+    } 
+    currentFloor = floorNum;    
 
 	//afbeeldingen zijn omgezet, pak nu ook de juiste routes en iconen
 	setRouteIconSource(floorNum);
@@ -277,6 +287,36 @@ map.on('click', function(evt){
 	}
 
 });
+var setFloor_buttons = document.createElement('div');
+setFloor_buttons.id = "floor-controll";
+setFloor_buttons.className = 'select-floor ol-control ol-unselectable';
+
+for (var fl_button = 0; fl_button <= 3; fl_button++) {
+    var floorButton = document.createElement('button');
+    floorButton.className = 'ol-unselectable select-floor-button';
+    floorButton.id = 'select-floor-'+fl_button;
+    floorButton.setAttribute('data',fl_button);
+    floorButton.innerHTML = fl_button;
+    setFloor_buttons.appendChild(floorButton);
+    
+}
+
+function selectFloor(f) {
+    document.getElementById("select-floor-"+f).onclick=function() {
+        setFloor(f);
+    };
+    document.getElementById("select-floor-"+f).touchstart=function() {
+        setFloor(f);
+    };
+}
+var button_overlay = new ol.control.Control({
+    element: setFloor_buttons
+});
+map.addControl(button_overlay);
+
+for (var floorEl = 0; floorEl <= 3; floorEl++) {
+    selectFloor(floorEl);
+}
 
 
 $(document).ready(function(){

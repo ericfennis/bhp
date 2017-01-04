@@ -6,7 +6,29 @@
                         <h1 class="welkom">welkom bij de</h1>
 
                         <img src="/img/logobhp.svg" class="logobhp" alt="Logo BHP">
-
+                        
+                        <ul id="calendar">
+                            <li class="event" v-for="Event in events">
+                                <div class="event-date-time">
+                                    <div class="event-dt-wrap">
+                                        <div class="event-date">
+                                            {{ Event.date }}
+                                        </div>
+                                        <div class="event-time">
+                                            {{ Event.time }}u
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="event-body">
+                                    <h3 class="event-title">
+                                        {{ Event.title }}
+                                    </h3>
+                                    <p class="event-desc">
+                                        {{ Event.desc }}
+                                    </p>
+                                </div>
+                            </li>
+                        </ul>
                     </div>
 
                 </aside>
@@ -36,6 +58,7 @@
     import MainLayout from '../Main.vue'
     import VLink from '../components/VLink.vue'
 
+    var STORAGE_KEY = 'events-vuejs'
     export default {
         components: {
                 MainLayout,
@@ -49,17 +72,22 @@
 
             }
         },
+        beforeCreate() {
+            this.events = localStorage.getItem(STORAGE_KEY);
+        },
         created() {
             this.getEvents();
         },
         mounted() {
-            console.log('Component ready.')
+            console.log('Component ready.');
+            setInterval(this.getEvents, 7200);
         },
         methods: {
             getEvents: function () {
                 this.$http.get('/api/events').then((response) => {
         
                 this.events = response.body;
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(response.body));
                 }, (response) => {
                     console.error('Hij doet het niet');
                 });

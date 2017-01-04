@@ -31,8 +31,8 @@ Route::get('/walkpath/{id}', 'WalkpathController@getWalkpath');
 
 
 Route::get('/point/list', 'PointController@getAll');
-Route::put('/point/add/{map}/{x}/{y}', 'PointController@addPoint');
-Route::put('/point/del/{id}', 'PointController@delPoint');
+Route::get('/point/add/{map}/{x}/{y}', 'PointController@addPoint');
+Route::get('/point/del/{id}', 'PointController@delPoint');
 
 Route::get('/events', 'gCalendarController@getEvents');
 

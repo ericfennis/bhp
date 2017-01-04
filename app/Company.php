@@ -16,7 +16,10 @@ class Company extends Model {
         \Request::input('walkpath_id') and $query->where('walkpath_id',\Request::input('walkpath_id'));
         \Request::input('location_point') and $query->where('location_point',\Request::input('location_point'));
         \Request::input('default_person') and $query->where('default_person',\Request::input('default_person'));
+        \Request::input('telephone') and $query->where('telephone','like','%'.\Request::input('telephone').'%');
+        \Request::input('email') and $query->where('email','like','%'.\Request::input('email').'%');
         \Request::input('name') and $query->where('name','like','%'.\Request::input('name').'%');
+        \Request::input('branch') and $query->where('branch','like','%'.\Request::input('branch').'%');
         \Request::input('description') and $query->where('description','like','%'.\Request::input('description').'%');
         \Request::input('logo') and $query->where('logo','like','%'.\Request::input('logo').'%');
         \Request::input('building') and $query->where('building',\Request::input('building'));
@@ -35,11 +38,13 @@ class Company extends Model {
     public static function validationRules( $attributes = null )
     {
         $rules = [
-
             'walkpath_id' => 'required|integer',
             'location_point' => 'required|integer',
             'default_person' => 'required|integer',
+            'telephone' => 'required|string|max:255',
+            'email' => 'required|string|max:64|email',
             'name' => 'required|string|max:255',
+            'branch' => 'required|string|max:255',
             'description' => 'required|string|max:255',
             'logo' => 'required|string|max:255',
             'building' => 'required',
@@ -62,10 +67,4 @@ class Company extends Model {
         return $newRules;
     }
 
-
-    public function walkpath()
-    {
-        return $this->hasOne('App\Walkpath','id','walkpath_id');
-
-    }
 }

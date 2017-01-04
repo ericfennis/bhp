@@ -12,15 +12,15 @@
 @-webkit-keyframes orangePulse {
   from {
     background-color: #DF4206;
-    -webkit-box-shadow: 0 0 12px #333;
+    -webkit-box-shadow: 0 0 10px #333;
   }
   50% {
     background-color: #FF6A0D;
-    -webkit-box-shadow: 0 0 20px #FF6A0D;
+    -webkit-box-shadow: 0 0 10px #FF6A0D;
   }
   to {
     background-color: #DF4206;
-    -webkit-box-shadow: 0 0 12px #333;
+    -webkit-box-shadow: 0 0 10px #333;
   }
 }
 
@@ -8174,30 +8174,28 @@ a.active {
   border-style: none !important;
 }
 
-.btn {
-  border-radius: 0px;
-  width: 56px;
-  height: 56px;
-  margin-top: 10px;
-  margin-right: 10px;
-  color: black;
-  background: #ccc;
-}
-
-form input {
-  width: 100%;
-  padding: 12px;
-  line-height: 32px;
-  border: 10px solid #4A4A4A;
-}
-
-form input:focus {
-  border-color: red;
-}
-
 .list-group-item:hover {
   background: #e9e9e9;
   cursor: pointer;
+}
+
+.list-group-item .item-body {
+  will-change: height;
+  height: 140px;
+  opacity: 1;
+  padding: 20px 10px;
+  overflow: hidden;
+}
+
+.list-group-item .collapse-enter-active, .list-group-item .collapse-leave-active {
+  -webkit-transition: all .3s ease;
+  transition: all .3s ease;
+}
+
+.list-group-item .collapse-enter, .list-group-item .collapse-leave-active {
+  height: 0;
+  padding: 0 10px;
+  opacity: 0;
 }
 
 html, body {
@@ -8250,6 +8248,29 @@ main aside form#search.filled {
   max-height: 58px;
 }
 
+main aside form .btn {
+  border-radius: 0px;
+  width: 56px;
+  margin-top: 10px;
+  margin-right: 10px;
+  color: black;
+  background: #ccc;
+}
+
+main aside input {
+  width: 100%;
+  padding: 12px;
+  line-height: 32px;
+  border: 10px solid transparent;
+  position: relative;
+  z-index: 9999;
+}
+
+main aside input:focus {
+  border: 10px solid transparent;
+  background: #fff;
+}
+
 main aside input + div {
   position: absolute;
   right: 0;
@@ -8289,6 +8310,73 @@ main aside footer {
   min-height: 160px;
   max-height: 160px;
   background: #333;
+}
+
+main aside #calendar {
+  padding: 80px 60px 0;
+}
+
+main aside #calendar:before, main aside #calendar:after {
+  content: " ";
+  display: table;
+}
+
+main aside #calendar:after {
+  clear: both;
+}
+
+main aside #calendar .event {
+  list-style-type: none;
+  min-height: 120px;
+  margin-bottom: 20px;
+}
+
+main aside #calendar .event:before, main aside #calendar .event:after {
+  content: " ";
+  display: table;
+}
+
+main aside #calendar .event:after {
+  clear: both;
+}
+
+main aside #calendar .event-date-time {
+  width: 36%;
+  float: left;
+}
+
+main aside #calendar .event-dt-wrap {
+  border-right: 5px solid #000;
+  text-align: center;
+  padding: 10px 0;
+}
+
+main aside #calendar .event-date {
+  font-size: 48px;
+  text-transform: uppercase;
+}
+
+main aside #calendar .event-time {
+  font-size: 36px;
+}
+
+main aside #calendar .event-title {
+  font-size: 32px;
+  line-height: 32px;
+  margin: 0;
+  word-break: break-word;
+  text-transform: uppercase;
+}
+
+main aside #calendar .event-desc {
+  margin-top: 10px;
+  color: #4A4A4A;
+}
+
+main aside #calendar .event-body {
+  float: left;
+  width: 64%;
+  padding: 10px 20px 20px 15px;
 }
 
 main > figure, main section {
@@ -8333,6 +8421,7 @@ main.home + #map .ol-control.select-floor {
 }
 
 main + #map canvas {
+  will-change: -webkit-filter;
   -webkit-transition: .4s -webkit-filter linear;
   transition: .4s -webkit-filter linear;
   -webkit-filter: blur(0px);
@@ -8458,9 +8547,16 @@ h1 {
 h1.welkom {
   text-transform: uppercase;
   text-align: center;
+  text-indent: -20px;
   font-size: 36px;
   margin-top: 60px;
   margin-bottom: 16px;
+}
+
+h2 {
+  font-family: parentFontBHP;
+  text-transform: uppercase;
+  font-size: 35px;
 }
 
 .maptitel {
@@ -8484,8 +8580,8 @@ h1.welkom {
 }
 
 .logobhp {
-  height: 240px;
-  width: 50%;
+  height: 260px;
+  width: auto;
   display: block;
   margin-left: auto;
   margin-right: auto;
@@ -8510,11 +8606,11 @@ h1.welkom {
   font-size: 34px;
   text-align: center;
   text-transform: uppercase;
-  width: 360px;
   padding: 16px;
   -webkit-animation-name: orangePulse;
   -webkit-animation-duration: 2s;
   -webkit-animation-iteration-count: infinite;
+  width: 360px;
 }
 
 #clock {
@@ -8545,22 +8641,6 @@ h1.welkom {
   right: 0;
   bottom: 0;
   left: 0;
-  background: rgba(100, 100, 100, 0.5);
-}
-
-h1 {
-  font-family: parentFontBHP;
-  text-transform: uppercase;
-}
-
-h1.welkom {
-  text-align: center;
-}
-
-h2 {
-  font-family: parentFontBHP;
-  text-transform: uppercase;
-  font-size: 35px;
 }
 
 .vue-keyboard {

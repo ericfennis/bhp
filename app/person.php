@@ -16,7 +16,8 @@ class Person extends Model {
         \Request::input('firstname') and $query->where('firstname','like','%'.\Request::input('firstname').'%');
         \Request::input('surname') and $query->where('surname','like','%'.\Request::input('surname').'%');
         \Request::input('profilepicture') and $query->where('profilepicture','like','%'.\Request::input('profilepicture').'%');
-        \Request::input('telephone') and $query->where('telephone',\Request::input('telephone'));
+        \Request::input('company_id') and $query->where('company_id',\Request::input('company_id'));
+        \Request::input('telephone') and $query->where('telephone','like','%'.\Request::input('telephone').'%');
         \Request::input('email') and $query->where('email','like','%'.\Request::input('email').'%');
         \Request::input('website') and $query->where('website','like','%'.\Request::input('website').'%');
         \Request::input('status') and $query->where('status',\Request::input('status'));
@@ -35,10 +36,11 @@ class Person extends Model {
         $rules = [
             'firstname' => 'required|string|max:64',
             'surname' => 'required|string|max:64',
-            'profilepicture' => 'required|string|max:64',
-            'telephone' => 'required|integer',
+            'profilepicture' => 'required|string|max:255',
+            'company_id' => 'required|integer',
+            'telephone' => 'required|string|max:255',
             'email' => 'required|string|max:64|email',
-            'website' => 'required|string|max:64',
+            'website' => 'required|string|max:255',
             'status' => 'required|integer',
         ];
 

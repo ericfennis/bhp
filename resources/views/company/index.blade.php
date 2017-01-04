@@ -7,14 +7,17 @@
 	@include('company.create')
 
 	<table class="table table-striped grid-view-tbl">
-
+	    
 	    <thead>
 		<tr class="header-row">
 			{!!\Nvd\Crud\Html::sortableTh('id','company.index','Id')!!}
-			{!!\Nvd\Crud\Html::sortableTh('route_id','company.index','Route Id')!!}
+			{!!\Nvd\Crud\Html::sortableTh('walkpath_id','company.index','Walkpath Id')!!}
 			{!!\Nvd\Crud\Html::sortableTh('location_point','company.index','Location Point')!!}
 			{!!\Nvd\Crud\Html::sortableTh('default_person','company.index','Default Person')!!}
+			{!!\Nvd\Crud\Html::sortableTh('telephone','company.index','Telephone')!!}
+			{!!\Nvd\Crud\Html::sortableTh('email','company.index','Email')!!}
 			{!!\Nvd\Crud\Html::sortableTh('name','company.index','Name')!!}
+			{!!\Nvd\Crud\Html::sortableTh('branch','company.index','Branch')!!}
 			{!!\Nvd\Crud\Html::sortableTh('description','company.index','Description')!!}
 			{!!\Nvd\Crud\Html::sortableTh('logo','company.index','Logo')!!}
 			{!!\Nvd\Crud\Html::sortableTh('building','company.index','Building')!!}
@@ -27,10 +30,13 @@
 		<tr class="search-row">
 			<form class="search-form">
 				<td><input type="text" class="form-control" name="id" value="{{Request::input("id")}}"></td>
-				<td><input type="text" class="form-control" name="route_id" value="{{Request::input("route_id")}}"></td>
+				<td><input type="text" class="form-control" name="walkpath_id" value="{{Request::input("walkpath_id")}}"></td>
 				<td><input type="text" class="form-control" name="location_point" value="{{Request::input("location_point")}}"></td>
 				<td><input type="text" class="form-control" name="default_person" value="{{Request::input("default_person")}}"></td>
+				<td><input type="text" class="form-control" name="telephone" value="{{Request::input("telephone")}}"></td>
+				<td><input type="text" class="form-control" name="email" value="{{Request::input("email")}}"></td>
 				<td><input type="text" class="form-control" name="name" value="{{Request::input("name")}}"></td>
+				<td><input type="text" class="form-control" name="branch" value="{{Request::input("branch")}}"></td>
 				<td><input type="text" class="form-control" name="description" value="{{Request::input("description")}}"></td>
 				<td><input type="text" class="form-control" name="logo" value="{{Request::input("logo")}}"></td>
 				<td><input type="text" class="form-control" name="building" value="{{Request::input("building")}}"></td>
@@ -52,11 +58,11 @@
 					<td>
 						<span class="editable"
 							  data-type="number"
-							  data-name="route_id"
-							  data-value="{{ $record->route_id }}"
+							  data-name="walkpath_id"
+							  data-value="{{ $record->walkpath_id }}"
 							  data-pk="{{ $record->{$record->getKeyName()} }}"
 							  data-url="/company/{{ $record->{$record->getKeyName()} }}"
-							  >{{ $record->route_id }}</span>
+							  >{{ $record->walkpath_id }}</span>
 						</td>
 					<td>
 						<span class="editable"
@@ -79,11 +85,38 @@
 					<td>
 						<span class="editable"
 							  data-type="text"
+							  data-name="telephone"
+							  data-value="{{ $record->telephone }}"
+							  data-pk="{{ $record->{$record->getKeyName()} }}"
+							  data-url="/company/{{ $record->{$record->getKeyName()} }}"
+							  >{{ $record->telephone }}</span>
+						</td>
+					<td>
+						<span class="editable"
+							  data-type="email"
+							  data-name="email"
+							  data-value="{{ $record->email }}"
+							  data-pk="{{ $record->{$record->getKeyName()} }}"
+							  data-url="/company/{{ $record->{$record->getKeyName()} }}"
+							  >{{ $record->email }}</span>
+						</td>
+					<td>
+						<span class="editable"
+							  data-type="text"
 							  data-name="name"
 							  data-value="{{ $record->name }}"
 							  data-pk="{{ $record->{$record->getKeyName()} }}"
 							  data-url="/company/{{ $record->{$record->getKeyName()} }}"
 							  >{{ $record->name }}</span>
+						</td>
+					<td>
+						<span class="editable"
+							  data-type="text"
+							  data-name="branch"
+							  data-value="{{ $record->branch }}"
+							  data-pk="{{ $record->{$record->getKeyName()} }}"
+							  data-url="/company/{{ $record->{$record->getKeyName()} }}"
+							  >{{ $record->branch }}</span>
 						</td>
 					<td>
 						<span class="editable"
@@ -139,7 +172,7 @@
 					@include( 'vendor.crud.single-page-templates.common.actions', [ 'url' => 'company', 'record' => $record ] )
 		    	</tr>
 			@empty
-				@include ('vendor.crud.single-page-templates.common.not-found-tr',['colspan' => 13])
+				@include ('vendor.crud.single-page-templates.common.not-found-tr',['colspan' => 16])
 	    	@endforelse
 	    </tbody>
 

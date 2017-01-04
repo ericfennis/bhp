@@ -62,7 +62,7 @@ class gCalendarController extends Controller
 
     public function getEvents(Google_Service_Calendar $client)
     {
-
+            date_default_timezone_set('Europe/Amsterdam');
 			$calendarId = 'primary';
 
 			$optParams = array(
@@ -86,7 +86,7 @@ class gCalendarController extends Controller
 					'title' => $ev->getSummary(),
 					'desc'	=> $ev->getDescription(),
 					'date' => date('d M',$timestamp),
-					'time' => date('h.i',$timestamp),
+					'time' => date('H.i',$timestamp),
 					);
 				array_push($results, $event);
 			}

@@ -31,17 +31,20 @@
 
                                 <i v-if="item.branch">{{item.branch}}</i>
                                 <i v-if="item.company">{{item.company}}</i>
-
-                                <div v-if="active == item" class="item-body">
-                                    <div class="info-location" v-if="item.room_number && item.building">Cel: {{ item.building+item.room_number }}</div>
-                                    <hr>
-                                    <div class="info-telephone" v-if="item.room_number">
-                                        {{ item.telephone }}
+                                
+                                <transition name="collapse">
+                                    <div v-if="active == item" class="item-body">
+                                        <div class="info-location" v-if="item.room_number && item.building">Cel: {{ item.building+item.room_number }}</div>
+                                        <hr>
+                                        <div class="info-telephone" v-if="item.room_number">
+                                            {{ item.telephone }}
+                                        </div>
+                                        <div class="info-email" v-if="item.room_number">
+                                            {{ item.email }}
+                                        </div>
                                     </div>
-                                    <div class="info-email" v-if="item.room_number">
-                                        {{ item.email }}
-                                    </div>
-                                </div>
+                                </transition>
+                                
                             </li>
 
                         </ul>

@@ -13,11 +13,15 @@
 // Animations
 
 @-webkit-keyframes orangePulse {
-  from { background-color: #DF4206; -webkit-box-shadow: 0 0 12px #333; }
-  50% { background-color: #FF6A0D; -webkit-box-shadow: 0 0 20px #FF6A0D; }
-  to { background-color: #DF4206; -webkit-box-shadow: 0 0 12px #333; }
+  from { background-color: #DF4206; -webkit-box-shadow: 0 0 10px #333; }
+  50% { background-color: #FF6A0D; -webkit-box-shadow: 0 0 10px #FF6A0D; }
+  to { background-color: #DF4206; -webkit-box-shadow: 0 0 10px #333; }
 }
 
+// @-webkit-keyframes slideOpen {
+// 	from { height:0 }
+// 	to { height:80px; }
+// }
 
 
 // Variables
@@ -29,6 +33,8 @@
 
 // Bootstrap
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+h3.event-title {
+}
 
 a.active {
 
@@ -53,34 +59,26 @@ a.active {
   border-style: none !important;
 
 }
-
-.btn {
-	border-radius: 0px;
-	width: 56px;
-	height: 56px;
-	margin-top: 10px;
-	margin-right: 10px;
-	color:black;
-	background: #ccc;
-
-}
-
-form input {
-	width: 100%;
-	padding: 12px;
-	line-height: 32px;
-	border: 10px solid #4A4A4A;
-	&:focus {
-		border-color: red;
-	}
-
-}
-
 .list-group-item {
 	//margin-bottom: 10px;
 	&:hover {
 		background:#e9e9e9;
 		cursor: pointer;
+	}
+	.item-body {
+		will-change: height;
+	    height: 140px;
+	    opacity: 1;
+	    padding: 20px 10px;
+	    overflow: hidden;    
+	}
+	.collapse-enter-active, .collapse-leave-active {
+	  	transition: all .3s ease;
+	}
+	.collapse-enter, .collapse-leave-active {
+		height: 0;
+		padding: 0 10px;
+		opacity: 0;
 	}
 }
 html, body {
@@ -127,8 +125,27 @@ main {
 					max-height:58px;
 				}
 			}
+			.btn {
+				border-radius: 0px;
+				width: 56px;
+				margin-top: 10px;
+				margin-right: 10px;
+				color:black;
+				background: #ccc;
+
+			}
 		}
 		input {
+			width: 100%;
+			padding: 12px;
+			line-height: 32px;
+			border: 10px solid transparent;
+			position: relative;
+			z-index: 9999;
+			&:focus {
+				border: 10px solid transparent;
+				background: #fff;
+			}
 			&+div {
 				position: absolute;
 				right: 0;
@@ -156,6 +173,48 @@ main {
 				min-height: 160px;
 				max-height: 160px;
 				background: #333;
+		}
+		#calendar {
+			padding: 80px 60px 0;
+			@include clearfix;
+			.event {
+				@include clearfix;
+				list-style-type: none;
+				min-height: 120px;
+				margin-bottom: 20px;
+				&-date-time {
+					width: 36%;;
+					float: left;
+				}
+				&-dt-wrap {
+					border-right: 5px solid #000;
+					text-align: center;
+					padding: 10px 0;;
+				}
+				&-date {
+					font-size: 48px;
+					text-transform: uppercase;
+				}
+				&-time {
+					font-size: 36px;
+				}
+				&-title {
+					font-size: 32px;
+					line-height: 32px;
+					margin: 0;
+					word-break: break-word;
+					text-transform: uppercase;
+				}
+				&-desc {
+					margin-top: 10px;
+					color: #4A4A4A;
+				}
+				&-body {
+					float: left;
+					width: 64%;
+					padding: 10px 20px 20px 15px;
+				}
+			}
 		}
 	}
 	& > figure, section {
@@ -201,6 +260,7 @@ main {
 	}
 	& + #map {
 		canvas {
+			will-change: -webkit-filter;
 			transition: .4s -webkit-filter linear;
 			-webkit-filter: blur(0px);
 				-moz-filter: blur(0px);
@@ -318,12 +378,17 @@ h1 {
     &.welkom {
     	text-transform:uppercase;
     	text-align: center;
+    	text-indent: -20px;
     	font-size: 36px;
 		margin-top: 60px;
 		margin-bottom: 16px;
 	}
 }
-
+h2 {
+  font-family: parentFontBHP;
+  text-transform: uppercase;
+  font-size:35px;
+}
 .maptitel {
 	font-size: 64px;
 	color: white;
@@ -347,8 +412,8 @@ h1 {
 // Home left
 
 .logobhp {
-	height: 240px;
-	width: 50%;
+	height: 260px;
+	width: auto;
 	display: block;
 	margin-left: auto;
 	margin-right: auto;
@@ -369,11 +434,11 @@ h1 {
 	font-size: 34px;
 	text-align: center;
 	text-transform: uppercase;
-	width: 360px;
 	padding: 16px;
 	-webkit-animation-name: orangePulse;
   	-webkit-animation-duration: 2s;
   	-webkit-animation-iteration-count: infinite;
+	width: 360px;
 }
 
 #clock {
@@ -403,20 +468,9 @@ h1 {
 	right: 0;
 	bottom: 0;
 	left: 0;
-	background:rgba(100,100,100,0.5);
+	// background:rgba(100,100,100,0.1);
 }
-h1 {
-    font-family: parentFontBHP;
-    text-transform:uppercase;
-    &.welkom {
-    	text-align: center;
-    }
-}
-h2 {
-  font-family: parentFontBHP;
-  text-transform: uppercase;
-  font-size:35px;
-}
+
 
 .vue-keyboard {
 	position: absolute;

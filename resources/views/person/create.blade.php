@@ -26,6 +26,8 @@
 
                     {!! \Nvd\Crud\Form::input('website','text')->show() !!}
 
+                    {!! \Nvd\Crud\Form::input('company_id','text')->show() !!}
+
                     {!! \Nvd\Crud\Form::input('status','text')->show() !!}
 
                     <button type="submit" class="btn btn-primary">Create</button>
