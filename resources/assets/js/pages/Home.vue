@@ -72,27 +72,34 @@
 
             }
         },
-        beforeCreate() {
-            this.events = localStorage.getItem(STORAGE_KEY);
+        beforeMount() {
+            this.events = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
         },
         created() {
-            this.getEvents();
+           this.getEvents();
+           var called = false;
+           if(!called) {
+                setInterval(function () {
+                    this.getEvents();
+                }.bind(this), 30000);
+                called = true;
+           }
         },
         mounted() {
             console.log('Component ready.');
-            setInterval(this.getEvents, 7200);
         },
         methods: {
             getEvents: function () {
                 this.$http.get('/api/events').then((response) => {
         
                 this.events = response.body;
-                localStorage.setItem(STORAGE_KEY, JSON.stringify(response.body));
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(this.events));
+
                 }, (response) => {
                     console.error('Hij doet het niet');
                 });
                 
-            },
-        }
+            }
+        },
     }
 </script>

@@ -65,51 +65,62 @@ var App = window.App = new Vue({
         }
 
     },
-	render (h) { return h(this.ViewComponent) }
+	render (h) { 
+        return h(this.ViewComponent) 
+    }
     
 });
-                // Timer
-                
-                // var clock = document.getElementById("clock");
-                // if (clock.length !== 0) {
-                //     var myTimer = setInterval(setClock,1000);
-                //     function setClock(){    
-                //         clock.innerHTML=new Date().toLocaleTimeString();
-                //     }
-                // }
-       
+var t;
+    window.onload = resetTimer;
+    // DOM Events
+    document.onmousemove = resetTimer;
+    document.onkeypress = resetTimer;
 
+    function goToHome() {
+        App.currentRoute = '/';
+        App.exitMap();
+        console.log("Home set");
+    }
+
+    function resetTimer() {
+        clearTimeout(t);
+        if(App.currentView() == "List") {
+            t = setTimeout(goToHome, 30000)
+        }
+        // 1000 milisec = 1 sec
+    }
                 //verscheidene bijnodigdheden voor routetekenen e.d.
-                var drawRoutes = false;
-                var drawIcons = false;
-                var iNum = 0;
-                var prevXY = [0, 0];
-                var prevPoint = 0;
-                var newRoute = [];
-
-                var currentFloor = 0;
-                var extent = [0, 0, 1024, 1024];
-                var center = [240, 485];
-                var projection = new ol.proj.Projection({
+                var drawRoutes = false,
+                drawIcons = false,
+                iNum = 0,
+                prevXY = [0, 0],
+                prevPoint = 0,
+                newRoute = [],
+                //openlayers settings
+                currentFloor = 0,
+                extent = [-420, 0, 1024, 960],
+                imageExtent = [0, 0, 1024, 1024],
+                center = [240, 485],
+                projection = new ol.proj.Projection({
                     code: 'static-image',
                     units: 'pixels',
-                    extent: extent
-                });
+                    extent: imageExtent
+                }),
 
                 //de sources waar we later nog dingen aan toe willen voegen staan hier.
-                var mapSource = new ol.source.ImageStatic({});
-                var routeSource = [new ol.source.Vector({}), new ol.source.Vector({}), new ol.source.Vector({}), new ol.source.Vector({})];
-                var iconSource = [new ol.source.Vector({}), new ol.source.Vector({}), new ol.source.Vector({}), new ol.source.Vector({})];
-                var letterSource = new ol.source.ImageStatic({});
+                mapSource = new ol.source.ImageStatic({}),
+                routeSource = [new ol.source.Vector({}), new ol.source.Vector({}), new ol.source.Vector({}), new ol.source.Vector({})],
+                iconSource = [new ol.source.Vector({}), new ol.source.Vector({}), new ol.source.Vector({}), new ol.source.Vector({})],
+                letterSource = new ol.source.ImageStatic({}),
 
                 //layers waar we later misschien nog aanspraak op willen maken?
-                var mapLayer = new ol.layer.Image({
+                mapLayer = new ol.layer.Image({
                     source: new ol.source.ImageStatic({
                         projection: projection,
                         imageExtent: extent
                     })
-                });
-                var routeLayer = new ol.layer.Vector({
+                }),
+                routeLayer = new ol.layer.Vector({
                     source: routeSource[currentFloor],
                     style: new ol.style.Style({
                         stroke: new ol.style.Stroke({
@@ -119,17 +130,17 @@ var App = window.App = new Vue({
                             lineDash: [5,2.5]
                         })
                     })
-                });
-                var iconLayer = new ol.layer.Vector({
+                }),
+                iconLayer = new ol.layer.Vector({
                     source: iconSource[currentFloor]
-                });
-                var letterLayer = new ol.layer.Image({
+                }),
+                letterLayer = new ol.layer.Image({
                     source: new ol.source.ImageStatic({
                         projection: projection,
-                        imageExtent: extent
+                        imageExtent: imageExtent
                     })
                 });
-
+                
                 function drawLine(x, y, point){
                     if(prevXY[0] == 0 && prevXY[1] == 0){
                         newRoute.push(point);
@@ -193,7 +204,7 @@ var App = window.App = new Vue({
                     mapSource = new ol.source.ImageStatic({
                         url: url,
                         projection: projection,
-                        imageExtent: extent
+                        imageExtent: imageExtent
                     })
                     mapLayer.setSource(mapSource);
                 }
@@ -201,7 +212,7 @@ var App = window.App = new Vue({
                     letterSource = new ol.source.ImageStatic({
                         url: url,
                         projection: projection,
-                        imageExtent: extent
+                        imageExtent: imageExtent
                     })
                     letterLayer.setSource(letterSource);
                 }
@@ -306,7 +317,7 @@ var App = window.App = new Vue({
                     }
                     
                 });
-        
+                
                 var setFloor_buttons = document.createElement('div');
                 setFloor_buttons.id = "floor-controll";
                 setFloor_buttons.className = 'select-floor ol-control ol-unselectable';
@@ -329,10 +340,10 @@ var App = window.App = new Vue({
                         setFloor(f);
                     };
                 }
-                var button_overlay = new ol.control.Control({
+                var buttonOverlay = new ol.control.Control({
                     element: setFloor_buttons
                 });
-                map.addControl(button_overlay);
+                map.addControl(buttonOverlay);
 
                 for (var floorEl = 0; floorEl <= 3; floorEl++) {
                     selectFloor(floorEl);
@@ -411,12 +422,12 @@ var App = window.App = new Vue({
                 }
 
                 function flyToCenter() {
-                    console.log(view.getCenter());
-                    var duration = 2000;
+                    var duration = 720;
                     var zoom = 1.7;
                     var parts = 2;
                     var called = false;
-                    if (center !== view.getCenter()) {
+                    var viewCenter = view.getCenter();
+                    if (viewCenter[0] !== center[0] && viewCenter[1] !== center[1]) {
                         function callback(complete) {
                           --parts;
                           if (called) {
@@ -438,6 +449,7 @@ var App = window.App = new Vue({
                           duration: duration / 2
                         }, callback);
                     }
+
                   }
 
                 //alles bedacht, stel zichtbare verdieping in

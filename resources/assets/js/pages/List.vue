@@ -5,7 +5,7 @@
                         <form id="search" v-bind:class="{ filled: searchString.length !== 0 }">
                             <input type="text" @click="selectTab('all'),screenKeyboard = true" v-model="searchString" placeholder="Zoek naar bv: 'Kapper, naam, bedrijf etc.'" />
 
-                            <div class="btn btn-primary" role="button" @click="searchString = '',clearKeyboard()">X</div>
+                            <div class="search-button" role="button" @click="searchString = '',clearKeyboard()"></div>
                             <nav v-if="searchString.length == 0">
                                 <ul class="nav nav-tabs">
                                     <li><a href="#" :class="{ active: visibility == 'all' }" @click="selectTab('all')">Alle</a></li>
@@ -17,7 +17,7 @@
 
                         </form>
                         <ul id="results" class="list-group" >
-                            <li class="list-group-item"  v-for="(item,index) in filteredData" @click="getWalkpath(item)" v-bind:class="{ active: active == item }">
+                            <li class="result-item"  v-for="(item,index) in filteredData" @click="getWalkpath(item)" v-bind:class="{ active: active == item }">
 
 
 
@@ -113,9 +113,9 @@
                 },
             }
         },
-        beforeCreate() {
+        beforeMount() {
             console.log('Component ready.');
-            this.all = localStorage.getItem(STORAGE_KEY);
+            this.all = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
         },
         created() {
             this.getAll();
@@ -179,7 +179,6 @@
                 this.all = all;
                 localStorage.setItem(STORAGE_KEY, JSON.stringify(this.all));
             },
-
             getWalkpath: function(item) {
                 this.$root.getWalkpath(item);
                 this.active = item;
@@ -188,6 +187,7 @@
             },
             selectTab: function(tab) {
                 this.visibility = tab;
+                this.active = null;
             },
             clearKeyboard:function () {
                 this.$children[0].$children[2].clear();

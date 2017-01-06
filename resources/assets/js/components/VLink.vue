@@ -22,8 +22,9 @@
     },
     methods: {
       go (event) {
-        event.preventDefault()
-        this.$root.currentRoute = this.href
+        event.preventDefault();
+        this.$root.currentRoute = this.href;
+        this.$root.currentRoute == "/" ? this.$root.exitMap():'';
         window.history.pushState(
           null,
           routes[this.href],
@@ -32,7 +33,6 @@
         if(this.func !== null) {
             this.func;
         }
-        //this.$parent.loadMap();
       }   
     }
   }

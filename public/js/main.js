@@ -51,7 +51,9 @@ var letterLayer = new ol.layer.Image({
 		imageExtent: extent
 	})
 });
-
+var buttonOverlay = new ol.control.Control({
+    element: setFloor_buttons
+});
 function drawLine(x, y, point){
 	if(prevXY[0] == 0 && prevXY[1] == 0){
 		newRoute.push(point);
@@ -309,10 +311,8 @@ function selectFloor(f) {
         setFloor(f);
     };
 }
-var button_overlay = new ol.control.Control({
-    element: setFloor_buttons
-});
-map.addControl(button_overlay);
+
+map.addControl(buttonOverlay);
 
 for (var floorEl = 0; floorEl <= 3; floorEl++) {
     selectFloor(floorEl);
