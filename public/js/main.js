@@ -2,7 +2,7 @@
 window.app = {};
 var app = window.app;
 
-//verscheidene bijnodigdheden voor routetekenen e.d.
+//verscheidene benodigdheden voor routetekenen e.d.
 var mode = '';
 var defaultIconAction = 'none'
 var iNum = 0;
@@ -223,7 +223,7 @@ var map = new ol.Map({
 map.on('click', function(evt){
 	var lonlat = ol.proj.transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326');
 
-	//moet hier één of andereg gekke factor toepassen, anders trekken de x en y scheef? :/
+	//moet hier één of andere gekke factor toepassen, anders trekken de x en y scheef? :/
 	var lon = lonlat[0]*111319.49079327356;//naar rechts is groter
 	var lat = lonlat[1]*111324.05140791999;//omhoog is kleiner
 
