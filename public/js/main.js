@@ -51,9 +51,6 @@ var letterLayer = new ol.layer.Image({
 		imageExtent: extent
 	})
 });
-var buttonOverlay = new ol.control.Control({
-    element: setFloor_buttons
-});
 function drawLine(x, y, point){
 	if(prevXY[0] == 0 && prevXY[1] == 0){
 		newRoute.push(point);
@@ -311,7 +308,9 @@ function selectFloor(f) {
         setFloor(f);
     };
 }
-
+var buttonOverlay = new ol.control.Control({
+    element: setFloor_buttons
+});
 map.addControl(buttonOverlay);
 
 for (var floorEl = 0; floorEl <= 3; floorEl++) {
@@ -321,6 +320,6 @@ for (var floorEl = 0; floorEl <= 3; floorEl++) {
 
 $(document).ready(function(){
 	if($("#json").length > 0){
-		$("#json").parent().parent().hide();
+		//$("#json").parent().parent().hide();
 	}
 });

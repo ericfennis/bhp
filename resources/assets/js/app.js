@@ -70,7 +70,8 @@ var App = window.App = new Vue({
     }
     
 });
-var t;
+    var t;
+    var debugMode = true
     window.onload = resetTimer;
     // DOM Events
     document.onmousemove = resetTimer;
@@ -84,7 +85,7 @@ var t;
 
     function resetTimer() {
         clearTimeout(t);
-        if(App.currentView() == "List") {
+        if(App.currentView() == "List" && debugMode == false) {
             t = setTimeout(goToHome, 30000)
         }
         // 1000 milisec = 1 sec
@@ -380,41 +381,51 @@ var t;
                 function drawWalkpath() {
           
                     var points = App.walkPath;
-             
+                    var totalFloors = 0;
+                    //var floorDest
                      routeSource = [new ol.source.Vector({}), new ol.source.Vector({}), new ol.source.Vector({}), new ol.source.Vector({})];
-
+                     iconSource = [new ol.source.Vector({}), new ol.source.Vector({}), new ol.source.Vector({}), new ol.source.Vector({})];
                     
                     if(points.length !== 0) {
                         //voor elke verdieping een getekende pad.
-                        for (var floor = 0; floor < points.length; floor++) {
-                            // laatste object in array
-                            var lastInArray = points[floor].length-1;
-
-                            // if(floor == 0) {
-                            //     //set startpunt
-                            //     addIcon(0, 'img/icons/Beginpunt (Fill).png', 'route-begin', 0, points[floor][0][0], points[floor][0][1]);
-                            // }
-                            // if(points.length > 1) {
-                            //     //console.log(points[floor][last_obj][0]);
-                            //     if((points.length - 1) !== floor){
-                            //         addIcon(floor, 'img/icons/Trap (Line).png', 'switch-floor', floor+1, points[floor][lastInArray][0], points[floor][lastInArray][1]);
-                            //     }
-                                
-
-                            //     if(floor !== 0) {
-                            //         addIcon(floor, 'img/icons/Trap (Line).png', 'switch-floor', floor-1, points[floor][0][0], points[floor][0][1]);
-                            //     }
-                                
-                            // }
-                            if((points.length - 1) == floor) {
-                                addIcon(floor, 'img/icons/Eindbestemming (Fill).png', 'route-end', 0, points[floor][lastInArray][0], points[floor][lastInArray][1]);
-                                //console.log(floor);
+                        for (var pointArray = 0; pointArray < points.length; pointArray++) {
+                            if(points[pointArray].length !== 0) {
+                                totalFloors++;
                             }
-                            var tempRouteFeature = new ol.Feature({
-                                    geometry: new ol.geom.LineString(points[floor]),
-                                    name: 'Route'
-                            });
-                            routeSource[floor].addFeature(tempRouteFeature);
+                        }
+                        console.log("vloeren:"+totalFloors);
+                        for (var floor = 0; floor < points.length; floor++) {
+
+                            if(points[floor].length !== 0) {
+                            // laatste object in array
+                                var lastInArray = points[floor].length -1;
+                                // console.log(points[floor].length);
+                                if(floor == 0) {
+                                    //set startpunt
+                                    addIcon(0, 'img/icons/beginpunt_zw.png', 'route-begin', 0, points[floor][0][0], points[floor][0][1]);
+                                }
+                                // if(points.length > 1) {
+                                //     //console.log(points[floor][last_obj][0]);
+                                //     if((points.length - 1) !== floor){
+                                //         addIcon(floor, 'img/icons/Trap (Line).png', 'switch-floor', floor+1, points[floor][lastInArray][0], points[floor][lastInArray][1]);
+                                //     }
+                                    
+
+                                //     if(floor !== 0) {
+                                //         addIcon(floor, 'img/icons/Trap (Line).png', 'switch-floor', floor-1, points[floor][0][0], points[floor][0][1]);
+                                //     }
+                                    
+                                // }
+                                if((totalFloors - 1) == floor) {
+                                    addIcon(floor, 'img/icons/Eindbestemming (Fill).png', 'route-end', 0, points[floor][lastInArray][0], points[floor][lastInArray][1]);
+                                    //console.log(floor);
+                                }
+                                var tempRouteFeature = new ol.Feature({
+                                        geometry: new ol.geom.LineString(points[floor]),
+                                        name: 'Route'
+                                });
+                                routeSource[floor].addFeature(tempRouteFeature);
+                            }
                         }
                         flyToCenter();
                         setFloor(0);
