@@ -11,8 +11,8 @@
 
 @font-face {
   font-family: 'icomoon';
-  src: url("fonts/icomoon.eot?vtnpy7");
-  src: url("fonts/icomoon.eot?vtnpy7#iefix") format("embedded-opentype"), url("fonts/icomoon.ttf?vtnpy7") format("truetype"), url("fonts/icomoon.woff?vtnpy7") format("woff"), url("fonts/icomoon.svg?vtnpy7#icomoon") format("svg");
+  src: url("/fonts/icomoon.eot?vtnpy7");
+  src: url("/fonts/icomoon.eot?vtnpy7#iefix") format("embedded-opentype"), url("/fonts/icomoon.ttf?vtnpy7") format("truetype"), url("/fonts/icomoon.woff?vtnpy7") format("woff"), url("/fonts/icomoon.svg?vtnpy7#icomoon") format("svg");
   font-weight: normal;
   font-style: normal;
 }
@@ -8267,6 +8267,7 @@ main aside input {
   padding: 12px;
   line-height: 32px;
   border: 10px solid transparent;
+  font-size: 36px;
 }
 
 main aside input:focus {
@@ -8286,15 +8287,21 @@ main aside ul#results {
   -webkit-box-flex: 1;
   flex: auto;
   color: #000;
+  padding-left: 15px;
 }
 
 main aside ul#results li.result-item {
   list-style: none;
   padding: 15px;
+  border-bottom: 2px solid #D7D6C8;
 }
 
-main aside ul#results li.result-item.active, main aside ul#results li.result-item.active:hover {
-  background: #DF4206;
+main aside ul#results li.result-item.active h4, main aside ul#results li.result-item.active:hover h4 {
+  color: #DF4206;
+}
+
+main aside ul#results li.result-item.active .item-image img, main aside ul#results li.result-item.active:hover .item-image img {
+  border-color: #DF4206;
 }
 
 main aside ul#results li.result-item:hover {
@@ -8302,11 +8309,41 @@ main aside ul#results li.result-item:hover {
   cursor: pointer;
 }
 
+main aside ul#results li.result-item .item-image {
+  float: left;
+}
+
+main aside ul#results li.result-item .item-image img {
+  border: 4px solid #4a4a4a;
+  -webkit-transition: border-color .3s ease;
+  transition: border-color .3s ease;
+}
+
 main aside ul#results li.result-item .item-body {
+  margin-left: 80px;
+  padding-left: 15px;
+  border-left: 4px solid #4a4a4a;
+}
+
+main aside ul#results li.result-item .item-body h4 {
+  margin: 0 0 5px;
+  text-transform: uppercase;
+  -webkit-transition: color .3s ease;
+  transition: color .3s ease;
+}
+
+main aside ul#results li.result-item .item-body p {
+  padding: 0 0 5px;
+  font-size: 25px;
+  color: #555;
+  margin: 0;
+}
+
+main aside ul#results li.result-item .item-collapse {
   will-change: height;
   height: 140px;
   opacity: 1;
-  padding: 20px 10px;
+  padding: 20px 0;
   overflow: hidden;
 }
 
@@ -8317,8 +8354,12 @@ main aside ul#results li.result-item .collapse-enter-active, main aside ul#resul
 
 main aside ul#results li.result-item .collapse-enter, main aside ul#results li.result-item .collapse-leave-active {
   height: 0;
-  padding: 0 10px;
+  padding: 0;
   opacity: 0;
+}
+
+main aside ul#results li.result-item:last-child:after {
+  display: none;
 }
 
 main aside div.panel {
@@ -8345,7 +8386,7 @@ main aside footer {
   height: 160px;
   min-height: 160px;
   max-height: 160px;
-  background: #333;
+  background: #E3E3D9;
 }
 
 main aside #calendar {
@@ -8404,9 +8445,22 @@ main aside #calendar .event-title {
   text-transform: uppercase;
 }
 
+main aside #calendar .event.active .event-desc {
+  height: auto;
+  display: block;
+}
+
 main aside #calendar .event-desc {
-  margin-top: 10px;
+  -webkit-transition: height .3s ease;
+  transition: height .3s ease;
+  margin: 10px 0 0;
   color: #4A4A4A;
+  overflow: hidden;
+  max-lines: 2;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  height: 45px;
 }
 
 main aside #calendar .event-body {
@@ -8437,8 +8491,7 @@ main section footer {
   left: 0;
   right: 0;
   bottom: 0;
-  background: #333;
-  color: #fff;
+  background: #E3E3D9;
   z-index: 20;
 }
 
@@ -8705,11 +8758,28 @@ h2 {
 
 .button_return {
   height: 80px;
-  width: 150px;
-  background-color: orange;
   margin: 40px;
   display: inline-block;
   line-height: 40px;
+  font-size: 42px;
+  color: #000;
+  text-transform: uppercase;
+  line-height: 80px;
+}
+
+.button_return:before {
+  content: "\e907";
+  font-family: 'icomoon';
+  background: #DF4206;
+  color: #fff;
+  padding: 15px;
+  font-size: 36px;
+  margin-right: 15px;
+}
+
+.button_return:hover {
+  text-decoration: none;
+  color: #4A4A4A;
 }
 
 .legenda_container {
@@ -8794,6 +8864,10 @@ h2 {
   background-color: none;
   border: none;
   box-shadow: none;
+}
+
+.nav > li > a {
+  padding: 8px 15px;
 }
 
 /*# sourceMappingURL=app.css.map */

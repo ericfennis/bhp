@@ -19,31 +19,34 @@
                         <ul id="results" class="list-group" >
                             <li class="result-item"  v-for="(item,index) in filteredData" @click="getWalkpath(item)" v-bind:class="{ active: active == item }">
 
+                                <div class="item-image">
+                                    <img v-if="item.profilepicture" width="64" height="64" v-bind:src="item.profilepicture"/>
+                                    <img v-else width="64" height="64" v-bind:src="item.logo"/>
+                                </div>
+                                <div class="item-body">
+                                    <h4 v-if="item.branch"><b>{{item.name}}</b></h4>
+                                    <h4 v-else>{{item.name}}</h4>
 
-
-                                <img v-if="item.profilepicture" width="64" height="64" v-bind:src="item.profilepicture"/>
-                                <img v-else width="64" height="64" v-bind:src="item.logo"/>
-
-
-
-                                <h4 v-if="item.branch"><b>{{item.name}}</b></h4>
-                                <h4 v-else>{{item.name}}</h4>
-
-                                <i v-if="item.branch">{{item.branch}}</i>
-                                <i v-if="item.company">{{item.company}}</i>
+                                    <p v-if="item.branch">{{item.branch}}</p>
+                                    <p v-if="item.company">{{item.company}}</p>
+                                    <transition name="collapse">
+                                        <div v-if="active == item" class="item-collapse">
+                                            <div class="info-location" v-if="item.room_number && item.building">Cel: {{ item.building+item.room_number }}</div>
+                                            <div class="info-telephone" v-if="item.room_number">
+                                                {{ item.telephone }}
+                                            </div>
+                                            <div class="info-email" v-if="item.room_number">
+                                                {{ item.email }}
+                                            </div>
+                                        </div>
+                                    </transition>
+                                </div>
                                 
-                                <transition name="collapse">
-                                    <div v-if="active == item" class="item-body">
-                                        <div class="info-location" v-if="item.room_number && item.building">Cel: {{ item.building+item.room_number }}</div>
-                                        <hr>
-                                        <div class="info-telephone" v-if="item.room_number">
-                                            {{ item.telephone }}
-                                        </div>
-                                        <div class="info-email" v-if="item.room_number">
-                                            {{ item.email }}
-                                        </div>
-                                    </div>
-                                </transition>
+
+
+
+                                
+                                
                                 
                             </li>
 
@@ -56,7 +59,7 @@
                 </aside>
                 <section>
                     <footer>
-                        <div class="contrast">
+                        <div class="">
                           <div class="legenda_container">
                             <div class="legenda_text">
                             <h2>Legenda</h2>

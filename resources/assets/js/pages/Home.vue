@@ -8,7 +8,7 @@
                         <img src="/img/logobhp.svg" class="logobhp" alt="Logo BHP">
                         
                         <ul id="calendar">
-                            <li class="event" v-for="Event in events">
+                            <li class="event" v-for="Event in events" @click="toggleEvent(Event)" v-bind:class="{ active: active == Event }">
                                 <div class="event-date-time">
                                     <div class="event-dt-wrap">
                                         <div class="event-date">
@@ -68,8 +68,8 @@
             return {
                 events:[
                         
-                ]
-
+                ],
+                active: ''
             }
         },
         beforeMount() {
@@ -81,6 +81,7 @@
            if(!called) {
                 setInterval(function () {
                     this.getEvents();
+                    this.toggleEvent();
                 }.bind(this), 30000);
                 called = true;
            }
@@ -98,6 +99,13 @@
                 }, (response) => {
                     console.error('Hij doet het niet');
                 });
+            },
+            toggleEvent: function (event) {
+                if(this.active == event) {
+                    this.active == '';
+                } else {
+                    this.active = event;
+                }
                 
             }
         },
