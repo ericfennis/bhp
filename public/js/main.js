@@ -51,9 +51,6 @@ var letterLayer = new ol.layer.Image({
 		imageExtent: extent
 	})
 });
-var buttonOverlay = new ol.control.Control({
-    element: setFloor_buttons
-});
 function drawLine(x, y, point){
 	if(prevXY[0] == 0 && prevXY[1] == 0){
 		newRoute.push(point);
@@ -184,34 +181,34 @@ function setFloor(floorNum){
 
 	switch(floorNum) {
         case 3:             //switch naar verdieping 2
-                            setMapSource("/img/floor3.png"); 
-                            setLetterSource("/img/letters3.png"); 
+                            setMapSource("/img/floor3.png");
+                            setLetterSource("/img/letters3.png");
                             floorNum = 3;
                             document.getElementById('select-floor-3').className = "select-floor-button active";
         break;
 
         case 2:             //switch naar verdieping 2
-                            setMapSource("/img/floor2.png"); 
-                            setLetterSource("/img/letters2.png"); 
+                            setMapSource("/img/floor2.png");
+                            setLetterSource("/img/letters2.png");
                             floorNum = 2;
-                            document.getElementById("select-floor-2").className = "select-floor-button active"; 
+                            document.getElementById("select-floor-2").className = "select-floor-button active";
         break;
 
         case 1:             //switch naar verdieping 1
-                            setMapSource("/img/floor1.png"); 
-                            setLetterSource("/img/letters2.png"); 
+                            setMapSource("/img/floor1.png");
+                            setLetterSource("/img/letters2.png");
                             floorNum = 1;
-                            document.getElementById("select-floor-1").className = "select-floor-button active"; 
+                            document.getElementById("select-floor-1").className = "select-floor-button active";
         break;
 
         case 0: default:    //switch naar beganegrond
-                            setMapSource("/img/floor0.png"); 
-                            setLetterSource("/img/letters1.png"); 
+                            setMapSource("/img/floor0.png");
+                            setLetterSource("/img/letters1.png");
                             floorNum = 0;
-                            document.getElementById("select-floor-0").className = "select-floor-button active"; 
+                            document.getElementById("select-floor-0").className = "select-floor-button active";
         break;
-    } 
-    currentFloor = floorNum;    
+    }
+    currentFloor = floorNum;
 
 	//afbeeldingen zijn omgezet, pak nu ook de juiste routes en iconen
 	setRouteIconSource(floorNum);
@@ -300,22 +297,28 @@ for (var fl_button = 0; fl_button <= 3; fl_button++) {
     floorButton.setAttribute('data',fl_button);
     floorButton.innerHTML = fl_button;
     setFloor_buttons.appendChild(floorButton);
-    
+
 }
 
-function selectFloor(f) {
-    document.getElementById("select-floor-"+f).onclick=function() {
-        setFloor(f);
-    };
-    document.getElementById("select-floor-"+f).touchstart=function() {
-        setFloor(f);
-    };
-}
+function setButtonEvent(f) {
+	console.log("buttonEvent aanmaken voor " + f);
+	$("#select-floor-"+f).on("tap", function(event) {
+ 		event.preventDefault();
+		setFloor(f);
+	});
 
+	$("#select-floor-"+f).on("click", function(event) {
+ 		event.preventDefault();
+		setFloor(f);
+	});
+}
+var buttonOverlay = new ol.control.Control({
+    element: setFloor_buttons
+});
 map.addControl(buttonOverlay);
 
 for (var floorEl = 0; floorEl <= 3; floorEl++) {
-    selectFloor(floorEl);
+    setButtonEvent(floorEl);
 }
 
 
