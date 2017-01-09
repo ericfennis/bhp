@@ -4,7 +4,7 @@
             <h4 class="panel-title">
                 <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
                     <i class="fa fa-plus"></i>
-                    Bedrijf toevoegen              </a>
+                    Bedrijf toevoegen                 </a>
             </h4>
         </div>
         <div id="collapseOne" class="panel-collapse collapse">
@@ -14,13 +14,19 @@
 
                     {{ csrf_field() }}
 
-                    {!! \Nvd\Crud\Form::input('route_id','text')->show() !!}
+                    {!! \Nvd\Crud\Form::input('walkpath_id','text')->show() !!}
 
                     {!! \Nvd\Crud\Form::input('location_point','text')->show() !!}
 
                     {!! \Nvd\Crud\Form::input('default_person','text')->show() !!}
 
+                    {!! \Nvd\Crud\Form::input('telephone','text')->show() !!}
+
+                    {!! \Nvd\Crud\Form::input('email','text')->show() !!}
+
                     {!! \Nvd\Crud\Form::input('name','text')->show() !!}
+
+                    {!! \Nvd\Crud\Form::input('branch','text')->show() !!}
 
                     {!! \Nvd\Crud\Form::input('description','text')->show() !!}
 

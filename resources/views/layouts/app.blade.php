@@ -15,7 +15,7 @@
     <link href="/css/app.css" rel="stylesheet"/>
 	<link href="/css/ol.css" rel="stylesheet"/>
 	<link href="/css/jquery-ui.css" rel="stylesheet"/>
-	<link href="/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous"/>
+	<link href="/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous"/>
 	<link href="/css/font-awesome.min.css" rel="stylesheet"/>
     <link href="/css/bootstrap-editable.css" rel="stylesheet"/>
 
@@ -23,7 +23,7 @@
 	<script src="/js/jquery-2.2.0.min.js"></script>
 	<script src="/js/jquery-ui.js"></script>
 	<script src="/js/bootstrap-editable.min.js"></script>
-	<script src="/js/bootstrap.min.js"	integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+	<script src="/js/bootstrap.min.js" crossorigin="anonymous"></script>
 
 
     <script>

@@ -20,7 +20,7 @@ class WalkpathController extends Controller
         // load all walkpath for company
         $company = Company::findOrFail($id);
         // load all Walkpath points for the walkpath
-        $walkpathpoints = $company->walkpath->walkpathpoints;
+        $walkpathpoints = $company->walkpath->walkpathpoint;
         // create array
         $points = array(
                 0 => array(),
@@ -31,7 +31,7 @@ class WalkpathController extends Controller
         // looping walkpathpoints
         foreach ($walkpathpoints as $walkpath) {
             // find each point with id.
-            $point = Point::find($walkpath->id);
+            $point = Point::find($walkpath->point_id);
             //make-up the array for JSON structure
             $coords = array($point->x,$point->y);
 

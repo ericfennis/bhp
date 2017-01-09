@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <h2>Company: {{$company->route_id}}</h2>
+    <h2>Bedrijf: {{$company->route_id}}</h2>
 
     <ul class="list-group">
 
@@ -11,8 +11,8 @@
             <h5>{{$company->id}}</h5>
         </li>
         <li class="list-group-item">
-            <h4>Route Id</h4>
-            <h5>{{$company->route_id}}</h5>
+            <h4>Walkpath Id</h4>
+            <h5>{{$company->walkpath_id}}</h5>
         </li>
         <li class="list-group-item">
             <h4>Location Point</h4>
@@ -23,8 +23,20 @@
             <h5>{{$company->default_person}}</h5>
         </li>
         <li class="list-group-item">
+            <h4>Telephone</h4>
+            <h5>{{$company->telephone}}</h5>
+        </li>
+        <li class="list-group-item">
+            <h4>Email</h4>
+            <h5>{{$company->email}}</h5>
+        </li>
+        <li class="list-group-item">
             <h4>Name</h4>
             <h5>{{$company->name}}</h5>
+        </li>
+        <li class="list-group-item">
+            <h4>Branch</h4>
+            <h5>{{$company->branch}}</h5>
         </li>
         <li class="list-group-item">
             <h4>Description</h4>
@@ -54,7 +66,7 @@
             <h4>Updated At</h4>
             <h5>{{$company->updated_at}}</h5>
         </li>
-
+        
     </ul>
 
 @endsection

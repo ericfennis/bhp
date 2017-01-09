@@ -2,23 +2,22 @@
     <main-layout>
                 <aside>
                     <div class="panel panel-default">
-
                         <form id="search" v-bind:class="{ filled: searchString.length !== 0 }">
                             <input type="text" @click="selectTab('all'),screenKeyboard = true" v-model="searchString" placeholder="Zoek naar bv: 'Kapper, naam, bedrijf etc.'" />
 
-                            <div class="btn btn-primary" role="button" @click="searchString = '',clearKeyboard()">X</div>
+                            <div class="search-button" role="button" @click="searchString = '',clearKeyboard()"></div>
                             <nav v-if="searchString.length == 0">
                                 <ul class="nav nav-tabs">
-                                    <li><a href="#" :class="{ active: visibility == 'all' }" @click="selectTab('all')">Alles</a></li>
+                                    <li><a href="#" :class="{ active: visibility == 'all' }" @click="selectTab('all')">Alle</a></li>
                                     <li><a href="#" :class="{ active: visibility == 'companies' }" @click="selectTab('companies')">Bedrijven</a></li>
                                     <li><a href="#" :class="{ active: visibility == 'people' }" @click="selectTab('people')">Medewerkers</a></li>
-                                    <li><a href="#" :class="{ active: visibility == 'education' }" @click="selectTab('education')">Onderwijsinstellingen</a></li>
+                                    <li><a href="#" :class="{ active: visibility == 'education' }" @click="selectTab('education')">Scholen</a></li>
                                 </ul>
                             </nav>
 
                         </form>
                         <ul id="results" class="list-group" >
-                            <li class="list-group-item"  v-for="(item,index) in filteredData" @click="getWalkpath(item)" v-bind:class="{ active: active == item }">
+                            <li class="result-item"  v-for="(item,index) in filteredData" @click="getWalkpath(item)" v-bind:class="{ active: active == item }">
 
 
 
@@ -32,22 +31,25 @@
 
                                 <i v-if="item.branch">{{item.branch}}</i>
                                 <i v-if="item.company">{{item.company}}</i>
-
-                                <div v-if="active == item" class="item-body">
-                                    <div class="info-location" v-if="item.room_number && item.building">Cel: {{ item.building+item.room_number }}</div>
-                                    <hr>
-                                    <div class="info-telephone" v-if="item.room_number">
-                                        {{ item.telephone }}
+                                
+                                <transition name="collapse">
+                                    <div v-if="active == item" class="item-body">
+                                        <div class="info-location" v-if="item.room_number && item.building">Cel: {{ item.building+item.room_number }}</div>
+                                        <hr>
+                                        <div class="info-telephone" v-if="item.room_number">
+                                            {{ item.telephone }}
+                                        </div>
+                                        <div class="info-email" v-if="item.room_number">
+                                            {{ item.email }}
+                                        </div>
                                     </div>
-                                    <div class="info-email" v-if="item.room_number">
-                                        {{ item.email }}
-                                    </div>
-                                </div>
+                                </transition>
+                                
                             </li>
 
                         </ul>
                         <footer>
-                            <v-link href="/" class="button_return">wtf is dit</v-link>
+                            <v-link backHome="true" href="/" class="button_return">Terug</v-link>
                         </footer>
                     </div>
 
@@ -73,13 +75,11 @@
                         </div>
                     </footer>
                 </section>
-
-
-                <keyboard :class="{ show: screenKeyboard == true }" v-model="searchString"
+                <keyboard :class="{ show: screenKeyboard == true }" @close="screenKeyboard = false" v-model="searchString"
     :layouts="[
         '{close:close}|1234567890{delete:backspace}|qwertyuiop|asdfghjkl|zxcvbnm|{space:space}'
-    ]"></keyboard>
-
+    ]"
+></keyboard>
 
         <div v-if="screenKeyboard" @click="screenKeyboard = false" class="overlay close-keyboard">
 
@@ -94,7 +94,6 @@
 
 
     var STORAGE_KEY = 'list-vuejs'
-    var list_vue = "";
     export default {
         components: {
                 MainLayout,
@@ -114,14 +113,13 @@
                 },
             }
         },
-        beforeCreate() {
+        beforeMount() {
             console.log('Component ready.');
-            this.all = localStorage.getItem(STORAGE_KEY);
+            this.all = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
         },
         created() {
             this.getAll();
             this.getJSON();
-            list_vue = this;
         },
         mounted() {
             console.log(this);
@@ -181,7 +179,6 @@
                 this.all = all;
                 localStorage.setItem(STORAGE_KEY, JSON.stringify(this.all));
             },
-
             getWalkpath: function(item) {
                 this.$root.getWalkpath(item);
                 this.active = item;
@@ -190,16 +187,10 @@
             },
             selectTab: function(tab) {
                 this.visibility = tab;
+                this.active = null;
             },
             clearKeyboard:function () {
                 this.$children[0].$children[2].clear();
-            },
-            hideKeyboard: function() {
-                // if(this.screenKeyboard == true) {
-                //     this.screenKeyboard == false;
-                // }
-
-                console.log("sfkjasfkjasbkfb");
             }
         },
 

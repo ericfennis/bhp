@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <h2>Persoonsgegevens aanpassen: {{$person->firstname}}</h2>
+    <h2>Update Person: {{$person->firstname}}</h2>
 
     <form action="/person/{{$person->id}}" method="post">
 
@@ -15,6 +15,8 @@
         {!! \Nvd\Crud\Form::input('surname','text')->model($person)->show() !!}
 
         {!! \Nvd\Crud\Form::input('profilepicture','text')->model($person)->show() !!}
+
+        {!! \Nvd\Crud\Form::input('company_id','text')->model($person)->show() !!}
 
         {!! \Nvd\Crud\Form::input('telephone','text')->model($person)->show() !!}
 

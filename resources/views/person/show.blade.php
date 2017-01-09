@@ -23,6 +23,10 @@
             <h5>{{$person->profilepicture}}</h5>
         </li>
         <li class="list-group-item">
+            <h4>Company Id</h4>
+            <h5>{{$person->company_id}}</h5>
+        </li>
+        <li class="list-group-item">
             <h4>Telephone</h4>
             <h5>{{$person->telephone}}</h5>
         </li>
@@ -46,7 +50,7 @@
             <h4>Updated At</h4>
             <h5>{{$person->updated_at}}</h5>
         </li>
-
+        
     </ul>
 
 @endsection

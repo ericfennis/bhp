@@ -79,7 +79,7 @@ $factory->define(App\Point::class, function (Faker\Generator $faker) {
 
 $factory->define(App\WalkpathPoint::class, function (Faker\Generator $faker) {
 	return [
-		'walkpath_id' => $faker->randomNumber(1),
+		'walkpath_id' => $faker->randomNumber(2),
 		'point_id' => $faker->randomNumber(1),
 		'point_order' => $faker->randomNumber(1),
 	];
