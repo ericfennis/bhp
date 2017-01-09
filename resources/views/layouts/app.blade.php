@@ -74,7 +74,7 @@
 								Punten</a>
 							</li>
 
-							<li><a href="{{ url('/point') }}">
+							<li><a href="{{ url('/facility') }}">
 								<i class="fa fa-map-o" aria-hidden="true"></i>
 								Faciliteiten</a>
 							</li>
