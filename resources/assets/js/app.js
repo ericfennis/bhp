@@ -112,6 +112,7 @@ var App = window.App = new Vue({
                 mapSource = new ol.source.ImageStatic({}),
                 routeSource = [new ol.source.Vector({}), new ol.source.Vector({}), new ol.source.Vector({}), new ol.source.Vector({})],
                 iconSource = [new ol.source.Vector({}), new ol.source.Vector({}), new ol.source.Vector({}), new ol.source.Vector({})],
+                facilitySource = [new ol.source.Vector({}), new ol.source.Vector({}), new ol.source.Vector({}), new ol.source.Vector({})],
                 letterSource = new ol.source.ImageStatic({}),
 
                 //layers waar we later misschien nog aanspraak op willen maken?
@@ -134,6 +135,9 @@ var App = window.App = new Vue({
                 }),
                 iconLayer = new ol.layer.Vector({
                     source: iconSource[currentFloor]
+                }),
+                facilityLayer = new ol.layer.Vector({
+                    source: facilitySource[currentFloor]
                 }),
                 letterLayer = new ol.layer.Image({
                     source: new ol.source.ImageStatic({
@@ -200,6 +204,37 @@ var App = window.App = new Vue({
                     console.info('Adding icon');
                     tempIconFeature.setStyle(tempIconStyle);
                     iconSource[floorNum].addFeature(tempIconFeature);
+                }
+                function addFacility(floorNum, icon, action, val, x, y){
+                    //de feature van dit icoon
+                    var tempFacilityFeature = 
+                        new ol.Feature({
+                            geometry: new ol.geom.Point([x, y]),
+                            x: x,
+                            y: y,
+                            name: icon,
+                            action: action,
+                            value: val,
+                        });
+
+                    //de style aanmaken van dit icoon
+                    var tempFacilityStyle = new ol.style.Style({
+                      image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
+                        anchor: [0.5, 0.5],
+                        //offset: 64,
+                        size: [32, 32],
+                        anchorXUnits: 'fraction',
+                        anchorYUnits: 'fraction',
+                        opacity: 0.75,
+                        scale: 1,
+                        //src: 'http://openlayers.org/en/v3.0.0/examples/data/icon.png'
+                        src: icon
+                      }))
+                    });
+
+                    console.info('Adding icon');
+                    tempFacilityFeature.setStyle(tempFacilityStyle);
+                    facilitySource[floorNum].addFeature(tempFacilityFeature);
                 }
                 function setMapSource(url){
                     mapSource = new ol.source.ImageStatic({
@@ -270,11 +305,10 @@ var App = window.App = new Vue({
                         extent: extent
                     });
                 var map = new ol.Map({
-                    layers: [mapLayer, routeLayer, iconLayer, letterLayer],
+                    layers: [mapLayer, routeLayer, iconLayer,facilityLayer, letterLayer],
                     target: 'map',
                     view: view
                 });
-
                 var mapReload = '';
 
                 //events
@@ -351,32 +385,32 @@ var App = window.App = new Vue({
                 }
 
                 //teken de toiletten
-                addIcon(0, 'img/icons/WC (Fill).png', 'toilet', 0, 182.8882180970813, 269.8107913554641);
-                addIcon(0, 'img/icons/WC (Fill).png', 'toilet', 0, 359.6649133937186, 454.37322191372243);
+                addFacility(0, 'img/icons/WC (Fill).png', 'toilet', 0, 182.8882180970813, 269.8107913554641);
+                addFacility(0, 'img/icons/WC (Fill).png', 'toilet', 0, 359.6649133937186, 454.37322191372243);
 
                 //teken alles op de begane grond
 
-                // addIcon(0, 'img/icons/Beginpunt (Fill).png', 'route-begin', 0, 87.25517739600188, 515.7997405507241);
+                // addFacility(0, 'img/icons/Beginpunt (Fill).png', 'route-begin', 0, 87.25517739600188, 515.7997405507241);
                 // addRoute(0, 87.25517739600188, 515.7997405507241, 181.77255084989517, 520.089303008371);
                 // addRoute(0, 181.77255084989517, 520.089303008371, 191.12767140564603, 425.24956209240486);
                 // addRoute(0, 191.12767140564603, 425.24956209240486, 211.60076314383846, 331.1205132058271);
-                 addIcon(0, 'img/icons/Trap (Fill).png', 'switch-floor', 1, 211.60076314383846, 331.1205132058271);//trap omhoog naar v1
+                 addFacility(0, 'img/icons/Trap (Fill).png', 'switch-floor', 1, 211.60076314383846, 331.1205132058271);//trap omhoog naar v1
 
                 // //teken alles op de eerste verdieping
-                 addIcon(1, 'img/icons/Trap (Fill).png', 'switch-floor', 0, 211.60076314383846, 331.1205132058271);//trap omlaag naar bg
-                 addIcon(1, 'img/icons/Trap (Fill).png', 'switch-floor', 2, 260.60076314383846, 351.1205132058271);//trap omhoog naar v1
+                 addFacility(1, 'img/icons/Trap (Fill).png', 'switch-floor', 0, 211.60076314383846, 331.1205132058271);//trap omlaag naar bg
+                 addFacility(1, 'img/icons/Trap (Fill).png', 'switch-floor', 2, 260.60076314383846, 351.1205132058271);//trap omhoog naar v1
 
                 // //teken alles op de eerste verdieping
-                 addIcon(2, 'img/icons/Trap (Fill).png', 'switch-floor', 1, 260.60076314383846, 351.1205132058271);//trap omlaag naar bg
+                 addFacility(2, 'img/icons/Trap (Fill).png', 'switch-floor', 1, 260.60076314383846, 351.1205132058271);//trap omlaag naar bg
                 // addRoute(1, 211.60076314383846, 331.1205132058271, 217.8126787429306, 260.46886477583973);
                 // addRoute(1, 217.8126787429306, 260.46886477583973, 425.8198910658566, 276.94793979000525);
                 // addRoute(1, 425.8198910658566, 276.94793979000525, 415.9707357590965, 369.28755355025527);
                 // addRoute(1, 415.9707357590965, 369.28755355025527, 436.9001907859601, 371.7499432498958);
                 // addRoute(1, 436.9001907859601, 371.7499432498958, 426.32169461714, 464.5669774843762);
-                // addIcon(1, 'img/icons/Eindbestemming (Fill).png', 'route-end', 0, 426.32169461714, 464.5669774843762);
+                // addFacility(1, 'img/icons/Eindbestemming (Fill).png', 'route-end', 0, 426.32169461714, 464.5669774843762);
 
                 //herkenninspunt op verdieping 1
-                addIcon(1, 'img/icons/WC (Fill).png', 'popup-sightseeing', 0, 425.8198910658566, 276.94793979000525);
+                addFacility(1, 'img/icons/WC (Fill).png', 'popup-sightseeing', 0, 425.8198910658566, 276.94793979000525);
 
                 function drawWalkpath() {
           
@@ -435,6 +469,7 @@ var App = window.App = new Vue({
                 function flyToCenter() {
                     var duration = 720;
                     var zoom = 1.7;
+                    var rotation = 0;
                     var parts = 2;
                     var called = false;
                     var viewCenter = view.getCenter();
@@ -450,7 +485,8 @@ var App = window.App = new Vue({
                         }
                         view.animate({
                           center: center,
-                          duration: duration
+                          duration: duration,
+                          rotation: rotation
                         }, callback);
                         view.animate({
                           zoom: zoom - .1,

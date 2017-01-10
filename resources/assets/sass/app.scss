@@ -476,8 +476,8 @@ main {
 .vue-keyboard {
 	position: absolute;
 	bottom: 0;
-	background: #777;
-	padding: 10px 40px;
+	background: #cccccc;
+	padding: 40px 70px;
 	z-index: 100;
 	display: none;
 	&.show {
@@ -491,28 +491,61 @@ main {
 	button {
 		border: none;
 		outline: none;
-		padding: 8px 10px;
-		min-width: 40px;
-		margin: 0 2px;
-		background: #EEE;
-		color: #666;
+		padding: 10px 20px;
+		background: #e3e3d9;
 		cursor: pointer;
 		font-family: inherit;
-		font-size: inherit;
-		border-radius: 2px;
-
+		font-size: 36px;
+		min-width: 40px;
+		text-transform: uppercase;
+		color: #666666;
+		margin: 0 2px;
+		
 		&:hover {
-			background: #E0E0E0;
+			background: #e0e0e0;
 		}
 
 		&:active {
-			background: #777;
-			color: #FFF;
+			background: #777777;
+			color: #ffffff;
 			box-shadow: inset 0 1px 4px rgba(#000, 0.1);
 		}
-
+		&[data-action="backspace"] {
+			text-indent: -9999px;
+			overflow: hidden;
+			white-space: nowrap;
+			height: 56px;
+			vertical-align: bottom;
+			line-height: 56px;
+			&:before {
+				text-indent: 0;
+				display: block;
+				font-family: 'icomoon';
+				font-size: 32px;
+				content: "\e90e";
+				line-height: 36px;
+			}
+		}
 		&[data-action="space"] {
 			padding: 8px 60px;
+		}
+		&[data-action="close"] {
+			position: absolute;
+			right: 0;
+			top: 0;
+			height:40px;
+			line-height: 29px;
+			text-indent: -9999px;
+			overflow: hidden;
+			white-space: nowrap;
+			background: none;
+			&:before {
+				text-indent: 0;
+				display: block;
+				font-family: 'icomoon';
+				font-size: 21px;
+				content: "\e919";
+			}
 		}
 	}
 }
