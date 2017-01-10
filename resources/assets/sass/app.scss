@@ -60,22 +60,22 @@ h3.event-title {
 }
 .nav-tabs > li > a {
 	border-radius:0px !important;
-	color: #4a4a4a;
+	color: #000;
 	text-transform: uppercase;
-	border:5px solid #4a4a4a;
+	border:5px solid #000;
 	margin-left:15px;
 	font-size: 25px;
 }
 
 .nav-tabs > li > a.active,
 .nav-tabs > li > a.active:hover {
-	background: #4A4A4A;
+	background: #000;
 	color:#fff;
 }
 .nav-tabs > li > a:hover {
 	background: #ddd;
-	border-color: #4a4a4a;
-	color: #4a4a4a;
+	border-color: #000;
+	color: #000;
 }
 // .nav-tabs > li {
 //   background-color: #DF4206;
@@ -129,6 +129,23 @@ main {
 				&.filled {
 					max-height:78px;
 					height:78px;
+					input {
+						background:#f9f9f9;
+					}
+					.search-button {
+						pointer-events: visible;
+						background: #ccc;
+						color: #000;
+						&:hover {
+							background:#DF4206;
+							color:#fff;
+
+						}
+						&:before {
+							content: "\e919";
+							font-size: 24px;
+						}
+					}
 				}
 			}
 			.search-button {
@@ -137,9 +154,17 @@ main {
 				margin-top: 15px;
 				height: 52px;
 				margin-right: 15px;
-				color: black;
-				background: #ccc;
-
+				color: #fff;
+				background:#DF4206;
+				pointer-events: none;
+				text-align: center;
+				&:before {
+					font-family: 'icomoon';
+					content: "\e90f";
+					line-height: 52px;
+					font-size: 28px;
+					
+				}
 			}
 		}
 		.remove-all {
@@ -187,14 +212,14 @@ main {
 				.item-image {
 					float: left;
 					img {
-						border:4px solid #4a4a4a;
+						border:4px solid #000;
 						transition: border-color .3s ease;
 					}
 				}
 				.item-body {
 					margin-left: 80px;
 					padding-left: 15px;
-					border-left: 4px solid #4a4a4a;
+					border-left: 4px solid #000;
 					h4 {
 						margin: 0 0 5px;
 						text-transform: uppercase;
@@ -291,7 +316,7 @@ main {
 				&-desc {
 					transition: height .3s ease;
 					margin: 10px 0 0;
-					color: #4A4A4A;
+					color: #000;
 					overflow: hidden;
 					max-lines: 2;
 					display: -webkit-box;
@@ -317,7 +342,7 @@ main {
 	}
 	 
 	::-webkit-scrollbar-thumb {
-	    background:#4A4A4A;
+	    background:#E3E3D9;
 	}
 	& > figure, section {
 		flex: 2;
@@ -397,7 +422,7 @@ main {
 	    display: block;
 	    margin: 5px;
 	    padding: 0;
-	    color: #DF4206;
+	    color: #000;
 	    font-size: 36px;
 	    font-weight: 700;
 	    text-decoration: none;
@@ -411,10 +436,32 @@ main {
 			color: #fff;
 			background-color: #DF4206;
 		}
+		&.ol-zoom-in {
+			&:before {
+				content: "\e90d";
+			}
+		}
+		&.ol-zoom-out {
+			&:before {
+				content: "\e90c";
+			}
+		}
 	}
 	&.ol-zoom {
 		right: 20px;
 		top: 90px;
+		button {
+			line-height: 48px;
+			text-indent: 100%;
+			white-space: nowrap;
+			overflow: hidden;
+			&:before {
+				text-indent: 0;
+				display: block;
+				font-family: 'icomoon';
+				font-size: 21px;
+			}
+		}
 	}
 	&.select-floor {
 		right: 20px;
@@ -601,7 +648,7 @@ h2 {
     } 
     &:hover {
     	text-decoration: none;
-    	color:#4A4A4A;
+    	color:#000;
     }
 }
 

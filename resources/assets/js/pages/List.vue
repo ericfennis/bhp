@@ -4,8 +4,10 @@
                     <div class="panel panel-default">
                         <form id="search" v-bind:class="{ filled: searchString.length !== 0 }">
                             <input type="text" @click="selectTab('all'),screenKeyboard = true" v-model="searchString" placeholder="Zoek naar bv: 'Kapper, naam, bedrijf etc.'" />
-
                             <div class="search-button" role="button" @click="searchString = '',clearKeyboard()"></div>
+       
+                            
+
                             <nav v-if="searchString.length == 0">
                                 <ul class="nav nav-tabs">
                                     <li><a href="#" :class="{ active: visibility == 'all' }" @click="selectTab('all')">Alle</a></li>
@@ -27,8 +29,23 @@
                                     <h4 v-if="item.branch"><b>{{item.name}}</b></h4>
                                     <h4 v-else>{{item.name}}</h4>
 
-                                    <p v-if="item.branch">{{item.branch}}</p>
-                                    <p v-if="item.company">{{item.company}}</p>
+                                    <!-- <p v-if="item.branch">
+                                    {{#if item.branch.lengt}}
+                                    {{ item.branch }}
+                                    </p>
+                                    <p v-if="item.company"
+                                    >{{ item.company }}
+                                    </p> -->
+                        
+                                        <p v-if="item.branch">
+                                            {{ item.branch }}
+                                        </p>
+
+                                        <p v-else-if="item.company">   
+                                            {{ item.company }}
+                                        </p>
+                                        <p v-else>&nbsp;</p>
+                        
                                     <transition name="collapse">
                                         <div v-if="active == item" class="item-collapse">
                                             <div class="info-location" v-if="item.room_number && item.building">Cel: {{ item.building+item.room_number }}</div>
