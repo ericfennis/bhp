@@ -22,40 +22,40 @@ var App = window.App = new Vue({
 
     el: '#app',
     data: {
-    	currentRoute: window.location.pathname,
+        currentRoute: window.location.pathname,
 
-    	walkPath: [],
-  	},
+        walkPath: [],
+    },
     computed: {
-	    ViewComponent () {
-			const matchingView = routes[this.currentRoute]
-			return matchingView
-			? require('./pages/' + matchingView + '.vue')
-			: require('./pages/404.vue');
-		}
-	  },
-	created() {
-    	console.log('vue loaded');
+        ViewComponent () {
+            const matchingView = routes[this.currentRoute]
+            return matchingView
+            ? require('./pages/' + matchingView + '.vue')
+            : require('./pages/404.vue');
+        }
+      },
+    created() {
+        console.log('vue loaded');
     },
     methods: {
-    	getWalkpath: function(item) {
+        getWalkpath: function(item) {
                 var resource = this.$resource('api/walkpath{/id}'),
-                	itemID = null;
+                    itemID = null;
 
-				  // GET someItem/1
-				  if(item.company_id) {
-                    	//console.log(item.company_id);
-                    	itemID = item.company_id;
+                  // GET someItem/1
+                  if(item.company_id) {
+                        //console.log(item.company_id);
+                        itemID = item.company_id;
 
-	                } else if(item.id) {
-	                    //console.log(item.id);
-	                    itemID = item.id;
-	                }
-				  resource.get({id: itemID}).then((response) => {
-				    this.walkPath = response.body;
+                    } else if(item.id) {
+                        //console.log(item.id);
+                        itemID = item.id;
+                    }
+                  resource.get({id: itemID}).then((response) => {
+                    this.walkPath = response.body;
                     //console.log(this.walkPath);
                     drawWalkpath();
-				  });                
+                  });                
         },
         currentView: function() {
             return routes[this.currentRoute];
@@ -65,7 +65,7 @@ var App = window.App = new Vue({
         }
 
     },
-	render (h) { 
+    render (h) { 
         return h(this.ViewComponent) 
     }
     
@@ -119,14 +119,14 @@ var App = window.App = new Vue({
                 mapLayer = new ol.layer.Image({
                     source: new ol.source.ImageStatic({
                         projection: projection,
-                        imageExtent: imageExtent,
+                        imageExtent: extent
                     })
                 }),
                 routeLayer = new ol.layer.Vector({
                     source: routeSource[currentFloor],
                     style: new ol.style.Style({
                         stroke: new ol.style.Stroke({
-                            color: '#222',
+                            color: '#222222',
                             width: 5,
                             lineCap: 0,       
                             lineDash: [5,2.5]
@@ -147,8 +147,8 @@ var App = window.App = new Vue({
                 }),
                 container = document.getElementById('popup'),
                 content = document.getElementById('popup-content'),
-                closer = document.getElementById('popup-closer');
-
+                button = document.getElementById('popup-action');
+                
                 function drawLine(x, y, point){
                     if(prevXY[0] == 0 && prevXY[1] == 0){
                         newRoute.push(point);
@@ -262,8 +262,8 @@ var App = window.App = new Vue({
                 }
                 function setRouteIconSource(floorNum){
                     routeLayer.setSource(routeSource[floorNum]);
-                    iconLayer.setSource(iconSource[floorNum]);
                     facilityLayer.setSource(facilitySource[floorNum]);
+                    iconLayer.setSource(iconSource[floorNum]);
                 }
                 function setFloor(floorNum){
                     var floor_buttons = document.getElementsByClassName("select-floor-button");
@@ -324,17 +324,19 @@ var App = window.App = new Vue({
                     layers: [mapLayer, routeLayer, iconLayer,facilityLayer, letterLayer],
                     overlays: [overlay],
                     target: 'map',
-                    view: view
+                    view: view,
                 });
                 var mapReload = '';
+
+                
                 //events
                 map.on('click', function(evt){
                     var lonlat = ol.proj.transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326');
 
                     //moet hier één of andereg gekke factor toepassen, anders trekken de x en y scheef? :/
-
                     var lon = lonlat[0]*111319.49079327356;//naar rechts is groter
                     var lat = lonlat[1]*111324.05140791999;//omhoog is kleiner
+
                     //console.info('Click lonlat [' + lon + ', ' + lat + ']');
                     
                     //check of er een icoon op deze locatie staat
@@ -362,6 +364,16 @@ var App = window.App = new Vue({
                     }
                     else {
                         console.info('[Click] No features at pixel, lonlat ' + lon + ', ' + lat);
+                        if(drawIcons == true){
+                            addIcon(currentFloor, 'img/icons/blackdot.png', 'draw-line', iNum++, lon, lat);
+                        }
+        //                 var coordinate = evt.coordinate;
+        // // var hdms = ol.proj.transform(
+        // //     coordinate, 'EPSG:3857', 'EPSG:4326');
+
+        //             content.innerHTML = '<p>You clicked here:</p><code>' + coordinate +
+        //                 '</code>';
+        //             overlay.setPosition(coordinate);
                     }
                     
                 });
@@ -411,10 +423,13 @@ var App = window.App = new Vue({
 
                 // //teken alles op de eerste verdieping
                  addFacility(1, 'img/icons/trap.svg', 'switch-floor', 0, 211.60076314383846, 331.1205132058271);//trap omlaag naar bg
-                 addFacility(1, 'img/icons/trap.svg', 'switch-floor', 2, 260.60076314383846, 351.1205132058271);//trap omhoog naar v1
+
+
+                 
+                 addFacility(1, 'img/icons/trap.svg', 'switch-floor', 2, 640.1952085804634, 588.6926147074832);//trap omhoog naar v1
 
                 // //teken alles op de eerste verdieping
-                 addFacility(2, 'img/icons/trap.svg', 'switch-floor', 1, 260.60076314383846, 351.1205132058271);//trap omlaag naar bg
+                 addFacility(2, 'img/icons/trap.svg', 'switch-floor', 1, 640.1952085804634, 588.6926147074832);//trap omlaag naar bg
                 // addRoute(1, 211.60076314383846, 331.1205132058271, 217.8126787429306, 260.46886477583973);
                 // addRoute(1, 217.8126787429306, 260.46886477583973, 425.8198910658566, 276.94793979000525);
                 // addRoute(1, 425.8198910658566, 276.94793979000525, 415.9707357590965, 369.28755355025527);
@@ -450,25 +465,32 @@ var App = window.App = new Vue({
                                 if(floor == 0) {
                                     //set startpunt
                                     //addIcon(0, 'img/icons/beginpunt.png', 'route-begin', 0, points[floor][0][0], points[floor][0][1]);
-                                    console.log(points[floor][0][0], points[floor][0][1]);
-                                     var text = "Dit is beginpunt";
-                                     addPopup(text,[points[floor][0][0], points[floor][0][1]]);
+                                    //console.log(points[floor][0][0], points[floor][0][1]);
+                                    // var text = "Dit is beginpunt";
+                                    // addPopup(points[floor][0][0], points[floor][0][1]);
                                 }
+                                // if(totalFloors > 1) {
+                                //     //console.log(points[floor][last_obj][0]);
+                                //     // if((points.length - 1) !== floor){
+                                //     //    // addIcon(floor, 'img/icons/Trap (Line).png', 'switch-floor', floor+1, points[floor][lastInArray][0], points[floor][lastInArray][1]);
+                                //     //    var text = "Ga de trap op";
+                                //     //    addPopup(text,points[floor][lastInArray][0], points[floor][lastInArray][1]);
+                                //     // }
+                                    
 
-                                if(totalFloors > 1) {
-                                    //console.log(points[floor][last_obj][0]);
-                                    if((totalFloors - 1) !== floor){
-                                        addIcon(floor, 'img/icons/trap.svg', 'switch-floor', floor+1, points[floor][lastInArray][0], points[floor][lastInArray][1]);
+                                //     // if(floor !== 0) {
+                                //     //     addIcon(floor, 'img/icons/Trap (Line).png', 'switch-floor', floor-1, points[floor][0][0], points[floor][0][1]);
+                                //     // }
+                                    
+                                // }
+                                if((totalFloors - 1) > floor) {
+                                    if((totalFloors - 1) !== floor) {
+                                        var text = "Ga naar de volgende verdieping";
+                                    var button = document.createElement('div');
+                                    addPopup(text,[points[floor][lastInArray][0], points[floor][lastInArray][1]]);
                                     }
                                     
                                 }
-                                //     if(floor !== 0) {
-                                //         addIcon(floor, 'img/icons/Trap (Line).png', 'switch-floor', floor-1, points[floor][0][0], points[floor][0][1]);
-                                //     }
-                                    
-
-                                // }
-                             
                                 if((totalFloors - 1) == floor) {
                                     addIcon(floor, 'img/icons/eindpunt.svg', 'route-end', 0, points[floor][lastInArray][0], points[floor][lastInArray][1]);
                                     //console.log(floor);
@@ -517,13 +539,12 @@ var App = window.App = new Vue({
                     }
 
                   }
-        map.on('singleclick', function(evt) {
-        var coordinate = evt.coordinate;
-        //var hdms = ol.coordinate.toStringHDMS();
 
-        content.innerHTML = '<p>You clicked here:</p><code>' + coordinate +
-            '</code>';
-        overlay.setPosition(coordinate);
-      });
+                  button.onclick = function() {
+                    overlay.setPosition(undefined);
+                    setFloor(currentFloor+1);
+                    button.blur();
+                    return false;
+                  };
                 //alles bedacht, stel zichtbare verdieping in
                 setFloor(0);
