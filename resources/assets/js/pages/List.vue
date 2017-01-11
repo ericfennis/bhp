@@ -76,23 +76,25 @@
                 </aside>
                 <section>
                     <footer>
-                        <div class="">
                           <div class="legenda_container">
                             <div class="legenda_text">
                             <h2>Legenda</h2>
                             </div>
                             <div class="legenda_wrapper">
                               <ul class="legend">
-                                <li class="eindpunt">Eindpunt</li>
-                                <li class="trap">Trap</li>
-                                <li class="herkenningspunt">Herkenningspunt</li>
+                                    <li class="beginpunt">U bevindt zich hier</li>
+                                    <li class="eindpunt">Eindpunt</li>
                               </ul>
                               <ul class="legend">
+                                <li class="trap">Trap</li>
                                 <li class="lift">Lift</li>
+                                <!-- <li class="herkenningspunt">Herkenningspunt</li> -->
+                              </ul>
+                              <ul class="legend">
+                                
                                 <li class="wc">WC</li>
                               </ul>
                           </div>
-                        </div>
                     </footer>
                 </section>
                 <keyboard :class="{ show: screenKeyboard == true }" @close="screenKeyboard = false" v-model="searchString"

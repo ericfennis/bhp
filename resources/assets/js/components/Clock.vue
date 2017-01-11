@@ -3,8 +3,8 @@
 </template>
 
 <script>
-    let now = new Date();
     
+    var now = new Date();
     function getZeroPad (n) {
       return (parseInt(n, 10) >= 10 ? '' : '0') + n
     }
@@ -21,6 +21,7 @@
         },
         methods: {
             updateDateTime () {
+                now = new Date();
                 this.hours = now.getHours()
                 this.minutes = getZeroPad(now.getMinutes()) 
             }

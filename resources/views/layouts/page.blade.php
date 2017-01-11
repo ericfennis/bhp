@@ -26,6 +26,10 @@
 <body>
    @yield('content')
    <figure id="map" class="map"></figure>
+   <div id="popup" class="ol-popup">
+      <a href="#" id="popup-closer" class="ol-popup-closer"></a>
+      <div id="popup-content"></div>
+    </div>
    <!-- Scripts -->
 	<script src="/js/app.js"></script>
 </body>

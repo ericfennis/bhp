@@ -471,6 +471,54 @@ pre {
   border: 2px dotted rgba(0, 60, 136, 0.7);
 }
 
+.ol-popup {
+  position: absolute;
+  background-color: white;
+  -webkit-filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.2));
+  filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.2));
+  padding: 15px;
+  border-radius: 10px;
+  border: 1px solid #cccccc;
+  bottom: 12px;
+  left: -50px;
+  min-width: 280px;
+}
+
+.ol-popup:after, .ol-popup:before {
+  top: 100%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+}
+
+.ol-popup:after {
+  border-top-color: white;
+  border-width: 10px;
+  left: 48px;
+  margin-left: -10px;
+}
+
+.ol-popup:before {
+  border-top-color: #cccccc;
+  border-width: 11px;
+  left: 48px;
+  margin-left: -11px;
+}
+
+.ol-popup-closer {
+  text-decoration: none;
+  position: absolute;
+  top: 2px;
+  right: 8px;
+}
+
+.ol-popup-closer:after {
+  content: "✖";
+}
+
 /*!
  * Bootstrap v3.3.7 (http://getbootstrap.com)
  * Copyright 2011-2016 Twitter, Inc.
@@ -8202,8 +8250,13 @@ button.close {
   border-style: none !important;
 }
 
+html {
+  zoom: reset;
+}
+
 html, body {
   height: 100%;
+  width: 100%;
   position: relative;
   color: #000;
 }
@@ -8215,6 +8268,7 @@ main {
   -webkit-box-direction: normal;
   flex-direction: column;
   height: 100vh;
+  min-height: 100%;
   flex-flow: row wrap;
   overflow: hidden;
 }
@@ -8415,7 +8469,7 @@ main aside footer {
   height: 160px;
   min-height: 160px;
   max-height: 160px;
-  background: #E3E3D9;
+  background: #e1e1e0;
 }
 
 main aside #calendar {
@@ -8520,7 +8574,7 @@ main section footer {
   left: 0;
   right: 0;
   bottom: 0;
-  background: #E3E3D9;
+  background: #e1e1e0;
   z-index: 20;
 }
 
@@ -8573,8 +8627,8 @@ main + #map .ol-control {
   right: 0;
   bottom: 0;
   left: 0;
-  height: 100vh;
-  width: 100vw;
+  height: 100%;
+  width: 100%;
   z-index: 0;
 }
 
@@ -8872,7 +8926,8 @@ h2 {
 }
 
 .legenda_container {
-  right: 20px;
+  position: absolute;
+  right: 30px;
 }
 
 .legenda_text {
@@ -8880,21 +8935,14 @@ h2 {
 }
 
 .legenda_wrapper {
-  margin-left: 250px;
+  margin-left: 64px;
+  float: left;
 }
 
 .legend {
   list-style: none;
   float: left;
-  margin: 10px 150px 10px 30px;
-}
-
-.legend li {
-  margin-right: 10px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  list-style: none;
-  text-transform: uppercase;
+  padding: 20px;
 }
 
 .legend span {
@@ -8904,49 +8952,40 @@ h2 {
   margin: 2px;
 }
 
-.legend li.eindpunt {
-  background: url("../img/icons/eindpunt.png");
+.legend li {
+  height: 48px;
+  padding: 0 15px 0 64px;
   background-repeat: no-repeat;
-  width: 32px;
-  height: 32px;
-  padding-left: 45px;
-  line-height: 35px;
+  background-size: 48px;
+  margin: 5px 30px 15px 0;
+  line-height: 48px;
+  list-style: none;
+  text-transform: uppercase;
+  font-size: 25px;
+}
+
+.legend li.beginpunt {
+  background-image: url("../img/icons/beginpunt.svg");
+}
+
+.legend li.eindpunt {
+  background-image: url("../img/icons/eindpunt.svg");
 }
 
 .legend li.trap {
-  background: url("../img/icons/trap.png");
-  background-repeat: no-repeat;
-  width: 32px;
-  height: 32px;
-  padding-left: 45px;
-  line-height: 35px;
+  background-image: url("../img/icons/trap.svg");
 }
 
 .legend li.lift {
-  background: url("../img/icons/lift.png");
-  background-repeat: no-repeat;
-  width: 32px;
-  height: 32px;
-  padding-left: 45px;
-  line-height: 35px;
+  background-image: url("../img/icons/lift.svg");
 }
 
 .legend li.herkenningspunt {
-  background: url("../img/icons/herkenningspunt.png");
-  background-repeat: no-repeat;
-  width: 32px;
-  height: 32px;
-  padding-left: 45px;
-  line-height: 35px;
+  background-image: url("../img/icons/herkenningspunt.png");
 }
 
 .legend li.wc {
-  background: url("../img/icons/wc.png");
-  background-repeat: no-repeat;
-  width: 32px;
-  height: 32px;
-  padding-left: 45px;
-  line-height: 35px;
+  background-image: url("../img/icons/toilet.svg");
 }
 
 .panel {
