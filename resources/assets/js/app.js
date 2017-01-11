@@ -119,14 +119,14 @@ var App = window.App = new Vue({
                 mapLayer = new ol.layer.Image({
                     source: new ol.source.ImageStatic({
                         projection: projection,
-                        imageExtent: extent
+                        imageExtent: imageExtent,
                     })
                 }),
                 routeLayer = new ol.layer.Vector({
                     source: routeSource[currentFloor],
                     style: new ol.style.Style({
                         stroke: new ol.style.Stroke({
-                            color: '#222222',
+                            color: '#222',
                             width: 5,
                             lineCap: 0,       
                             lineDash: [5,2.5]
@@ -144,8 +144,11 @@ var App = window.App = new Vue({
                         projection: projection,
                         imageExtent: imageExtent
                     })
-                });
-                
+                }),
+                container = document.getElementById('popup'),
+                content = document.getElementById('popup-content'),
+                closer = document.getElementById('popup-closer');
+
                 function drawLine(x, y, point){
                     if(prevXY[0] == 0 && prevXY[1] == 0){
                         newRoute.push(point);
@@ -235,6 +238,12 @@ var App = window.App = new Vue({
                     tempFacilityFeature.setStyle(tempFacilityStyle);
                     facilitySource[floorNum].addFeature(tempFacilityFeature);
                 }
+                function addPopup(text,coordinate) {
+
+                    content.innerHTML = '<p>' + text +
+                        '</p>';
+                    overlay.setPosition(coordinate);
+                }
                 function setMapSource(url){
                     mapSource = new ol.source.ImageStatic({
                         url: url,
@@ -254,6 +263,7 @@ var App = window.App = new Vue({
                 function setRouteIconSource(floorNum){
                     routeLayer.setSource(routeSource[floorNum]);
                     iconLayer.setSource(iconSource[floorNum]);
+                    facilityLayer.setSource(facilitySource[floorNum]);
                 }
                 function setFloor(floorNum){
                     var floor_buttons = document.getElementsByClassName("select-floor-button");
@@ -295,6 +305,13 @@ var App = window.App = new Vue({
                     setRouteIconSource(floorNum);
                     console.info("Switched to floor " + floorNum);  
                 }
+                var overlay = new ol.Overlay(/** @type {olx.OverlayOptions} */ ({
+                    element: container,
+                    autoPan: true,
+                    autoPanAnimation: {
+                      duration: 250
+                    }
+                  }));
                  var view = new ol.View({
                         projection: projection,
                         minZoom: 1.5,
@@ -305,6 +322,7 @@ var App = window.App = new Vue({
                     });
                 var map = new ol.Map({
                     layers: [mapLayer, routeLayer, iconLayer,facilityLayer, letterLayer],
+                    overlays: [overlay],
                     target: 'map',
                     view: view
                 });
@@ -314,9 +332,9 @@ var App = window.App = new Vue({
                     var lonlat = ol.proj.transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326');
 
                     //moet hier één of andereg gekke factor toepassen, anders trekken de x en y scheef? :/
+
                     var lon = lonlat[0]*111319.49079327356;//naar rechts is groter
                     var lat = lonlat[1]*111324.05140791999;//omhoog is kleiner
-
                     //console.info('Click lonlat [' + lon + ', ' + lat + ']');
                     
                     //check of er een icoon op deze locatie staat
@@ -344,9 +362,6 @@ var App = window.App = new Vue({
                     }
                     else {
                         console.info('[Click] No features at pixel, lonlat ' + lon + ', ' + lat);
-                        if(drawIcons == true){
-                            addIcon(currentFloor, 'img/icons/blackdot.png', 'draw-line', iNum++, lon, lat);
-                        }
                     }
                     
                 });
@@ -436,19 +451,24 @@ var App = window.App = new Vue({
                                     //set startpunt
                                     //addIcon(0, 'img/icons/beginpunt.png', 'route-begin', 0, points[floor][0][0], points[floor][0][1]);
                                     console.log(points[floor][0][0], points[floor][0][1]);
+                                     var text = "Dit is beginpunt";
+                                     addPopup(text,[points[floor][0][0], points[floor][0][1]]);
                                 }
-                                // if(points.length > 1) {
-                                //     //console.log(points[floor][last_obj][0]);
-                                //     if((points.length - 1) !== floor){
-                                //         addIcon(floor, 'img/icons/Trap (Line).png', 'switch-floor', floor+1, points[floor][lastInArray][0], points[floor][lastInArray][1]);
-                                //     }
-                                    
 
+                                if(totalFloors > 1) {
+                                    //console.log(points[floor][last_obj][0]);
+                                    if((totalFloors - 1) !== floor){
+                                        addIcon(floor, 'img/icons/trap.svg', 'switch-floor', floor+1, points[floor][lastInArray][0], points[floor][lastInArray][1]);
+                                    }
+                                    
+                                }
                                 //     if(floor !== 0) {
                                 //         addIcon(floor, 'img/icons/Trap (Line).png', 'switch-floor', floor-1, points[floor][0][0], points[floor][0][1]);
                                 //     }
                                     
+
                                 // }
+                             
                                 if((totalFloors - 1) == floor) {
                                     addIcon(floor, 'img/icons/eindpunt.svg', 'route-end', 0, points[floor][lastInArray][0], points[floor][lastInArray][1]);
                                     //console.log(floor);
@@ -497,6 +517,13 @@ var App = window.App = new Vue({
                     }
 
                   }
+        map.on('singleclick', function(evt) {
+        var coordinate = evt.coordinate;
+        //var hdms = ol.coordinate.toStringHDMS();
 
+        content.innerHTML = '<p>You clicked here:</p><code>' + coordinate +
+            '</code>';
+        overlay.setPosition(coordinate);
+      });
                 //alles bedacht, stel zichtbare verdieping in
                 setFloor(0);
