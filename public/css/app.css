@@ -8952,19 +8952,20 @@ h2 {
 
 .ol-popup {
   position: absolute;
-  background-color: #fff;
-  border: 4px solid #000;
+  background-color: rgba(0, 0, 0, 0.5);
   padding: 15px;
-  bottom: 15px;
-  left: -140px;
+  bottom: 40px;
+  left: -40px;
   min-width: 280px;
   -webkit-filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.2));
   filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.2));
   text-align: center;
+  color: #fff;
 }
 
-.popup-content {
+#popup-content {
   font-size: 24px;
+  line-height: 32px;
 }
 
 .ol-popup:after, .ol-popup:before {
@@ -8978,9 +8979,9 @@ h2 {
 }
 
 .ol-popup:after {
-  border-top-color: #000;
+  border-top-color: rgba(0, 0, 0, 0.5);
   border-width: 15px;
-  margin-left: -15px;
+  margin-left: -70px;
 }
 
 .ol-popup-action {
@@ -8989,7 +8990,8 @@ h2 {
   font-size: 32px;
   display: block;
   padding: 5px 20px;
-  margin: 0 30px;
+  margin: 10px 15px 0;
+  float: right;
 }
 
 .ol-popup-action:hover {

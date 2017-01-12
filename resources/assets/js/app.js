@@ -145,10 +145,8 @@ var App = window.App = new Vue({
                         imageExtent: imageExtent
                     })
                 }),
-                container = document.getElementById('popup'),
-                content = document.getElementById('popup-content'),
-                button = document.getElementById('popup-action');
-                
+                container = document.getElementById('popups');
+
                 function drawLine(x, y, point){
                     if(prevXY[0] == 0 && prevXY[1] == 0){
                         newRoute.push(point);
@@ -238,12 +236,7 @@ var App = window.App = new Vue({
                     tempFacilityFeature.setStyle(tempFacilityStyle);
                     facilitySource[floorNum].addFeature(tempFacilityFeature);
                 }
-                function addPopup(text,coordinate) {
-
-                    content.innerHTML = '<p>' + text +
-                        '</p>';
-                    overlay.setPosition(coordinate);
-                }
+                
                 function setMapSource(url){
                     mapSource = new ol.source.ImageStatic({
                         url: url,
@@ -267,36 +260,45 @@ var App = window.App = new Vue({
                 }
                 function setFloor(floorNum){
                     var floor_buttons = document.getElementsByClassName("select-floor-button");
+                    var popUp = document.getElementsByClassName("ol-popup");
+                    //console.log(popUp);
                     for (var fl = 0; fl <= 3; fl++) {
                         floor_buttons[fl].className = "select-floor-button";
+                        if(popUp) {
+                            popUp[fl] = 0;
+                        }
                     }
                     switch(floorNum) {
                         case 3:             //switch naar verdieping 2
                                             setMapSource("/img/floor3.png"); 
                                             setLetterSource("/img/letters3.png"); 
                                             floorNum = 3;
-                                            document.getElementById('select-floor-3').className = "select-floor-button active";
+                                            floor_buttons[3].className = "select-floor-button active";
+                                            popUp[3] ? popUp['popup-3'].style.display = 'block': '';
                         break;
 
                         case 2:             //switch naar verdieping 2
                                             setMapSource("/img/floor2.png"); 
                                             setLetterSource("/img/letters2.png"); 
                                             floorNum = 2;
-                                            document.getElementById("select-floor-2").className = "select-floor-button active"; 
+                                            floor_buttons[2].className = "select-floor-button active"; 
+                                            popUp[2] ? popUp['popup-2'].style.display = 'block': '';
                         break;
 
                         case 1:             //switch naar verdieping 1
                                             setMapSource("/img/floor1.png"); 
                                             setLetterSource("/img/letters2.png"); 
                                             floorNum = 1;
-                                            document.getElementById("select-floor-1").className = "select-floor-button active"; 
+                                            floor_buttons[1].className = "select-floor-button active";
+                                            popUp[1] ? popUp['popup-1'].style.display = 'block': '';
                         break;
 
                         case 0: default:    //switch naar beganegrond
                                             setMapSource("/img/floor0.png"); 
                                             setLetterSource("/img/letters1.png"); 
                                             floorNum = 0;
-                                            document.getElementById("select-floor-0").className = "select-floor-button active"; 
+                                            floor_buttons[0].className = "select-floor-button active";
+                                            popUp[0] ? popUp['popup-0'].style.display = 'block': '';
                         break;
                     } 
                     currentFloor = floorNum;    
@@ -305,13 +307,7 @@ var App = window.App = new Vue({
                     setRouteIconSource(floorNum);
                     console.info("Switched to floor " + floorNum);  
                 }
-                var overlay = new ol.Overlay(/** @type {olx.OverlayOptions} */ ({
-                    element: container,
-                    autoPan: true,
-                    autoPanAnimation: {
-                      duration: 250
-                    }
-                  }));
+                
                  var view = new ol.View({
                         projection: projection,
                         minZoom: 1.5,
@@ -322,7 +318,7 @@ var App = window.App = new Vue({
                     });
                 var map = new ol.Map({
                     layers: [mapLayer, routeLayer, iconLayer,facilityLayer, letterLayer],
-                    overlays: [overlay],
+                    //overlays: [overlay0,overlay1,overlay2,overlay3],
                     target: 'map',
                     view: view,
                 });
@@ -391,7 +387,39 @@ var App = window.App = new Vue({
                     setFloor_buttons.appendChild(floorButton);
                     
                 }
-             
+             function addPopup(floor,text,coordinate) {
+                    console.log(floor);
+                     var popup = document.createElement('div');
+                    popup.className = 'ol-popup';
+                    popup.id = 'popup-'+floor;
+                    popup.style.display = 'none';
+                    //popup.setAttribute('data-floor',floor);
+                    var overlay = [];
+                    popup.innerHTML = '<div id="popup-content">'+text+'</div><a href="#" id="popup-action"  class="ol-popup-action">OK</a>';
+                     overlay[floor] = new ol.Overlay(({
+                        element: popup,
+                        autoPan: true,
+                        autoPanAnimation: {
+                          duration: 250
+                        }
+                    }));
+                     popup.ontouchstart=function() {
+                        overlay[floor].setPosition(undefined);
+                        setFloor(floor+1);
+                        popup.blur();
+                        return false;
+                    };
+                     popup.onclick=function() {
+                        overlay[floor].setPosition(undefined);
+                        setFloor(floor+1);
+                        popup.blur();
+                        return false;
+                    };
+                    
+                    map.addOverlay(overlay[floor]);
+                    overlay[floor].setPosition(coordinate);
+
+                }
                 function selectFloor(f) {
                     document.getElementById("select-floor-"+f).onclick=function() {
                         setFloor(f);
@@ -485,9 +513,9 @@ var App = window.App = new Vue({
                                 // }
                                 if((totalFloors - 1) > floor) {
                                     if((totalFloors - 1) !== floor) {
-                                        var text = "Ga naar de volgende verdieping";
-                                    var button = document.createElement('div');
-                                    addPopup(text,[points[floor][lastInArray][0], points[floor][lastInArray][1]]);
+                                        var text = "Ga hier naar de volgende verdieping";
+
+                                        addPopup(floor,text,[points[floor][lastInArray][0], points[floor][lastInArray][1]]);
                                     }
                                     
                                 }
@@ -539,12 +567,5 @@ var App = window.App = new Vue({
                     }
 
                   }
-
-                  button.onclick = function() {
-                    overlay.setPosition(undefined);
-                    setFloor(currentFloor+1);
-                    button.blur();
-                    return false;
-                  };
                 //alles bedacht, stel zichtbare verdieping in
                 setFloor(0);

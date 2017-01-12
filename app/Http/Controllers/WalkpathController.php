@@ -40,23 +40,15 @@ class WalkpathController extends Controller
             //$points = array_merge($points,array($coords));
 
         }
-        
-        
         foreach ($points as $floorKey => $arrayPoints) {
             if(!empty($arrayPoints)) {
                 $endPointInArray = end($arrayPoints);
-            }
-            if($floorKey == 0) {
                 
-                // $return = $points;
-                // $return = $floorKey;
-                array_unshift($points[$floorKey+1],$endPointInArray);
+                if(!empty($points[$floorKey+1])) {
+                    array_unshift($points[$floorKey+1],$endPointInArray);
+                }
             }
-             
-            // if(!empty($arrayPoints)) {
-            //     $endPointInArray = ;
-            // }
-            //$return = $endPointInArray;
+       
         }
         // return Points
     	return $points;
