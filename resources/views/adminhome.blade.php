@@ -31,8 +31,10 @@
 
 			<div class="col-md-2">
 				<center>
-					<i class="fa fa-map-o fa-5x" aria-hidden="true"></i><br />
-					Faciliteiten
+					<a href="/facility">
+						<i class="fa fa-map-o fa-5x" aria-hidden="true"></i><br />
+						Faciliteiten
+					</div>
 				</center>
 			</div>
 
@@ -63,10 +65,6 @@
 						Uitloggen
 					</a>
 				</center>
-			</div>
-
-			<div class="col-md-12">
-				© Copyright Blokhuispoort
 			</div>
 		</div>
 </div>

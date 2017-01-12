@@ -1,22 +1,20 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Person;
-use App\Company;
+use App\Facility;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-class PersonController extends Controller
+class FacilityController extends Controller
 {
-    public $viewDir = "person";
+    public $viewDir = "facility";
 
     public function index()
     {
-        $records = Person::findRequested();
-		$companies = Company::all();
-        return $this->view("index", array('records' => $records,  'companies' => $companies));
+        $records = Facility::findRequested();
+        return $this->view( "index", ['records' => $records] );
     }
 
     /**
@@ -37,11 +35,11 @@ class PersonController extends Controller
      */
     public function store( Request $request )
     {
-        $this->validate($request, Person::validationRules());
+        $this->validate($request, Facility::validationRules());
 
-        Person::create($request->all());
+        Facility::create($request->all());
 
-        return redirect('/person');
+        return redirect('/facility');
     }
 
     /**
@@ -49,9 +47,9 @@ class PersonController extends Controller
      *
      * @return  \Illuminate\Http\Response
      */
-    public function show(Request $request, Person $person)
+    public function show(Request $request, Facility $facility)
     {
-        return $this->view("show",['person' => $person]);
+        return $this->view("show",['facility' => $facility]);
     }
 
     /**
@@ -59,10 +57,9 @@ class PersonController extends Controller
      *
      * @return  \Illuminate\Http\Response
      */
-    public function edit(Request $request, Person $person)
+    public function edit(Request $request, Facility $facility)
     {
-		$companies = Company::all();
-        return $this->view( "edit", array('person' => $person, 'companies' => $companies));
+        return $this->view( "edit", ['facility' => $facility] );
     }
 
     /**
@@ -71,23 +68,23 @@ class PersonController extends Controller
      * @param    \Illuminate\Http\Request  $request
      * @return  \Illuminate\Http\Response
      */
-    public function update(Request $request, Person $person)
+    public function update(Request $request, Facility $facility)
     {
         if( $request->isXmlHttpRequest() )
         {
             $data = [$request->name  => $request->value];
-            $validator = \Validator::make( $data, Person::validationRules( $request->name ) );
+            $validator = \Validator::make( $data, Facility::validationRules( $request->name ) );
             if($validator->fails())
                 return response($validator->errors()->first( $request->name),403);
-            $person->update($data);
+            $facility->update($data);
             return "Record updated";
         }
 
-        $this->validate($request, Person::validationRules());
+        $this->validate($request, Facility::validationRules());
 
-        $person->update($request->all());
+        $facility->update($request->all());
 
-        return redirect('/person');
+        return redirect('/facility');
     }
 
     /**
@@ -95,10 +92,10 @@ class PersonController extends Controller
      *
      * @return  \Illuminate\Http\Response
      */
-    public function destroy(Request $request, Person $person)
+    public function destroy(Request $request, Facility $facility)
     {
-        $person->delete();
-        return redirect('/person');
+        $facility->delete();
+        return redirect('/facility');
     }
 
     protected function view($view, $data = [])

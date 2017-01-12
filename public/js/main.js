@@ -2,7 +2,7 @@
 window.app = {};
 var app = window.app;
 
-//verscheidene bijnodigdheden voor routetekenen e.d.
+//verscheidene benodigdheden voor routetekenen e.d.
 var mode = '';
 var defaultIconAction = 'none'
 var iNum = 0;
@@ -166,6 +166,13 @@ function setMode(newMode){
 			getAllIcons(); //in deze modus hebben we de points nodig
 			break;
 
+		case 'setPoint':
+			console.info("Switched to set-point-mode");
+			mode = "setPoint";
+			defaultIconAction = "set-point";
+			getAllIcons(); //in deze modus hebben we de points nodig
+			break;
+
 		case '':	default:
 			mode = '';
 			defaultAction = '';
@@ -181,34 +188,34 @@ function setFloor(floorNum){
 
 	switch(floorNum) {
         case 3:             //switch naar verdieping 2
-                            setMapSource("/img/floor3.png"); 
-                            setLetterSource("/img/letters3.png"); 
+                            setMapSource("/img/floor3.png");
+                            setLetterSource("/img/letters3.png");
                             floorNum = 3;
                             document.getElementById('select-floor-3').className = "select-floor-button active";
         break;
 
         case 2:             //switch naar verdieping 2
-                            setMapSource("/img/floor2.png"); 
-                            setLetterSource("/img/letters2.png"); 
+                            setMapSource("/img/floor2.png");
+                            setLetterSource("/img/letters2.png");
                             floorNum = 2;
-                            document.getElementById("select-floor-2").className = "select-floor-button active"; 
+                            document.getElementById("select-floor-2").className = "select-floor-button active";
         break;
 
         case 1:             //switch naar verdieping 1
-                            setMapSource("/img/floor1.png"); 
-                            setLetterSource("/img/letters2.png"); 
+                            setMapSource("/img/floor1.png");
+                            setLetterSource("/img/letters2.png");
                             floorNum = 1;
-                            document.getElementById("select-floor-1").className = "select-floor-button active"; 
+                            document.getElementById("select-floor-1").className = "select-floor-button active";
         break;
 
         case 0: default:    //switch naar beganegrond
-                            setMapSource("/img/floor0.png"); 
-                            setLetterSource("/img/letters1.png"); 
+                            setMapSource("/img/floor0.png");
+                            setLetterSource("/img/letters1.png");
                             floorNum = 0;
-                            document.getElementById("select-floor-0").className = "select-floor-button active"; 
+                            document.getElementById("select-floor-0").className = "select-floor-button active";
         break;
-    } 
-    currentFloor = floorNum;    
+    }
+    currentFloor = floorNum;
 
 	//afbeeldingen zijn omgezet, pak nu ook de juiste routes en iconen
 	setRouteIconSource(floorNum);
@@ -232,7 +239,7 @@ var map = new ol.Map({
 map.on('click', function(evt){
 	var lonlat = ol.proj.transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326');
 
-	//moet hier één of andereg gekke factor toepassen, anders trekken de x en y scheef? :/
+	//moet hier één of andere gekke factor toepassen, anders trekken de x en y scheef? :/
 	var lon = lonlat[0]*111319.49079327356;//naar rechts is groter
 	var lat = lonlat[1]*111324.05140791999;//omhoog is kleiner
 
@@ -256,6 +263,17 @@ map.on('click', function(evt){
 					}
 					else {
 						console.info('[Click] Line has not been drawn; check mapmode!');
+					}
+				break;
+				case 'set-point':
+					if(mode == 'setPoint'){
+						console.info('[Click] setPoint ' + feature.get('value'));
+						if($(".wp-field").length > 0){
+							$(".wp-field").val(feature.get('value'));
+						}
+					}
+					else {
+						console.info('[Click] Point has not been selected; check mapmode!');
 					}
 				break;
 				case 'del-icon':
@@ -297,24 +315,30 @@ for (var fl_button = 0; fl_button <= 3; fl_button++) {
     floorButton.setAttribute('data',fl_button);
     floorButton.innerHTML = fl_button;
     setFloor_buttons.appendChild(floorButton);
-    
+
 }
 
-function selectFloor(f) {
-    document.getElementById("select-floor-"+f).onclick=function() {
-        setFloor(f);
-    };
-    document.getElementById("select-floor-"+f).touchstart=function() {
-        setFloor(f);
-    };
+
+function setButtonEvent(f) {
+	console.log("buttonEvent aanmaken voor " + f);
+	$("#select-floor-"+f).on("tap", function(event) {
+ 		event.preventDefault();
+		setFloor(f);
+	});
+
+	$("#select-floor-"+f).on("click", function(event) {
+ 		event.preventDefault();
+		setFloor(f);
+	});
 }
+
 var buttonOverlay = new ol.control.Control({
     element: setFloor_buttons
 });
 map.addControl(buttonOverlay);
 
 for (var floorEl = 0; floorEl <= 3; floorEl++) {
-    selectFloor(floorEl);
+    setButtonEvent(floorEl);
 }
 
 

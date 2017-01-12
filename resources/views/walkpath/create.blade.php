@@ -18,6 +18,17 @@
 
                     {!! \Nvd\Crud\Form::input('description','text')->show() !!}
 
+					<!--{!! \Nvd\Crud\Form::input('status','text')->show() !!}-->
+					<div class="row form-group">
+						<label class="col-lg-1" for="status">Status</label>
+						<div class="col-lg-11">
+							<select name="status" id="status" class="form-control" value="" type="text">
+								<option value="0">Inactief</option>
+								<option value="1">Actief</option>
+							</select>
+						</div>
+					</div>
+
 					<!-- deze maar even verstoppen.. -->
 					<input id="status" name="status" value="0" disabled="disabled" style="display:none;" />
 

@@ -20,7 +20,16 @@
 
         {!! \Nvd\Crud\Form::input('description','text')->model($walkpath)->show() !!}
 
-        {!! \Nvd\Crud\Form::input('status','text')->model($walkpath)->show() !!}
+<!--        {!! \Nvd\Crud\Form::input('status','text')->model($walkpath)->show() !!} -->
+		<div class="row form-group">
+			<label class="col-lg-1" for="status">Status</label>
+			<div class="col-lg-11">
+				<select name="status" id="status" class="form-control" value="" type="text">
+					<option value="0">Inactief</option>
+					<option value="1" selected>Actief</option>
+				</select>
+			</div>
+		</div>
 
 		{!! \Nvd\Crud\Form::input('json','text')->show() !!}
 

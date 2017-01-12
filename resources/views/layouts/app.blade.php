@@ -14,6 +14,7 @@
     <link href="/css/app.css" rel="stylesheet"/>
 	<link href="/css/ol.css" rel="stylesheet"/>
 	<link href="/css/jquery-ui.css" rel="stylesheet"/>
+	<link href="/css/chosen.css" rel="stylesheet"/>
 	<link href="/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous"/>
 	<link href="/css/font-awesome.min.css" rel="stylesheet"/>
     <link href="/css/bootstrap-editable.css" rel="stylesheet"/>
@@ -21,6 +22,7 @@
     <!-- Scripts -->
 	<script src="/js/jquery-2.2.0.min.js"></script>
 	<script src="/js/jquery-ui.js"></script>
+	<script src="/js/chosen.jquery.js"></script>
 	<script src="/js/bootstrap-editable.min.js"></script>
 	<script src="/js/bootstrap.min.js" crossorigin="anonymous"></script>
 
@@ -35,6 +37,13 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+
+		$( document ).ready(function() {
+			$('select').chosen();
+			$('.chosen-container').width('100%');
+			$('.chosen-container').children().width('90%');
+		});
+
     </script>
 
     <meta name="csrf-token" content="{{ csrf_token() }}" />
@@ -73,7 +82,7 @@
 								Punten</a>
 							</li>
 
-							<li><a href="{{ url('/point') }}">
+							<li><a href="{{ url('/facility') }}">
 								<i class="fa fa-map-o" aria-hidden="true"></i>
 								Faciliteiten</a>
 							</li>

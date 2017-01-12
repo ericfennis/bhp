@@ -2,6 +2,8 @@
 namespace App\Http\Controllers;
 
 use App\Company;
+use App\Person;
+use App\Walkpath;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -14,7 +16,9 @@ class CompanyController extends Controller
     public function index()
     {
         $records = Company::findRequested();
-        return $this->view( "index", ['records' => $records] );
+		$people = Person::all();
+		$walkpaths = Walkpath::all();
+        return $this->view( "index", array('records' => $records, 'people' => $people, 'walkpaths' => $walkpaths ) );
     }
 
     /**
@@ -59,7 +63,9 @@ class CompanyController extends Controller
      */
     public function edit(Request $request, Company $company)
     {
-        return $this->view( "edit", ['company' => $company] );
+		$people = Person::all();
+		$walkpaths = Walkpath::all();
+        return $this->view( "edit", array('company' => $company, 'people' => $people, 'walkpaths' => $walkpaths));
     }
 
     /**

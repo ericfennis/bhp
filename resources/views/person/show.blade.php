@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('vendor.crud.single-page-templates.common.app')
 
 @section('content')
 
@@ -21,10 +21,6 @@
         <li class="list-group-item">
             <h4>Profilepicture</h4>
             <h5>{{$person->profilepicture}}</h5>
-        </li>
-        <li class="list-group-item">
-            <h4>Company Id</h4>
-            <h5>{{$person->company_id}}</h5>
         </li>
         <li class="list-group-item">
             <h4>Telephone</h4>
