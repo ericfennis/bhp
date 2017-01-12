@@ -71,7 +71,7 @@ var App = window.App = new Vue({
     
 });
     var t;
-    var debugMode = true
+    var debugMode = false;
     window.onload = resetTimer;
     // DOM Events
     document.onmousemove = resetTimer;

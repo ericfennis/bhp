@@ -8302,7 +8302,7 @@ main aside input {
   padding: 12px;
   line-height: 32px;
   border: 10px solid transparent;
-  font-size: 36px;
+  font-size: 32px;
 }
 
 main aside input:focus {
@@ -8791,7 +8791,7 @@ h2 {
   text-transform: uppercase;
   text-align: center;
   margin-top: 400px;
-  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.48);
 }
 
 .mapparagraph {
@@ -8801,12 +8801,13 @@ h2 {
   text-align: center;
   color: white;
   font-size: 40px;
-  text-shadow: 2px 2px 8px black;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.48);
   letter-spacing: 1px;
 }
 
 .logobhp {
   height: 260px;
+  min-height: 260px;
   width: auto;
   display: block;
   margin-left: auto;
@@ -8833,10 +8834,17 @@ h2 {
   text-align: center;
   text-transform: uppercase;
   padding: 16px;
-  -webkit-animation-name: orangePulse;
-  -webkit-animation-duration: 2s;
-  -webkit-animation-iteration-count: infinite;
+  -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.48);
+  line-height: 48px;
   width: 360px;
+  display: block;
+  color: #fff;
+}
+
+.plattegrond-button:hover {
+  background: #000;
+  color: #fff;
+  text-decoration: none;
 }
 
 #clock {
@@ -8965,6 +8973,56 @@ h2 {
 
 .nav > li > a {
   padding: 8px 15px;
+}
+
+.ol-popup {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 15px;
+  bottom: 40px;
+  left: -40px;
+  min-width: 280px;
+  -webkit-filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.2));
+  filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.2));
+  text-align: center;
+  color: #fff;
+}
+
+#popup-content {
+  font-size: 24px;
+  line-height: 32px;
+}
+
+.ol-popup:after, .ol-popup:before {
+  top: 100%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+}
+
+.ol-popup:after {
+  border-top-color: rgba(0, 0, 0, 0.5);
+  border-width: 15px;
+  margin-left: -70px;
+}
+
+.ol-popup-action {
+  color: #fff;
+  background-color: #DF4206;
+  font-size: 32px;
+  display: block;
+  padding: 5px 20px;
+  margin: 10px 15px 0;
+  float: right;
+}
+
+.ol-popup-action:hover {
+  background: #000;
+  color: #fff;
+  text-decoration: none;
 }
 
 /*# sourceMappingURL=app.css.map */

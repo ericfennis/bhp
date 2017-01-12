@@ -42,10 +42,10 @@
                             <div class="row">
 
 
-                                <h1 class="maptitel">bedrijven &amp; Personen zoeken</h1>
+                                <h1 class="maptitel">Bedrijven &amp; Personen zoeken</h1>
                                     <p class="mapparagraph">Ga verder naar de plattegrond om de locatie te vinden van het bedrijf of persoon waar u naar op zoek bent.</p>
 
-                                    <v-link href="/list" class="btn btn-lg btn-block btn-primary plattegrond-button">Klik hier voor de plattegrond</v-link>
+                                    <v-link href="/list" class="plattegrond-button">Klik hier voor de plattegrond</v-link>
 
                             </div>
                         </div>
@@ -105,7 +105,7 @@
             },
             toggleEvent: function (event) {
                 if(this.active == event) {
-                    this.active == '';
+                    this.active = '';
                 } else {
                     this.active = event;
                 }

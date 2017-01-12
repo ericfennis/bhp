@@ -24,6 +24,7 @@
                                 <div class="item-image">
                                     <img v-if="item.profilepicture" width="64" height="64" v-bind:src="item.profilepicture"/>
                                     <img v-else width="64" height="64" v-bind:src="item.logo"/>
+                                    <img v-else width="64" height="64" src="http://placehold.it/64x64"/>
                                 </div>
                                 <div class="item-body">
                                     <h4 v-if="item.branch"><b>{{item.name}}</b></h4>
