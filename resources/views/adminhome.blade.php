@@ -66,10 +66,6 @@
 					</a>
 				</center>
 			</div>
-
-			<div class="col-md-12">
-				© Copyright Blokhuispoort
-			</div>
 		</div>
 </div>
 @endsection

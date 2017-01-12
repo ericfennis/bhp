@@ -123,16 +123,19 @@ class WalkpathController extends Controller
             $table->integer('point_order');
 		*/
 
-		$walkpathpoints = json_decode($request->json);
-		//oude walkpathpoints verwijderen
-		WalkpathPoint::where('walkpath_id', $walkpath->id)->delete();
-		foreach($walkpathpoints as $order => $point_id){
-			//huppakee! nieuwe dinkjes erin :D
-			DB::table('walkpath_points')->insertGetId(
-				array('walkpath_id' => $walkpath->id, 'point_id' => $point_id, 'point_order' => $order)
-			);
-		}
 
+		if($request->json != ""){
+			$walkpathpoints = json_decode($request->json);
+			//oude walkpathpoints verwijderen
+			WalkpathPoint::where('walkpath_id', $walkpath->id)->delete();
+
+			foreach($walkpathpoints as $order => $point_id){
+				//huppakee! nieuwe dinkjes erin :D
+				DB::table('walkpath_points')->insertGetId(
+					array('walkpath_id' => $walkpath->id, 'point_id' => $point_id, 'point_order' => $order)
+				);
+			}
+		}
 		//return $request->json;
         return redirect('/walkpath');
     }

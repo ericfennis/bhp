@@ -166,6 +166,13 @@ function setMode(newMode){
 			getAllIcons(); //in deze modus hebben we de points nodig
 			break;
 
+		case 'setPoint':
+			console.info("Switched to set-point-mode");
+			mode = "setPoint";
+			defaultIconAction = "set-point";
+			getAllIcons(); //in deze modus hebben we de points nodig
+			break;
+
 		case '':	default:
 			mode = '';
 			defaultAction = '';
@@ -256,6 +263,17 @@ map.on('click', function(evt){
 					}
 					else {
 						console.info('[Click] Line has not been drawn; check mapmode!');
+					}
+				break;
+				case 'set-point':
+					if(mode == 'setPoint'){
+						console.info('[Click] setPoint ' + feature.get('value'));
+						if($(".wp-field").length > 0){
+							$(".wp-field").val(feature.get('value'));
+						}
+					}
+					else {
+						console.info('[Click] Point has not been selected; check mapmode!');
 					}
 				break;
 				case 'del-icon':

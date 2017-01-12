@@ -1,4 +1,4 @@
-@extends('vendor.crud.single-page-templates.common.app')
+@extends('layouts.app')
 
 @section('content')
 
@@ -7,7 +7,7 @@
 	@include('facility.create')
 
 	<table class="table table-striped grid-view-tbl">
-	    
+
 	    <thead>
 		<tr class="header-row">
 			{!!\Nvd\Crud\Html::sortableTh('id','facility.index','Id')!!}

@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\Person;
+use App\Company;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -14,7 +15,8 @@ class PersonController extends Controller
     public function index()
     {
         $records = Person::findRequested();
-        return $this->view( "index", ['records' => $records] );
+		$companies = Company::all();
+        return $this->view("index", array('records' => $records,  'companies' => $companies));
     }
 
     /**
@@ -59,7 +61,8 @@ class PersonController extends Controller
      */
     public function edit(Request $request, Person $person)
     {
-        return $this->view( "edit", ['person' => $person] );
+		$companies = Company::all();
+        return $this->view( "edit", array('person' => $person, 'companies' => $companies));
     }
 
     /**

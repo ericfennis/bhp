@@ -14,7 +14,12 @@
 
                     {{ csrf_field() }}
 
-                    {!! \Nvd\Crud\Form::input('walkpath_points_id','text')->show() !!}
+                    <!--{!! \Nvd\Crud\Form::input('walkpath_points_id','text')->show() !!}-->
+					<div class="row form-group" style='display:none;'>
+						<label class="col-lg-1" for="walkpath_points_id">Walkpath Points Id</label>
+						<div class="col-lg-11"><input name="walkpath_points_id" id="walkpath_points_id" class="form-control" value="0" type="text">
+						</div>
+					</div>
 
                     {!! \Nvd\Crud\Form::input('name','text')->show() !!}
 
