@@ -11,8 +11,8 @@
 
 @font-face {
   font-family: 'icomoon';
-  src: url("fonts/icomoon.eot?vtnpy7");
-  src: url("fonts/icomoon.eot?vtnpy7#iefix") format("embedded-opentype"), url("fonts/icomoon.ttf?vtnpy7") format("truetype"), url("fonts/icomoon.woff?vtnpy7") format("woff"), url("fonts/icomoon.svg?vtnpy7#icomoon") format("svg");
+  src: url("/fonts/icomoon.eot?vtnpy7");
+  src: url("/fonts/icomoon.eot?vtnpy7#iefix") format("embedded-opentype"), url("/fonts/icomoon.ttf?vtnpy7") format("truetype"), url("/fonts/icomoon.woff?vtnpy7") format("woff"), url("/fonts/icomoon.svg?vtnpy7#icomoon") format("svg");
   font-weight: normal;
   font-style: normal;
 }
@@ -8178,23 +8178,23 @@ button.close {
 
 .nav-tabs > li > a {
   border-radius: 0px !important;
-  color: #4a4a4a;
+  color: #000;
   text-transform: uppercase;
-  border: 5px solid #4a4a4a;
+  border: 5px solid #000;
   margin-left: 15px;
   font-size: 25px;
 }
 
 .nav-tabs > li > a.active,
 .nav-tabs > li > a.active:hover {
-  background: #4A4A4A;
+  background: #000;
   color: #fff;
 }
 
 .nav-tabs > li > a:hover {
   background: #ddd;
-  border-color: #4a4a4a;
-  color: #4a4a4a;
+  border-color: #000;
+  color: #000;
 }
 
 .btn-primary {
@@ -8202,8 +8202,13 @@ button.close {
   border-style: none !important;
 }
 
+html {
+  zoom: reset;
+}
+
 html, body {
   height: 100%;
+  width: 100%;
   position: relative;
   color: #000;
 }
@@ -8215,6 +8220,7 @@ main {
   -webkit-box-direction: normal;
   flex-direction: column;
   height: 100vh;
+  min-height: 100%;
   flex-flow: row wrap;
   overflow: hidden;
 }
@@ -8252,14 +8258,43 @@ main aside form#search.filled {
   height: 78px;
 }
 
+main aside form#search.filled input {
+  background: #f9f9f9;
+}
+
+main aside form#search.filled .search-button {
+  pointer-events: visible;
+  background: #ccc;
+  color: #000;
+}
+
+main aside form#search.filled .search-button:hover {
+  background: #DF4206;
+  color: #fff;
+}
+
+main aside form#search.filled .search-button:before {
+  content: "\e919";
+  font-size: 24px;
+}
+
 main aside form .search-button {
   border-radius: 0px;
   width: 52px;
   margin-top: 15px;
   height: 52px;
   margin-right: 15px;
-  color: black;
-  background: #ccc;
+  color: #fff;
+  background: #DF4206;
+  pointer-events: none;
+  text-align: center;
+}
+
+main aside form .search-button:before {
+  font-family: 'icomoon';
+  content: "\e90f";
+  line-height: 52px;
+  font-size: 28px;
 }
 
 main aside input {
@@ -8267,6 +8302,7 @@ main aside input {
   padding: 12px;
   line-height: 32px;
   border: 10px solid transparent;
+  font-size: 36px;
 }
 
 main aside input:focus {
@@ -8286,15 +8322,21 @@ main aside ul#results {
   -webkit-box-flex: 1;
   flex: auto;
   color: #000;
+  padding-left: 15px;
 }
 
 main aside ul#results li.result-item {
   list-style: none;
   padding: 15px;
+  border-bottom: 2px solid #D7D6C8;
 }
 
-main aside ul#results li.result-item.active, main aside ul#results li.result-item.active:hover {
-  background: #DF4206;
+main aside ul#results li.result-item.active h4, main aside ul#results li.result-item.active:hover h4 {
+  color: #DF4206;
+}
+
+main aside ul#results li.result-item.active .item-image img, main aside ul#results li.result-item.active:hover .item-image img {
+  border-color: #DF4206;
 }
 
 main aside ul#results li.result-item:hover {
@@ -8302,11 +8344,41 @@ main aside ul#results li.result-item:hover {
   cursor: pointer;
 }
 
+main aside ul#results li.result-item .item-image {
+  float: left;
+}
+
+main aside ul#results li.result-item .item-image img {
+  border: 4px solid #000;
+  -webkit-transition: border-color .3s ease;
+  transition: border-color .3s ease;
+}
+
 main aside ul#results li.result-item .item-body {
+  margin-left: 80px;
+  padding-left: 15px;
+  border-left: 4px solid #000;
+}
+
+main aside ul#results li.result-item .item-body h4 {
+  margin: 0 0 5px;
+  text-transform: uppercase;
+  -webkit-transition: color .3s ease;
+  transition: color .3s ease;
+}
+
+main aside ul#results li.result-item .item-body p {
+  padding: 0 0 5px;
+  font-size: 25px;
+  color: #555;
+  margin: 0;
+}
+
+main aside ul#results li.result-item .item-collapse {
   will-change: height;
   height: 140px;
   opacity: 1;
-  padding: 20px 10px;
+  padding: 20px 0;
   overflow: hidden;
 }
 
@@ -8317,8 +8389,12 @@ main aside ul#results li.result-item .collapse-enter-active, main aside ul#resul
 
 main aside ul#results li.result-item .collapse-enter, main aside ul#results li.result-item .collapse-leave-active {
   height: 0;
-  padding: 0 10px;
+  padding: 0;
   opacity: 0;
+}
+
+main aside ul#results li.result-item:last-child:after {
+  display: none;
 }
 
 main aside div.panel {
@@ -8345,7 +8421,7 @@ main aside footer {
   height: 160px;
   min-height: 160px;
   max-height: 160px;
-  background: #333;
+  background: #e1e1e0;
 }
 
 main aside #calendar {
@@ -8404,9 +8480,22 @@ main aside #calendar .event-title {
   text-transform: uppercase;
 }
 
+main aside #calendar .event.active .event-desc {
+  height: auto;
+  display: block;
+}
+
 main aside #calendar .event-desc {
-  margin-top: 10px;
-  color: #4A4A4A;
+  -webkit-transition: height .3s ease;
+  transition: height .3s ease;
+  margin: 10px 0 0;
+  color: #000;
+  overflow: hidden;
+  max-lines: 2;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  height: 45px;
 }
 
 main aside #calendar .event-body {
@@ -8420,7 +8509,7 @@ main ::-webkit-scrollbar {
 }
 
 main ::-webkit-scrollbar-thumb {
-  background: #4A4A4A;
+  background: #E3E3D9;
 }
 
 main > figure, main section {
@@ -8437,8 +8526,7 @@ main section footer {
   left: 0;
   right: 0;
   bottom: 0;
-  background: #333;
-  color: #fff;
+  background: #e1e1e0;
   z-index: 20;
 }
 
@@ -8491,8 +8579,8 @@ main + #map .ol-control {
   right: 0;
   bottom: 0;
   left: 0;
-  height: 100vh;
-  width: 100vw;
+  height: 100%;
+  width: 100%;
   z-index: 0;
 }
 
@@ -8508,7 +8596,7 @@ main + #map .ol-control {
   display: block;
   margin: 5px;
   padding: 0;
-  color: #DF4206;
+  color: #000;
   font-size: 36px;
   font-weight: 700;
   text-decoration: none;
@@ -8525,9 +8613,31 @@ main + #map .ol-control {
   background-color: #DF4206;
 }
 
+.ol-control button.ol-zoom-in:before {
+  content: "\e90d";
+}
+
+.ol-control button.ol-zoom-out:before {
+  content: "\e90c";
+}
+
 .ol-control.ol-zoom {
   right: 20px;
   top: 90px;
+}
+
+.ol-control.ol-zoom button {
+  line-height: 48px;
+  text-indent: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.ol-control.ol-zoom button:before {
+  text-indent: 0;
+  display: block;
+  font-family: 'icomoon';
+  font-size: 21px;
 }
 
 .ol-control.select-floor {
@@ -8542,8 +8652,8 @@ main + #map .ol-control {
 .vue-keyboard {
   position: absolute;
   bottom: 0;
-  background: #777;
-  padding: 10px 40px;
+  background: #cccccc;
+  padding: 40px 70px;
   z-index: 100;
   display: none;
 }
@@ -8560,29 +8670,67 @@ main + #map .ol-control {
 .vue-keyboard button {
   border: none;
   outline: none;
-  padding: 8px 10px;
-  min-width: 40px;
-  margin: 0 2px;
-  background: #EEE;
-  color: #666;
+  padding: 10px 20px;
+  background: #e3e3d9;
   cursor: pointer;
   font-family: inherit;
-  font-size: inherit;
-  border-radius: 2px;
+  font-size: 36px;
+  min-width: 40px;
+  text-transform: uppercase;
+  color: #666666;
+  margin: 0 2px;
 }
 
 .vue-keyboard button:hover {
-  background: #E0E0E0;
+  background: #e0e0e0;
 }
 
 .vue-keyboard button:active {
-  background: #777;
-  color: #FFF;
+  background: #777777;
+  color: #ffffff;
   box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.vue-keyboard button[data-action="backspace"] {
+  text-indent: -9999px;
+  overflow: hidden;
+  white-space: nowrap;
+  height: 56px;
+  vertical-align: bottom;
+  line-height: 56px;
+}
+
+.vue-keyboard button[data-action="backspace"]:before {
+  text-indent: 0;
+  display: block;
+  font-family: 'icomoon';
+  font-size: 32px;
+  content: "\e90e";
+  line-height: 36px;
 }
 
 .vue-keyboard button[data-action="space"] {
   padding: 8px 60px;
+}
+
+.vue-keyboard button[data-action="close"] {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 40px;
+  line-height: 29px;
+  text-indent: -9999px;
+  overflow: hidden;
+  white-space: nowrap;
+  background: none;
+}
+
+.vue-keyboard button[data-action="close"]:before {
+  text-indent: 0;
+  display: block;
+  font-family: 'icomoon';
+  font-size: 21px;
+  content: "\e919";
 }
 
 .overlay {
@@ -8705,15 +8853,33 @@ h2 {
 
 .button_return {
   height: 80px;
-  width: 150px;
-  background-color: orange;
   margin: 40px;
   display: inline-block;
   line-height: 40px;
+  font-size: 42px;
+  color: #000;
+  text-transform: uppercase;
+  line-height: 80px;
+}
+
+.button_return:before {
+  content: "\e907";
+  font-family: 'icomoon';
+  background: #DF4206;
+  color: #fff;
+  padding: 15px;
+  font-size: 36px;
+  margin-right: 15px;
+}
+
+.button_return:hover {
+  text-decoration: none;
+  color: #000;
 }
 
 .legenda_container {
-  right: 20px;
+  position: absolute;
+  right: 30px;
 }
 
 .legenda_text {
@@ -8721,21 +8887,14 @@ h2 {
 }
 
 .legenda_wrapper {
-  margin-left: 250px;
+  margin-left: 64px;
+  float: left;
 }
 
 .legend {
   list-style: none;
   float: left;
-  margin: 10px 150px 10px 30px;
-}
-
-.legend li {
-  margin-right: 10px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  list-style: none;
-  text-transform: uppercase;
+  padding: 20px;
 }
 
 .legend span {
@@ -8745,55 +8904,100 @@ h2 {
   margin: 2px;
 }
 
-.legend li.eindpunt {
-  background: url("../img/icons/eindpunt.png");
+.legend li {
+  height: 48px;
+  padding: 0 15px 0 64px;
   background-repeat: no-repeat;
-  width: 32px;
-  height: 32px;
-  padding-left: 45px;
-  line-height: 35px;
+  background-size: 48px;
+  margin: 5px 15px 15px 0;
+  line-height: 48px;
+  list-style: none;
+  text-transform: uppercase;
+  font-size: 25px;
+}
+
+.legend li.beginpunt {
+  background-image: url("../img/icons/beginpunt.svg");
+}
+
+.legend li.eindpunt {
+  background-image: url("../img/icons/eindpunt.svg");
 }
 
 .legend li.trap {
-  background: url("../img/icons/trap.png");
-  background-repeat: no-repeat;
-  width: 32px;
-  height: 32px;
-  padding-left: 45px;
-  line-height: 35px;
+  background-image: url("../img/icons/trap.svg");
 }
 
 .legend li.lift {
-  background: url("../img/icons/lift.png");
-  background-repeat: no-repeat;
-  width: 32px;
-  height: 32px;
-  padding-left: 45px;
-  line-height: 35px;
+  background-image: url("../img/icons/lift.svg");
 }
 
 .legend li.herkenningspunt {
-  background: url("../img/icons/herkenningspunt.png");
-  background-repeat: no-repeat;
-  width: 32px;
-  height: 32px;
-  padding-left: 45px;
-  line-height: 35px;
+  background-image: url("../img/icons/herkenningspunt.png");
 }
 
 .legend li.wc {
-  background: url("../img/icons/wc.png");
-  background-repeat: no-repeat;
-  width: 32px;
-  height: 32px;
-  padding-left: 45px;
-  line-height: 35px;
+  background-image: url("../img/icons/toilet.svg");
 }
 
 .panel {
   background-color: none;
   border: none;
   box-shadow: none;
+}
+
+.nav > li > a {
+  padding: 8px 15px;
+}
+
+.ol-popup {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 15px;
+  bottom: 40px;
+  left: -40px;
+  min-width: 280px;
+  -webkit-filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.2));
+  filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.2));
+  text-align: center;
+  color: #fff;
+}
+
+#popup-content {
+  font-size: 24px;
+  line-height: 32px;
+}
+
+.ol-popup:after, .ol-popup:before {
+  top: 100%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+}
+
+.ol-popup:after {
+  border-top-color: rgba(0, 0, 0, 0.5);
+  border-width: 15px;
+  margin-left: -70px;
+}
+
+.ol-popup-action {
+  color: #fff;
+  background-color: #DF4206;
+  font-size: 32px;
+  display: block;
+  padding: 5px 20px;
+  margin: 10px 15px 0;
+  float: right;
+}
+
+.ol-popup-action:hover {
+  background: #000;
+  color: #fff;
+  text-decoration: none;
 }
 
 /*# sourceMappingURL=app.css.map */

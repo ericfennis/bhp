@@ -4,8 +4,10 @@
                     <div class="panel panel-default">
                         <form id="search" v-bind:class="{ filled: searchString.length !== 0 }">
                             <input type="text" @click="selectTab('all'),screenKeyboard = true" v-model="searchString" placeholder="Zoek naar bv: 'Kapper, naam, bedrijf etc.'" />
-
                             <div class="search-button" role="button" @click="searchString = '',clearKeyboard()"></div>
+       
+                            
+
                             <nav v-if="searchString.length == 0">
                                 <ul class="nav nav-tabs">
                                     <li><a href="#" :class="{ active: visibility == 'all' }" @click="selectTab('all')">Alle</a></li>
@@ -19,31 +21,49 @@
                         <ul id="results" class="list-group" >
                             <li class="result-item"  v-for="(item,index) in filteredData" @click="getWalkpath(item)" v-bind:class="{ active: active == item }">
 
+                                <div class="item-image">
+                                    <img v-if="item.profilepicture" width="64" height="64" v-bind:src="item.profilepicture"/>
+                                    <img v-else width="64" height="64" v-bind:src="item.logo"/>
+                                </div>
+                                <div class="item-body">
+                                    <h4 v-if="item.branch"><b>{{item.name}}</b></h4>
+                                    <h4 v-else>{{item.name}}</h4>
 
+                                    <!-- <p v-if="item.branch">
+                                    {{#if item.branch.lengt}}
+                                    {{ item.branch }}
+                                    </p>
+                                    <p v-if="item.company"
+                                    >{{ item.company }}
+                                    </p> -->
+                        
+                                        <p v-if="item.branch">
+                                            {{ item.branch }}
+                                        </p>
 
-                                <img v-if="item.profilepicture" width="64" height="64" v-bind:src="item.profilepicture"/>
-                                <img v-else width="64" height="64" v-bind:src="item.logo"/>
-
-
-
-                                <h4 v-if="item.branch"><b>{{item.name}}</b></h4>
-                                <h4 v-else>{{item.name}}</h4>
-
-                                <i v-if="item.branch">{{item.branch}}</i>
-                                <i v-if="item.company">{{item.company}}</i>
+                                        <p v-else-if="item.company">   
+                                            {{ item.company }}
+                                        </p>
+                                        <p v-else>&nbsp;</p>
+                        
+                                    <transition name="collapse">
+                                        <div v-if="active == item" class="item-collapse">
+                                            <div class="info-location" v-if="item.room_number && item.building">Cel: {{ item.building+item.room_number }}</div>
+                                            <div class="info-telephone" v-if="item.room_number">
+                                                {{ item.telephone }}
+                                            </div>
+                                            <div class="info-email" v-if="item.room_number">
+                                                {{ item.email }}
+                                            </div>
+                                        </div>
+                                    </transition>
+                                </div>
                                 
-                                <transition name="collapse">
-                                    <div v-if="active == item" class="item-body">
-                                        <div class="info-location" v-if="item.room_number && item.building">Cel: {{ item.building+item.room_number }}</div>
-                                        <hr>
-                                        <div class="info-telephone" v-if="item.room_number">
-                                            {{ item.telephone }}
-                                        </div>
-                                        <div class="info-email" v-if="item.room_number">
-                                            {{ item.email }}
-                                        </div>
-                                    </div>
-                                </transition>
+
+
+
+                                
+                                
                                 
                             </li>
 
@@ -56,23 +76,25 @@
                 </aside>
                 <section>
                     <footer>
-                        <div class="contrast">
                           <div class="legenda_container">
                             <div class="legenda_text">
                             <h2>Legenda</h2>
                             </div>
                             <div class="legenda_wrapper">
                               <ul class="legend">
-                                <li class="eindpunt">Eindpunt</li>
-                                <li class="trap">Trap</li>
-                                <li class="herkenningspunt">Herkenningspunt</li>
+                                    <li class="beginpunt">U bevindt zich hier</li>
+                                    <li class="eindpunt">Eindpunt</li>
                               </ul>
                               <ul class="legend">
+                                <li class="trap">Trap</li>
                                 <li class="lift">Lift</li>
+                                <!-- <li class="herkenningspunt">Herkenningspunt</li> -->
+                              </ul>
+                              <ul class="legend">
+                                
                                 <li class="wc">WC</li>
                               </ul>
                           </div>
-                        </div>
                     </footer>
                 </section>
                 <keyboard :class="{ show: screenKeyboard == true }" @close="screenKeyboard = false" v-model="searchString"

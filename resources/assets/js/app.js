@@ -22,40 +22,40 @@ var App = window.App = new Vue({
 
     el: '#app',
     data: {
-    	currentRoute: window.location.pathname,
+        currentRoute: window.location.pathname,
 
-    	walkPath: [],
-  	},
+        walkPath: [],
+    },
     computed: {
-	    ViewComponent () {
-			const matchingView = routes[this.currentRoute]
-			return matchingView
-			? require('./pages/' + matchingView + '.vue')
-			: require('./pages/404.vue');
-		}
-	  },
-	created() {
-    	console.log('vue loaded');
+        ViewComponent () {
+            const matchingView = routes[this.currentRoute]
+            return matchingView
+            ? require('./pages/' + matchingView + '.vue')
+            : require('./pages/404.vue');
+        }
+      },
+    created() {
+        console.log('vue loaded');
     },
     methods: {
-    	getWalkpath: function(item) {
+        getWalkpath: function(item) {
                 var resource = this.$resource('api/walkpath{/id}'),
-                	itemID = null;
+                    itemID = null;
 
-				  // GET someItem/1
-				  if(item.company_id) {
-                    	//console.log(item.company_id);
-                    	itemID = item.company_id;
+                  // GET someItem/1
+                  if(item.company_id) {
+                        //console.log(item.company_id);
+                        itemID = item.company_id;
 
-	                } else if(item.id) {
-	                    //console.log(item.id);
-	                    itemID = item.id;
-	                }
-				  resource.get({id: itemID}).then((response) => {
-				    this.walkPath = response.body;
+                    } else if(item.id) {
+                        //console.log(item.id);
+                        itemID = item.id;
+                    }
+                  resource.get({id: itemID}).then((response) => {
+                    this.walkPath = response.body;
                     //console.log(this.walkPath);
                     drawWalkpath();
-				  });                
+                  });                
         },
         currentView: function() {
             return routes[this.currentRoute];
@@ -65,12 +65,13 @@ var App = window.App = new Vue({
         }
 
     },
-	render (h) { 
+    render (h) { 
         return h(this.ViewComponent) 
     }
     
 });
-var t;
+    var t;
+    var debugMode = true
     window.onload = resetTimer;
     // DOM Events
     document.onmousemove = resetTimer;
@@ -84,7 +85,7 @@ var t;
 
     function resetTimer() {
         clearTimeout(t);
-        if(App.currentView() == "List") {
+        if(App.currentView() == "List" && debugMode == false) {
             t = setTimeout(goToHome, 30000)
         }
         // 1000 milisec = 1 sec
@@ -111,6 +112,7 @@ var t;
                 mapSource = new ol.source.ImageStatic({}),
                 routeSource = [new ol.source.Vector({}), new ol.source.Vector({}), new ol.source.Vector({}), new ol.source.Vector({})],
                 iconSource = [new ol.source.Vector({}), new ol.source.Vector({}), new ol.source.Vector({}), new ol.source.Vector({})],
+                facilitySource = [new ol.source.Vector({}), new ol.source.Vector({}), new ol.source.Vector({}), new ol.source.Vector({})],
                 letterSource = new ol.source.ImageStatic({}),
 
                 //layers waar we later misschien nog aanspraak op willen maken?
@@ -134,13 +136,17 @@ var t;
                 iconLayer = new ol.layer.Vector({
                     source: iconSource[currentFloor]
                 }),
+                facilityLayer = new ol.layer.Vector({
+                    source: facilitySource[currentFloor]
+                }),
                 letterLayer = new ol.layer.Image({
                     source: new ol.source.ImageStatic({
                         projection: projection,
                         imageExtent: imageExtent
                     })
-                });
-                
+                }),
+                container = document.getElementById('popups');
+
                 function drawLine(x, y, point){
                     if(prevXY[0] == 0 && prevXY[1] == 0){
                         newRoute.push(point);
@@ -189,7 +195,7 @@ var t;
                         size: [32, 32],
                         anchorXUnits: 'fraction',
                         anchorYUnits: 'fraction',
-                        opacity: 0.75,
+                        opacity: 1,
                         scale: 1,
                         //src: 'http://openlayers.org/en/v3.0.0/examples/data/icon.png'
                         src: icon
@@ -200,6 +206,37 @@ var t;
                     tempIconFeature.setStyle(tempIconStyle);
                     iconSource[floorNum].addFeature(tempIconFeature);
                 }
+                function addFacility(floorNum, icon, action, val, x, y){
+                    //de feature van dit icoon
+                    var tempFacilityFeature = 
+                        new ol.Feature({
+                            geometry: new ol.geom.Point([x, y]),
+                            x: x,
+                            y: y,
+                            name: icon,
+                            action: action,
+                            value: val,
+                        });
+
+                    //de style aanmaken van dit icoon
+                    var tempFacilityStyle = new ol.style.Style({
+                      image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
+                        anchor: [0.5, 0.5],
+                        //offset: 64,
+                        size: [32,32],
+                        anchorXUnits: 'fraction',
+                        anchorYUnits: 'fraction',
+                        scale: 1,
+                        //src: 'http://openlayers.org/en/v3.0.0/examples/data/icon.png'
+                        src: icon
+                      }))
+                    });
+
+                    console.info('Adding icon');
+                    tempFacilityFeature.setStyle(tempFacilityStyle);
+                    facilitySource[floorNum].addFeature(tempFacilityFeature);
+                }
+                
                 function setMapSource(url){
                     mapSource = new ol.source.ImageStatic({
                         url: url,
@@ -218,40 +255,50 @@ var t;
                 }
                 function setRouteIconSource(floorNum){
                     routeLayer.setSource(routeSource[floorNum]);
+                    facilityLayer.setSource(facilitySource[floorNum]);
                     iconLayer.setSource(iconSource[floorNum]);
                 }
                 function setFloor(floorNum){
                     var floor_buttons = document.getElementsByClassName("select-floor-button");
+                    var popUp = document.getElementsByClassName("ol-popup");
+                    //console.log(popUp);
                     for (var fl = 0; fl <= 3; fl++) {
                         floor_buttons[fl].className = "select-floor-button";
+                        if(popUp) {
+                            popUp[fl] = 0;
+                        }
                     }
                     switch(floorNum) {
                         case 3:             //switch naar verdieping 2
                                             setMapSource("/img/floor3.png"); 
                                             setLetterSource("/img/letters3.png"); 
                                             floorNum = 3;
-                                            document.getElementById('select-floor-3').className = "select-floor-button active";
+                                            floor_buttons[3].className = "select-floor-button active";
+                                            popUp[3] ? popUp['popup-3'].style.display = 'block': '';
                         break;
 
                         case 2:             //switch naar verdieping 2
                                             setMapSource("/img/floor2.png"); 
                                             setLetterSource("/img/letters2.png"); 
                                             floorNum = 2;
-                                            document.getElementById("select-floor-2").className = "select-floor-button active"; 
+                                            floor_buttons[2].className = "select-floor-button active"; 
+                                            popUp[2] ? popUp['popup-2'].style.display = 'block': '';
                         break;
 
                         case 1:             //switch naar verdieping 1
                                             setMapSource("/img/floor1.png"); 
                                             setLetterSource("/img/letters2.png"); 
                                             floorNum = 1;
-                                            document.getElementById("select-floor-1").className = "select-floor-button active"; 
+                                            floor_buttons[1].className = "select-floor-button active";
+                                            popUp[1] ? popUp['popup-1'].style.display = 'block': '';
                         break;
 
                         case 0: default:    //switch naar beganegrond
                                             setMapSource("/img/floor0.png"); 
                                             setLetterSource("/img/letters1.png"); 
                                             floorNum = 0;
-                                            document.getElementById("select-floor-0").className = "select-floor-button active"; 
+                                            floor_buttons[0].className = "select-floor-button active";
+                                            popUp[0] ? popUp['popup-0'].style.display = 'block': '';
                         break;
                     } 
                     currentFloor = floorNum;    
@@ -260,22 +307,24 @@ var t;
                     setRouteIconSource(floorNum);
                     console.info("Switched to floor " + floorNum);  
                 }
+                
                  var view = new ol.View({
                         projection: projection,
                         minZoom: 1.5,
                         maxZoom: 3,
-                        zoom: 1.7,
+                        zoom: 2.1,
                         center: center,
                         extent: extent
                     });
                 var map = new ol.Map({
-                    layers: [mapLayer, routeLayer, iconLayer, letterLayer],
+                    layers: [mapLayer, routeLayer, iconLayer,facilityLayer, letterLayer],
+                    //overlays: [overlay0,overlay1,overlay2,overlay3],
                     target: 'map',
-                    view: view
+                    view: view,
                 });
-
                 var mapReload = '';
 
+                
                 //events
                 map.on('click', function(evt){
                     var lonlat = ol.proj.transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326');
@@ -314,6 +363,13 @@ var t;
                         if(drawIcons == true){
                             addIcon(currentFloor, 'img/icons/blackdot.png', 'draw-line', iNum++, lon, lat);
                         }
+        //                 var coordinate = evt.coordinate;
+        // // var hdms = ol.proj.transform(
+        // //     coordinate, 'EPSG:3857', 'EPSG:4326');
+
+        //             content.innerHTML = '<p>You clicked here:</p><code>' + coordinate +
+        //                 '</code>';
+        //             overlay.setPosition(coordinate);
                     }
                     
                 });
@@ -331,7 +387,39 @@ var t;
                     setFloor_buttons.appendChild(floorButton);
                     
                 }
-             
+             function addPopup(floor,text,coordinate) {
+                    console.log(floor);
+                     var popup = document.createElement('div');
+                    popup.className = 'ol-popup';
+                    popup.id = 'popup-'+floor;
+                    popup.style.display = 'none';
+                    //popup.setAttribute('data-floor',floor);
+                    var overlay = [];
+                    popup.innerHTML = '<div id="popup-content">'+text+'</div><a href="#" id="popup-action"  class="ol-popup-action">OK</a>';
+                     overlay[floor] = new ol.Overlay(({
+                        element: popup,
+                        autoPan: true,
+                        autoPanAnimation: {
+                          duration: 250
+                        }
+                    }));
+                     popup.ontouchstart=function() {
+                        overlay[floor].setPosition(undefined);
+                        setFloor(floor+1);
+                        popup.blur();
+                        return false;
+                    };
+                     popup.onclick=function() {
+                        overlay[floor].setPosition(undefined);
+                        setFloor(floor+1);
+                        popup.blur();
+                        return false;
+                    };
+                    
+                    map.addOverlay(overlay[floor]);
+                    overlay[floor].setPosition(coordinate);
+
+                }
                 function selectFloor(f) {
                     document.getElementById("select-floor-"+f).onclick=function() {
                         setFloor(f);
@@ -350,71 +438,97 @@ var t;
                 }
 
                 //teken de toiletten
-                addIcon(0, 'img/icons/WC (Fill).png', 'toilet', 0, 182.8882180970813, 269.8107913554641);
-                addIcon(0, 'img/icons/WC (Fill).png', 'toilet', 0, 359.6649133937186, 454.37322191372243);
-
+                addFacility(0, 'img/icons/toilet.svg', 'toilet', 0, 182.8882180970813, 269.8107913554641);
+                addFacility(0, 'img/icons/toilet.svg', 'toilet', 0, 359.6649133937186, 454.37322191372243);
+                addFacility(0, 'img/icons/beginpunt.png', 'route-begin', 0, 83,521);
                 //teken alles op de begane grond
 
-                // addIcon(0, 'img/icons/Beginpunt (Fill).png', 'route-begin', 0, 87.25517739600188, 515.7997405507241);
+                // addFacility(0, 'img/icons/Beginpunt (Fill).png', 'route-begin', 0, 87.25517739600188, 515.7997405507241);
                 // addRoute(0, 87.25517739600188, 515.7997405507241, 181.77255084989517, 520.089303008371);
                 // addRoute(0, 181.77255084989517, 520.089303008371, 191.12767140564603, 425.24956209240486);
                 // addRoute(0, 191.12767140564603, 425.24956209240486, 211.60076314383846, 331.1205132058271);
-                 addIcon(0, 'img/icons/Trap (Fill).png', 'switch-floor', 1, 211.60076314383846, 331.1205132058271);//trap omhoog naar v1
+                 addFacility(0, 'img/icons/trap.svg', 'switch-floor', 1, 211.60076314383846, 331.1205132058271);//trap omhoog naar v1
 
                 // //teken alles op de eerste verdieping
-                 addIcon(1, 'img/icons/Trap (Fill).png', 'switch-floor', 0, 211.60076314383846, 331.1205132058271);//trap omlaag naar bg
-                 addIcon(1, 'img/icons/Trap (Fill).png', 'switch-floor', 2, 260.60076314383846, 351.1205132058271);//trap omhoog naar v1
+                 addFacility(1, 'img/icons/trap.svg', 'switch-floor', 0, 211.60076314383846, 331.1205132058271);//trap omlaag naar bg
+
+
+                 
+                 addFacility(1, 'img/icons/trap.svg', 'switch-floor', 2, 640.1952085804634, 588.6926147074832);//trap omhoog naar v1
 
                 // //teken alles op de eerste verdieping
-                 addIcon(2, 'img/icons/Trap (Fill).png', 'switch-floor', 1, 260.60076314383846, 351.1205132058271);//trap omlaag naar bg
+                 addFacility(2, 'img/icons/trap.svg', 'switch-floor', 1, 640.1952085804634, 588.6926147074832);//trap omlaag naar bg
                 // addRoute(1, 211.60076314383846, 331.1205132058271, 217.8126787429306, 260.46886477583973);
                 // addRoute(1, 217.8126787429306, 260.46886477583973, 425.8198910658566, 276.94793979000525);
                 // addRoute(1, 425.8198910658566, 276.94793979000525, 415.9707357590965, 369.28755355025527);
                 // addRoute(1, 415.9707357590965, 369.28755355025527, 436.9001907859601, 371.7499432498958);
                 // addRoute(1, 436.9001907859601, 371.7499432498958, 426.32169461714, 464.5669774843762);
-                // addIcon(1, 'img/icons/Eindbestemming (Fill).png', 'route-end', 0, 426.32169461714, 464.5669774843762);
+                // addFacility(1, 'img/icons/Eindbestemming (Fill).png', 'route-end', 0, 426.32169461714, 464.5669774843762);
 
                 //herkenninspunt op verdieping 1
-                addIcon(1, 'img/icons/WC (Fill).png', 'popup-sightseeing', 0, 425.8198910658566, 276.94793979000525);
+                addFacility(1, 'img/icons/toilet.svg', 'tiolet', 0, 217.8126787429306, 260.46886477583973);
 
                 function drawWalkpath() {
           
                     var points = App.walkPath;
-             
+                    var totalFloors = 0;
+                    //var floorDest
                      routeSource = [new ol.source.Vector({}), new ol.source.Vector({}), new ol.source.Vector({}), new ol.source.Vector({})];
-
+                     iconSource = [new ol.source.Vector({}), new ol.source.Vector({}), new ol.source.Vector({}), new ol.source.Vector({})];
                     
                     if(points.length !== 0) {
                         //voor elke verdieping een getekende pad.
-                        for (var floor = 0; floor < points.length; floor++) {
-                            // laatste object in array
-                            var lastInArray = points[floor].length-1;
-
-                            // if(floor == 0) {
-                            //     //set startpunt
-                            //     addIcon(0, 'img/icons/Beginpunt (Fill).png', 'route-begin', 0, points[floor][0][0], points[floor][0][1]);
-                            // }
-                            // if(points.length > 1) {
-                            //     //console.log(points[floor][last_obj][0]);
-                            //     if((points.length - 1) !== floor){
-                            //         addIcon(floor, 'img/icons/Trap (Line).png', 'switch-floor', floor+1, points[floor][lastInArray][0], points[floor][lastInArray][1]);
-                            //     }
-                                
-
-                            //     if(floor !== 0) {
-                            //         addIcon(floor, 'img/icons/Trap (Line).png', 'switch-floor', floor-1, points[floor][0][0], points[floor][0][1]);
-                            //     }
-                                
-                            // }
-                            if((points.length - 1) == floor) {
-                                addIcon(floor, 'img/icons/Eindbestemming (Fill).png', 'route-end', 0, points[floor][lastInArray][0], points[floor][lastInArray][1]);
-                                //console.log(floor);
+                        for (var pointArray = 0; pointArray < points.length; pointArray++) {
+                            if(points[pointArray].length !== 0) {
+                                totalFloors++;
                             }
-                            var tempRouteFeature = new ol.Feature({
-                                    geometry: new ol.geom.LineString(points[floor]),
-                                    name: 'Route'
-                            });
-                            routeSource[floor].addFeature(tempRouteFeature);
+                        }
+                        console.log("vloeren:"+totalFloors);
+                        for (var floor = 0; floor < points.length; floor++) {
+
+                            if(points[floor].length !== 0) {
+                            // laatste object in array
+                                var lastInArray = points[floor].length -1;
+                                // console.log(points[floor].length);
+                                if(floor == 0) {
+                                    //set startpunt
+                                    //addIcon(0, 'img/icons/beginpunt.png', 'route-begin', 0, points[floor][0][0], points[floor][0][1]);
+                                    //console.log(points[floor][0][0], points[floor][0][1]);
+                                    // var text = "Dit is beginpunt";
+                                    // addPopup(points[floor][0][0], points[floor][0][1]);
+                                }
+                                // if(totalFloors > 1) {
+                                //     //console.log(points[floor][last_obj][0]);
+                                //     // if((points.length - 1) !== floor){
+                                //     //    // addIcon(floor, 'img/icons/Trap (Line).png', 'switch-floor', floor+1, points[floor][lastInArray][0], points[floor][lastInArray][1]);
+                                //     //    var text = "Ga de trap op";
+                                //     //    addPopup(text,points[floor][lastInArray][0], points[floor][lastInArray][1]);
+                                //     // }
+                                    
+
+                                //     // if(floor !== 0) {
+                                //     //     addIcon(floor, 'img/icons/Trap (Line).png', 'switch-floor', floor-1, points[floor][0][0], points[floor][0][1]);
+                                //     // }
+                                    
+                                // }
+                                if((totalFloors - 1) > floor) {
+                                    if((totalFloors - 1) !== floor) {
+                                        var text = "Ga hier naar de volgende verdieping";
+
+                                        addPopup(floor,text,[points[floor][lastInArray][0], points[floor][lastInArray][1]]);
+                                    }
+                                    
+                                }
+                                if((totalFloors - 1) == floor) {
+                                    addIcon(floor, 'img/icons/eindpunt.svg', 'route-end', 0, points[floor][lastInArray][0], points[floor][lastInArray][1]);
+                                    //console.log(floor);
+                                }
+                                var tempRouteFeature = new ol.Feature({
+                                        geometry: new ol.geom.LineString(points[floor]),
+                                        name: 'Route'
+                                });
+                                routeSource[floor].addFeature(tempRouteFeature);
+                            }
                         }
                         flyToCenter();
                         setFloor(0);
@@ -424,6 +538,7 @@ var t;
                 function flyToCenter() {
                     var duration = 720;
                     var zoom = 1.7;
+                    var rotation = 0;
                     var parts = 2;
                     var called = false;
                     var viewCenter = view.getCenter();
@@ -439,7 +554,8 @@ var t;
                         }
                         view.animate({
                           center: center,
-                          duration: duration
+                          duration: duration,
+                          rotation: rotation
                         }, callback);
                         view.animate({
                           zoom: zoom - .1,
@@ -451,6 +567,5 @@ var t;
                     }
 
                   }
-
                 //alles bedacht, stel zichtbare verdieping in
                 setFloor(0);

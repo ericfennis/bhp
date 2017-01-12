@@ -318,6 +318,7 @@ for (var fl_button = 0; fl_button <= 3; fl_button++) {
 
 }
 
+
 function setButtonEvent(f) {
 	console.log("buttonEvent aanmaken voor " + f);
 	$("#select-floor-"+f).on("tap", function(event) {
@@ -330,6 +331,7 @@ function setButtonEvent(f) {
 		setFloor(f);
 	});
 }
+
 var buttonOverlay = new ol.control.Control({
     element: setFloor_buttons
 });
@@ -342,6 +344,6 @@ for (var floorEl = 0; floorEl <= 3; floorEl++) {
 
 $(document).ready(function(){
 	if($("#json").length > 0){
-		$("#json").parent().parent().hide();
+		//$("#json").parent().parent().hide();
 	}
 });
