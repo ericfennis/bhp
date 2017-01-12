@@ -136,16 +136,17 @@
                 },
             }
         },
-        beforeMount() {
-            console.log('Component ready.');
+        beforeMounted() {
             this.all = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+            console.log('Component ready.');
+            
         },
         created() {
             this.getAll();
             this.getJSON();
         },
-        mounted() {
-            console.log(this);
+        beforeCreated() {
+            this.all = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
         },
         computed: {
         // A computed property that holds only those articles that match the searchString.

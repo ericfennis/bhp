@@ -61,6 +61,7 @@ var App = window.App = new Vue({
             return routes[this.currentRoute];
         },
         exitMap: function() {
+                clearMap();
             flyToCenter();
         }
 
@@ -90,6 +91,7 @@ var App = window.App = new Vue({
         }
         // 1000 milisec = 1 sec
     }
+    
                 //verscheidene bijnodigdheden voor routetekenen e.d.
                 var drawRoutes = false,
                 drawIcons = false,
@@ -317,7 +319,7 @@ var App = window.App = new Vue({
                         extent: extent
                     });
                 var map = new ol.Map({
-                    layers: [mapLayer, routeLayer, iconLayer,facilityLayer, letterLayer],
+                    layers: [mapLayer,routeLayer,facilityLayer,iconLayer,letterLayer],
                     //overlays: [overlay0,overlay1,overlay2,overlay3],
                     target: 'map',
                     view: view,
@@ -447,8 +449,12 @@ var App = window.App = new Vue({
                 // addRoute(0, 87.25517739600188, 515.7997405507241, 181.77255084989517, 520.089303008371);
                 // addRoute(0, 181.77255084989517, 520.089303008371, 191.12767140564603, 425.24956209240486);
                 // addRoute(0, 191.12767140564603, 425.24956209240486, 211.60076314383846, 331.1205132058271);
+                addFacility(0, 'img/icons/trap.svg', 'switch-floor', 1, 422.4777300599601, 710.4659086809227);
+                addFacility(1, 'img/icons/trap.svg', 'switch-floor', 0, 422.4777300599601, 710.4659086809227); 
+
                  addFacility(0, 'img/icons/trap.svg', 'switch-floor', 1, 211.60076314383846, 331.1205132058271);//trap omhoog naar v1
 
+                
                 // //teken alles op de eerste verdieping
                  addFacility(1, 'img/icons/trap.svg', 'switch-floor', 0, 211.60076314383846, 331.1205132058271);//trap omlaag naar bg
 
@@ -497,20 +503,6 @@ var App = window.App = new Vue({
                                     // var text = "Dit is beginpunt";
                                     // addPopup(points[floor][0][0], points[floor][0][1]);
                                 }
-                                // if(totalFloors > 1) {
-                                //     //console.log(points[floor][last_obj][0]);
-                                //     // if((points.length - 1) !== floor){
-                                //     //    // addIcon(floor, 'img/icons/Trap (Line).png', 'switch-floor', floor+1, points[floor][lastInArray][0], points[floor][lastInArray][1]);
-                                //     //    var text = "Ga de trap op";
-                                //     //    addPopup(text,points[floor][lastInArray][0], points[floor][lastInArray][1]);
-                                //     // }
-                                    
-
-                                //     // if(floor !== 0) {
-                                //     //     addIcon(floor, 'img/icons/Trap (Line).png', 'switch-floor', floor-1, points[floor][0][0], points[floor][0][1]);
-                                //     // }
-                                    
-                                // }
                                 if((totalFloors - 1) > floor) {
                                     if((totalFloors - 1) !== floor) {
                                         var text = "Ga hier naar de volgende verdieping";
@@ -534,7 +526,15 @@ var App = window.App = new Vue({
                         setFloor(0);
                     }
                 }
-
+                function clearMap() {
+                    routeSource = [new ol.source.Vector({}), new ol.source.Vector({}), new ol.source.Vector({}), new ol.source.Vector({})];
+                    iconSource = [new ol.source.Vector({}), new ol.source.Vector({}), new ol.source.Vector({}), new ol.source.Vector({})];
+                    routeLayer.changed();
+                    iconLayer.changed();
+                    map.getOverlays().clear();
+                    setFloor(0);
+                    console.log("Clear!");
+                }
                 function flyToCenter() {
                     var duration = 720;
                     var zoom = 1.7;
