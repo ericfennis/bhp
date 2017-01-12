@@ -8453,7 +8453,7 @@ main aside #calendar .event:after {
 }
 
 main aside #calendar .event-date-time {
-  width: 36%;
+  width: 30%;
   float: left;
 }
 
@@ -8500,8 +8500,25 @@ main aside #calendar .event-desc {
 
 main aside #calendar .event-body {
   float: left;
-  width: 64%;
+  width: 60%;
   padding: 10px 20px 20px 15px;
+}
+
+main aside #calendar .event-arrow img {
+  width: 10%;
+  padding: 10px;
+  transition-duration: 0.5s;
+  -webkit-transition-duration: 0.5s;
+  -moz-transition-duration: 0.5s;
+}
+
+main aside #calendar .event.active .event-arrow img {
+  transform: rotate(90deg);
+  -webkit-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  transition-duration: 0.5s;
+  -webkit-transition-duration: 0.5s;
+  -moz-transition-duration: 0.5s;
 }
 
 main ::-webkit-scrollbar {
