@@ -18,9 +18,9 @@
                             </nav>
 
                         </form>
-                        <ul id="results" class="list-group" >
-                            <li class="result-item"  v-for="(item,index) in filteredData" @click="getWalkpath(item)" v-bind:class="{ active: active == item }">
-
+                        <ul id="results" class="list-group">
+                            <li class="result-item"  v-for="(item, i) in filteredData" @click="getWalkpath(item)" v-bind:style="'animation-delay:'+i+1*12+'ms'" v-bind:key="i" v-bind:class="{ active: active == item }">
+                        
                                 <div class="item-image">
                                     <img v-if="item.profilepicture" width="64" height="64" v-bind:src="item.profilepicture"/>
                                     <img v-else width="64" height="64" v-bind:src="item.logo"/>

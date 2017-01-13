@@ -61,7 +61,7 @@ var App = window.App = new Vue({
             return routes[this.currentRoute];
         },
         exitMap: function() {
-                clearMap();
+            clearMap();
             flyToCenter();
         }
 
@@ -267,7 +267,7 @@ var App = window.App = new Vue({
                     for (var fl = 0; fl <= 3; fl++) {
                         floor_buttons[fl].className = "select-floor-button";
                         if(popUp) {
-                            popUp[fl] = 0;
+                            popUp[fl] ? popUp[fl].style.display = 'none': '';
                         }
                     }
                     switch(floorNum) {
@@ -365,13 +365,6 @@ var App = window.App = new Vue({
                         if(drawIcons == true){
                             addIcon(currentFloor, 'img/icons/blackdot.png', 'draw-line', iNum++, lon, lat);
                         }
-        //                 var coordinate = evt.coordinate;
-        // // var hdms = ol.proj.transform(
-        // //     coordinate, 'EPSG:3857', 'EPSG:4326');
-
-        //             content.innerHTML = '<p>You clicked here:</p><code>' + coordinate +
-        //                 '</code>';
-        //             overlay.setPosition(coordinate);
                     }
                     
                 });
@@ -389,7 +382,23 @@ var App = window.App = new Vue({
                     setFloor_buttons.appendChild(floorButton);
                     
                 }
-             function addPopup(floor,text,coordinate) {
+                function selectFloor(f) {
+                    document.getElementById("select-floor-"+f).onclick=function() {
+                        setFloor(f);
+                    };
+                    document.getElementById("select-floor-"+f).touchstart=function() {
+                        setFloor(f);
+                    };
+                }
+                var buttonOverlay = new ol.control.Control({
+                    element: setFloor_buttons
+                });
+                map.addControl(buttonOverlay);
+
+                for (var floorEl = 0; floorEl <= 3; floorEl++) {
+                    selectFloor(floorEl);
+                }
+             function addPopup(floor,func,text,coordinate) {
                     console.log(floor);
                      var popup = document.createElement('div');
                     popup.className = 'ol-popup';
@@ -407,13 +416,13 @@ var App = window.App = new Vue({
                     }));
                      popup.ontouchstart=function() {
                         overlay[floor].setPosition(undefined);
-                        setFloor(floor+1);
+                        func=='next-floor'?setFloor(floor+1):'';
                         popup.blur();
                         return false;
                     };
                      popup.onclick=function() {
                         overlay[floor].setPosition(undefined);
-                        setFloor(floor+1);
+                        func=='next-floor'?setFloor(floor+1):'';
                         popup.blur();
                         return false;
                     };
@@ -422,22 +431,7 @@ var App = window.App = new Vue({
                     overlay[floor].setPosition(coordinate);
 
                 }
-                function selectFloor(f) {
-                    document.getElementById("select-floor-"+f).onclick=function() {
-                        setFloor(f);
-                    };
-                    document.getElementById("select-floor-"+f).touchstart=function() {
-                        setFloor(f);
-                    };
-                }
-                var buttonOverlay = new ol.control.Control({
-                    element: setFloor_buttons
-                });
-                map.addControl(buttonOverlay);
-
-                for (var floorEl = 0; floorEl <= 3; floorEl++) {
-                    selectFloor(floorEl);
-                }
+                
 
                 //teken de toiletten
                 addFacility(0, 'img/icons/toilet.svg', 'toilet', 0, 182.8882180970813, 269.8107913554641);
@@ -475,12 +469,11 @@ var App = window.App = new Vue({
                 addFacility(1, 'img/icons/toilet.svg', 'tiolet', 0, 217.8126787429306, 260.46886477583973);
 
                 function drawWalkpath() {
-          
+                    clearMap();
+
                     var points = App.walkPath;
                     var totalFloors = 0;
-                    //var floorDest
-                     routeSource = [new ol.source.Vector({}), new ol.source.Vector({}), new ol.source.Vector({}), new ol.source.Vector({})];
-                     iconSource = [new ol.source.Vector({}), new ol.source.Vector({}), new ol.source.Vector({}), new ol.source.Vector({})];
+                    
                     
                     if(points.length !== 0) {
                         //voor elke verdieping een getekende pad.
@@ -495,24 +488,17 @@ var App = window.App = new Vue({
                             if(points[floor].length !== 0) {
                             // laatste object in array
                                 var lastInArray = points[floor].length -1;
-                                // console.log(points[floor].length);
-                                if(floor == 0) {
-                                    //set startpunt
-                                    //addIcon(0, 'img/icons/beginpunt.png', 'route-begin', 0, points[floor][0][0], points[floor][0][1]);
-                                    //console.log(points[floor][0][0], points[floor][0][1]);
-                                    // var text = "Dit is beginpunt";
-                                    // addPopup(points[floor][0][0], points[floor][0][1]);
-                                }
+
                                 if((totalFloors - 1) > floor) {
                                     if((totalFloors - 1) !== floor) {
                                         var text = "Ga hier naar de volgende verdieping";
-
-                                        addPopup(floor,text,[points[floor][lastInArray][0], points[floor][lastInArray][1]]);
+                                        addPopup(floor,'next-floor',text,[points[floor][lastInArray][0], points[floor][lastInArray][1]]);
                                     }
-                                    
                                 }
                                 if((totalFloors - 1) == floor) {
                                     addIcon(floor, 'img/icons/eindpunt.svg', 'route-end', 0, points[floor][lastInArray][0], points[floor][lastInArray][1]);
+                                    var text = "Hier is uw bestemming";
+                                    addPopup(floor,null,text,[points[floor][lastInArray][0], points[floor][lastInArray][1]]);
                                     //console.log(floor);
                                 }
                                 var tempRouteFeature = new ol.Feature({

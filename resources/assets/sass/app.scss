@@ -20,17 +20,15 @@
 }
 
 // Animations
-
-@-webkit-keyframes orangePulse {
-  from { background-color: #DF4206; -webkit-box-shadow: 0 0 10px #333; }
-  50% { background-color: #FF6A0D; -webkit-box-shadow: 0 0 10px #FF6A0D; }
-  to { background-color: #DF4206; -webkit-box-shadow: 0 0 10px #333; }
+@-webkit-keyframes moveUp {
+	0% { }
+	100% { -webkit-transform: translateY(0); opacity: 1; }
 }
 
-// @-webkit-keyframes slideOpen {
-// 	from { height:0 }
-// 	to { height:80px; }
-// }
+@keyframes moveUp {
+	0% { }
+	100% { -webkit-transform: translateY(0); transform: translateY(0); opacity: 1; }
+}
 //colors
 $footer: #e1e1e0;
 
@@ -38,6 +36,7 @@ $footer: #e1e1e0;
 @import "reset";
 @import "variables";
 @import "ol";
+@import "vue2-animate";
 
 @import "mixins";
 
@@ -200,7 +199,14 @@ main {
       		li.result-item {
 				list-style: none;
 				padding: 15px;
-				border-bottom: 2px solid #D7D6C8;
+				border-bottom: 2px solid #e1e1e0;
+				will-change: transform;
+				will-change: -webkit-transform;
+				-webkit-transform: translateY(100px);
+				transform: translateY(100px);
+				opacity: 0;
+				-webkit-animation: moveUp .32s ease forwards;
+				animation: moveUp .32s ease forwards;
 				&.active, &.active:hover {
 					h4 {
 						color:#DF4206;
@@ -364,7 +370,7 @@ main {
 	}
 
 	::-webkit-scrollbar-thumb {
-	    background:#E3E3D9;
+	    background:#e1e1e0;
 	}
 	& > figure, section {
 		flex: 2;
@@ -514,7 +520,7 @@ main {
 		border: none;
 		outline: none;
 		padding: 10px 20px;
-		background: #e3e3d9;
+		background: #e1e1e0;
 		cursor: pointer;
 		font-family: inherit;
 		font-size: 36px;
