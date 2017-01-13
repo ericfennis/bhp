@@ -27,7 +27,7 @@ class Company extends Model {
         \Request::input('status') and $query->where('status',\Request::input('status'));
         \Request::input('created_at') and $query->where('created_at',\Request::input('created_at'));
         \Request::input('updated_at') and $query->where('updated_at',\Request::input('updated_at'));
-        
+
         // sort results
         \Request::input("sort") and $query->orderBy(\Request::input("sort"),\Request::input("sortType","asc"));
 
@@ -46,7 +46,7 @@ class Company extends Model {
             'name' => 'required|string|max:255',
             'branch' => 'required|string|max:255',
             'description' => 'required|string|max:255',
-            'logo' => 'required|string|max:255',
+            'logo' => 'mimes:png',
             'building' => 'required',
             'room_number' => 'required',
             'status' => 'required|integer',
@@ -66,7 +66,7 @@ class Company extends Model {
             $newRules[$attr] = $rules[$attr];
         return $newRules;
     }
-    
+
     public function walkpath()
     {
         return $this->hasOne('App\Walkpath','id','walkpath_id');

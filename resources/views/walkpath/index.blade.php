@@ -10,20 +10,16 @@
 
 	    <thead>
 		<tr class="header-row">
-			{!!\Nvd\Crud\Html::sortableTh('id','walkpath.index','Id')!!}
-			{!!\Nvd\Crud\Html::sortableTh('name','walkpath.index','Name')!!}
-			{!!\Nvd\Crud\Html::sortableTh('description','walkpath.index','Description')!!}
-			{!!\Nvd\Crud\Html::sortableTh('status','walkpath.index','Status')!!}
+			{!!\Nvd\Crud\Html::sortableTh('Name','walkpath.index','Naam')!!}
+			{!!\Nvd\Crud\Html::sortableTh('Description','walkpath.index','Omschrijving')!!}
 			{!!\Nvd\Crud\Html::sortableTh('created_at','walkpath.index','Created At')!!}
 			{!!\Nvd\Crud\Html::sortableTh('updated_at','walkpath.index','Updated At')!!}
 			<th></th>
 		</tr>
 		<tr class="search-row">
 			<form class="search-form">
-				<td><input type="text" class="form-control" name="id" value="{{Request::input("id")}}"></td>
 				<td><input type="text" class="form-control" name="name" value="{{Request::input("name")}}"></td>
 				<td><input type="text" class="form-control" name="description" value="{{Request::input("description")}}"></td>
-				<td><input type="text" class="form-control" name="status" value="{{Request::input("status")}}"></td>
 				<td><input type="text" class="form-control" name="created_at" value="{{Request::input("created_at")}}"></td>
 				<td><input type="text" class="form-control" name="updated_at" value="{{Request::input("updated_at")}}"></td>
 				<td style="min-width: 6em;">@include('vendor.crud.single-page-templates.common.search-btn')</td>
@@ -34,9 +30,6 @@
 	    <tbody>
 	    	@forelse ( $records as $record )
 		    	<tr>
-					<td>
-						{{ $record->id }}
-						</td>
 					<td>
 						<span class="editable"
 							  data-type="text"
@@ -54,15 +47,6 @@
 							  data-pk="{{ $record->{$record->getKeyName()} }}"
 							  data-url="/walkpath/{{ $record->{$record->getKeyName()} }}"
 							  >{{ $record->description }}</span>
-						</td>
-					<td>
-						<span class="editable"
-							  data-type="number"
-							  data-name="status"
-							  data-value="{{ $record->status }}"
-							  data-pk="{{ $record->{$record->getKeyName()} }}"
-							  data-url="/walkpath/{{ $record->{$record->getKeyName()} }}"
-							  >{{ $record->status }}</span>
 						</td>
 					<td>
 						{{ $record->created_at }}

@@ -9,7 +9,7 @@
 		<button type="submit" class="btn btn-default col-lg-1" form="form">Opslaan!</button>
 	</div>
 
-    <form id="form" action="/company/{{$company->id}}" method="post">
+    <form id="form" action="/company/{{$company->id}}" method="post" enctype="multipart/form-data">
 
         {{ csrf_field() }}
 
@@ -17,7 +17,7 @@
 
         <!--{!! \Nvd\Crud\Form::input('walkpath_id','text')->model($company)->show() !!}-->
 		<div class="row form-group">
-			<label class="col-lg-1" for="status">route</label>
+			<label class="col-lg-1" for="status">Locatie</label>
 			<div class="col-lg-11">
 				<select name="walkpath_id" id="walkpath_id" class="form-control" value="" type="text">
 					@forelse ( $walkpaths as $walkpath )
@@ -62,7 +62,7 @@
 
         {!! \Nvd\Crud\Form::input('description','text')->model($company)->show() !!}
 
-        {!! \Nvd\Crud\Form::input('logo','text')->model($company)->show() !!}
+        {!! \Nvd\Crud\Form::input('logo','file')->model($company)->show() !!}
 
         {!! \Nvd\Crud\Form::input('building','text')->model($company)->show() !!}
 

@@ -88,6 +88,17 @@ class CompanyController extends Controller
 
         $this->validate($request, Company::validationRules());
 
+		//alles goed én een plaatje? verwerk plaatje
+		if($request->logo != ''){
+			$imageName = $company->id . '.' .
+				$request->file('logo')->getClientOriginalExtension();
+
+			$request->file('logo')->move(
+				base_path() . '/public/images/company/', $imageName
+			);
+			$request->merge(array('Logo' => "/images/company/" . $imageName));
+		}
+
         $company->update($request->all());
 
         return redirect('/company');

@@ -73,19 +73,34 @@ class PersonController extends Controller
      */
     public function update(Request $request, Person $person)
     {
+
+
         if( $request->isXmlHttpRequest() )
         {
             $data = [$request->name  => $request->value];
             $validator = \Validator::make( $data, Person::validationRules( $request->name ) );
             if($validator->fails())
                 return response($validator->errors()->first( $request->name),403);
+
             $person->update($data);
             return "Record updated";
         }
 
         $this->validate($request, Person::validationRules());
 
+		//alles goed én een plaatje? verwerk plaatje
+		if($request->profilepicture != ''){
+			$imageName = $person->id . '.' .
+				$request->file('profilepicture')->getClientOriginalExtension();
+
+			$request->file('profilepicture')->move(
+				base_path() . '/public/images/person/', $imageName
+			);
+			$request->merge(array('Profilepicture' => "/images/person/" . $imageName));
+		}
+
         $person->update($request->all());
+
 
         return redirect('/person');
     }

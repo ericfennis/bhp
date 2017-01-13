@@ -4,7 +4,7 @@
 
     <h2>Update Person: {{$person->firstname}}</h2>
 
-    <form action="/person/{{$person->id}}" method="post">
+    <form action="/person/{{$person->id}}" method="post" enctype="multipart/form-data">
 
         {{ csrf_field() }}
 
@@ -27,7 +27,7 @@
 			</div>
 		</div>
 
-        {!! \Nvd\Crud\Form::input('profilepicture','text')->model($person)->show() !!}
+        {!! \Nvd\Crud\Form::input('profilepicture','file')->model($person)->show() !!}
 
         {!! \Nvd\Crud\Form::input('telephone','text')->model($person)->show() !!}
 
