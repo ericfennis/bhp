@@ -22,7 +22,7 @@ class Person extends Model {
         \Request::input('status') and $query->where('status',\Request::input('status'));
         \Request::input('created_at') and $query->where('created_at',\Request::input('created_at'));
         \Request::input('updated_at') and $query->where('updated_at',\Request::input('updated_at'));
-        
+
         // sort results
         \Request::input("sort") and $query->orderBy(\Request::input("sort"),\Request::input("sortType","asc"));
 
@@ -35,7 +35,7 @@ class Person extends Model {
         $rules = [
             'firstname' => 'required|string|max:64',
             'surname' => 'required|string|max:64',
-            'profilepicture' => 'required|string|max:64',
+            'profilepicture' => 'mimes:png',
             'telephone' => 'required|integer',
             'email' => 'required|string|max:64|email',
             'website' => 'required|string|max:64',

@@ -2,7 +2,7 @@
 
 @section('content')
 
-	<h2>Facilities</h2>
+	<h2>Faciliteiten</h2>
 
 	@include('facility.create')
 
