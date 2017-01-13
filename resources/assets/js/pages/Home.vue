@@ -57,7 +57,6 @@
 </template>
 
 <script>
-    //console.log(this);
     import MainLayout from '../Main.vue'
     import VLink from '../components/VLink.vue'
 
