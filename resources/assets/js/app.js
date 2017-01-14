@@ -23,8 +23,8 @@ var App = window.App = new Vue({
     el: '#app',
     data: {
         currentRoute: window.location.pathname,
-
         walkPath: [],
+        facilities: []
     },
     computed: {
         ViewComponent () {
@@ -36,26 +36,31 @@ var App = window.App = new Vue({
       },
     created() {
         console.log('vue loaded');
+        this.getFacilities();
     },
     methods: {
         getWalkpath: function(item) {
                 var resource = this.$resource('api/walkpath{/id}'),
                     itemID = null;
 
-                  // GET someItem/1
-                  if(item.company_id) {
-                        //console.log(item.company_id);
-                        itemID = item.company_id;
+                if(item.company_id) {
+                    itemID = item.company_id;
 
-                    } else if(item.id) {
-                        //console.log(item.id);
-                        itemID = item.id;
-                    }
-                  resource.get({id: itemID}).then((response) => {
+                } else if(item.id) {
+                    itemID = item.id;
+                }
+                resource.get({id: itemID}).then((response) => {
                     this.walkPath = response.body;
-                    //console.log(this.walkPath);
                     drawWalkpath();
-                  });                
+                });                
+        },
+        getFacilities: function() {
+                this.$http.get('/api/facilities').then((response) => {
+                    this.facilities = response.body;
+                    setFacilities();
+                }, (response) => {
+                    console.error('Hij doet het niet');
+                });
         },
         currentView: function() {
             return routes[this.currentRoute];
@@ -63,6 +68,7 @@ var App = window.App = new Vue({
         exitMap: function() {
             clearMap();
             flyToCenter();
+            this.getFacilities();
         }
 
     },
@@ -193,13 +199,11 @@ var App = window.App = new Vue({
                     var tempIconStyle = new ol.style.Style({
                       image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
                         anchor: [0.5, 0.5],
-                        //offset: 64,
                         size: [32, 32],
                         anchorXUnits: 'fraction',
                         anchorYUnits: 'fraction',
                         opacity: 1,
                         scale: 1,
-                        //src: 'http://openlayers.org/en/v3.0.0/examples/data/icon.png'
                         src: icon
                       }))
                     });
@@ -208,8 +212,23 @@ var App = window.App = new Vue({
                     tempIconFeature.setStyle(tempIconStyle);
                     iconSource[floorNum].addFeature(tempIconFeature);
                 }
-                function addFacility(floorNum, icon, action, val, x, y){
+                function addFacility(floorNum, action, val, x, y){
                     //de feature van dit icoon
+                    var icon = 'img/icons/';
+                    switch(action) {
+                        case 'start':
+                            icon +='beginpunt.png';
+                        break;
+                        case 'switch-floor':
+                            icon +='trap.svg';
+                        break;
+                        case 'toilet':
+                            icon +='toilet.svg';
+                        break;
+                        case 'lift':
+                            icon +='lift.svg';
+                        break;
+                    }
                     var tempFacilityFeature = 
                         new ol.Feature({
                             geometry: new ol.geom.Point([x, y]),
@@ -228,6 +247,7 @@ var App = window.App = new Vue({
                         size: [32,32],
                         anchorXUnits: 'fraction',
                         anchorYUnits: 'fraction',
+                        opacity: 1,
                         scale: 1,
                         //src: 'http://openlayers.org/en/v3.0.0/examples/data/icon.png'
                         src: icon
@@ -319,8 +339,7 @@ var App = window.App = new Vue({
                         extent: extent
                     });
                 var map = new ol.Map({
-                    layers: [mapLayer,routeLayer,facilityLayer,iconLayer,letterLayer],
-                    //overlays: [overlay0,overlay1,overlay2,overlay3],
+                    layers: [mapLayer,facilityLayer,routeLayer,iconLayer,letterLayer],
                     target: 'map',
                     view: view,
                 });
@@ -398,7 +417,7 @@ var App = window.App = new Vue({
                 for (var floorEl = 0; floorEl <= 3; floorEl++) {
                     selectFloor(floorEl);
                 }
-             function addPopup(floor,func,text,coordinate) {
+                function addPopup(floor,func,text,coordinate) {
                     console.log(floor);
                      var popup = document.createElement('div');
                     popup.className = 'ol-popup';
@@ -431,42 +450,32 @@ var App = window.App = new Vue({
                     overlay[floor].setPosition(coordinate);
 
                 }
-                
+                function setFacilities() {
 
-                //teken de toiletten
-                addFacility(0, 'img/icons/toilet.svg', 'toilet', 0, 182.8882180970813, 269.8107913554641);
-                addFacility(0, 'img/icons/toilet.svg', 'toilet', 0, 359.6649133937186, 454.37322191372243);
-                addFacility(0, 'img/icons/beginpunt.png', 'route-begin', 0, 83,521);
-                //teken alles op de begane grond
+                    var facilities = App.facilities;
+                    facilitySource = [new ol.source.Vector({}), new ol.source.Vector({}), new ol.source.Vector({}), new ol.source.Vector({})];
+                    
+                    for (var i = 0; i < facilities.length; i++) {
+                        var fac = facilities[i];
+                        switch(fac.icon) {
+                            case 'stairs-up':
+                                addFacility(fac.floor,'switch-floor',fac.floor+1, fac.x, fac.y);
+                            break;
+                            case 'stairs-down':
+                                addFacility(fac.floor,'switch-floor',fac.floor-1, fac.x, fac.y);
+                            break;
+                            case 'toilet':
+                                addFacility(fac.floor,'toilet',0, fac.x, fac.y);
+                            break;
+                            case 'lift':
+                                addFacility(fac.floor,'lift',0, fac.x, fac.y);
+                            break;
 
-                // addFacility(0, 'img/icons/Beginpunt (Fill).png', 'route-begin', 0, 87.25517739600188, 515.7997405507241);
-                // addRoute(0, 87.25517739600188, 515.7997405507241, 181.77255084989517, 520.089303008371);
-                // addRoute(0, 181.77255084989517, 520.089303008371, 191.12767140564603, 425.24956209240486);
-                // addRoute(0, 191.12767140564603, 425.24956209240486, 211.60076314383846, 331.1205132058271);
-                addFacility(0, 'img/icons/trap.svg', 'switch-floor', 1, 422.4777300599601, 710.4659086809227);
-                addFacility(1, 'img/icons/trap.svg', 'switch-floor', 0, 422.4777300599601, 710.4659086809227); 
-
-                 addFacility(0, 'img/icons/trap.svg', 'switch-floor', 1, 211.60076314383846, 331.1205132058271);//trap omhoog naar v1
-
-                
-                // //teken alles op de eerste verdieping
-                 addFacility(1, 'img/icons/trap.svg', 'switch-floor', 0, 211.60076314383846, 331.1205132058271);//trap omlaag naar bg
-
-
-                 
-                 addFacility(1, 'img/icons/trap.svg', 'switch-floor', 2, 640.1952085804634, 588.6926147074832);//trap omhoog naar v1
-
-                // //teken alles op de eerste verdieping
-                 addFacility(2, 'img/icons/trap.svg', 'switch-floor', 1, 640.1952085804634, 588.6926147074832);//trap omlaag naar bg
-                // addRoute(1, 211.60076314383846, 331.1205132058271, 217.8126787429306, 260.46886477583973);
-                // addRoute(1, 217.8126787429306, 260.46886477583973, 425.8198910658566, 276.94793979000525);
-                // addRoute(1, 425.8198910658566, 276.94793979000525, 415.9707357590965, 369.28755355025527);
-                // addRoute(1, 415.9707357590965, 369.28755355025527, 436.9001907859601, 371.7499432498958);
-                // addRoute(1, 436.9001907859601, 371.7499432498958, 426.32169461714, 464.5669774843762);
-                // addFacility(1, 'img/icons/Eindbestemming (Fill).png', 'route-end', 0, 426.32169461714, 464.5669774843762);
-
-                //herkenninspunt op verdieping 1
-                addFacility(1, 'img/icons/toilet.svg', 'tiolet', 0, 217.8126787429306, 260.46886477583973);
+                        }
+                    }
+                    addFacility(0, 'start', 0, 83,521);
+                    setFloor(0);
+                }
 
                 function drawWalkpath() {
                     clearMap();
@@ -553,5 +562,6 @@ var App = window.App = new Vue({
                     }
 
                   }
+
                 //alles bedacht, stel zichtbare verdieping in
                 setFloor(0);

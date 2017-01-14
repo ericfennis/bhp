@@ -50,5 +50,9 @@ class Facility extends Model {
             $newRules[$attr] = $rules[$attr];
         return $newRules;
     }
+    public function Point()
+    {
+        return $this->hasOne('App\Point','id','walkpath_points_id');
+    }
 
 }

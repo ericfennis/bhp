@@ -22,8 +22,6 @@ class GoogleClientServiceProvider extends ServiceProvider
 
         $client->setSubject('bhppanel@gmail.com');
 
-        // repeat this block for as many Google_Services_* as you like
-        // don't forget to add scopes for other services.
         $this->app->singleton(\Google_Service_Calendar::class, function ($app) use ($client) {
             return new \Google_Service_Calendar($client);
         });

@@ -17,6 +17,28 @@ class FacilityController extends Controller
         return $this->view( "index", ['records' => $records] );
     }
 
+    public function getFacilities()
+    {   
+        $id = 1;
+        $facilities = Facility::All();
+        $returnArray = array();
+
+        foreach ($facilities as $facility) {
+            $walkpathpoint = $facility->Point;
+            $pushArray = array (
+                    'x' => $walkpathpoint['x'],
+                    'y' => $walkpathpoint['y'],
+                    'floor' => $walkpathpoint['map_id'],
+                    'icon' => $facility['icon']
+                );
+            array_push($returnArray, $pushArray);
+        }
+        
+        
+        //array()
+        return $returnArray;
+    }
+
     /**
      * Show the form for creating a new resource.
      *

@@ -29,14 +29,6 @@
                                 <div class="item-body">
                                     <h4 v-if="item.branch"><b>{{item.name}}</b></h4>
                                     <h4 v-else>{{item.name}}</h4>
-
-                                    <!-- <p v-if="item.branch">
-                                    {{#if item.branch.lengt}}
-                                    {{ item.branch }}
-                                    </p>
-                                    <p v-if="item.company"
-                                    >{{ item.company }}
-                                    </p> -->
                         
                                         <p v-if="item.branch">
                                             {{ item.branch }}
@@ -58,14 +50,7 @@
                                             </div>
                                         </div>
                                     </transition>
-                                </div>
-                                
-
-
-
-                                
-                                
-                                
+                                </div> 
                             </li>
 
                         </ul>
@@ -84,7 +69,7 @@
                             <div class="legenda_wrapper">
                               <ul class="legend">
                                     <li class="beginpunt">U bevindt zich hier</li>
-                                    <li class="eindpunt">Eindpunt</li>
+                                    <li class="eindpunt">Uw bestemming</li>
                               </ul>
                               <ul class="legend">
                                 <li class="trap">Trap</li>
@@ -136,17 +121,14 @@
                 },
             }
         },
-        beforeMounted() {
-            this.all = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+        Mounted() {
             console.log('Component ready.');
-            
         },
         created() {
             this.getAll();
-            this.getJSON();
-        },
-        beforeCreated() {
             this.all = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+            this.getJSON();
+
         },
         computed: {
         // A computed property that holds only those articles that match the searchString.

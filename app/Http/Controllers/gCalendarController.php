@@ -10,19 +10,6 @@ use Illuminate\Http\Request;
 
 class gCalendarController extends Controller
 {
-    protected $client;
-
-    // public function __construct()
-    // {
-    //     $client = new Google_Client();
-    //     $client->setAuthConfig('client_secret.json');
-    //     $client->addScope(Google_Service_Calendar::CALENDAR_READONLY);
-
-    //     $guzzleClient = new \GuzzleHttp\Client(array('curl' => array(CURLOPT_SSL_VERIFYPEER => false)));
-    //     $client->setHttpClient($guzzleClient);
-    //     $this->client = $client;
-    // }
-
     /**
      * Display a listing of the resource.
      *
@@ -95,47 +82,4 @@ class gCalendarController extends Controller
 
 
     }
-
-    public function oauth()
-    {
-        session_start();
-
-        $rurl = action('gCalendarController@oauth');
-        $this->client->setRedirectUri($rurl);
-        if (!isset($_GET['code'])) {
-            $auth_url = $this->client->createAuthUrl();
-            $filtered_url = filter_var($auth_url, FILTER_SANITIZE_URL);
-            return redirect($filtered_url);
-        } else {
-            $this->client->authenticate($_GET['code']);
-            $_SESSION['access_token'] = $this->client->getAccessToken();
-            return redirect()->route('calendar.index');
-        }
-    }
-    /**
-     * Display the specified resource.
-     *
-     * @param $eventId
-     * @return \Illuminate\Http\Response
-     * @internal param int $id
-     */
-    public function show($eventId)
-    {
-        session_start();
-        if (isset($_SESSION['access_token']) && $_SESSION['access_token']) {
-            $this->client->setAccessToken($_SESSION['access_token']);
-
-            $service = new Google_Service_Calendar($this->client);
-            $event = $service->events->get('primary', $eventId);
-
-            if (!$event) {
-                return response()->json(['status' => 'error', 'message' => 'Something went wrong']);
-            }
-            return response()->json(['status' => 'success', 'data' => $event]);
-
-        } else {
-            return redirect()->route('oauthCallback');
-        }
-    }
-
 }	

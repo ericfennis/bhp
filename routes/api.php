@@ -36,14 +36,4 @@ Route::get('/point/del/{id}', 'PointController@delPoint');
 
 Route::get('/events', 'gCalendarController@getEvents');
 
-// Route::get('/walkpath/{id}', function($id){
-// 	$company = App\Company::findOrFail($id);
-// 	$walkpathpoints = $company->walkpath->walkpathpoints;
-// 	$points = array();
-// 	foreach ($walkpathpoints as $walkpath) {
-// 		array_push($points, App\Point::find($walkpath->id));
-// 	}
-	
-// 	return $points;
-// });
-
+Route::get('/facilities', 'FacilityController@getFacilities');
