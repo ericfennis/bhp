@@ -10,7 +10,7 @@
         <div id="collapseOne" class="panel-collapse collapse">
             <div class="panel-body">
 
-                <form action="/company" method="post">
+                <form action="/company" method="post" enctype="multipart/form-data">
 
                     {{ csrf_field() }}
 
@@ -38,7 +38,7 @@
 
                     {!! \Nvd\Crud\Form::input('description','text')->show() !!}
 
-                    {!! \Nvd\Crud\Form::input('logo','text')->show() !!}
+                    {!! \Nvd\Crud\Form::input('logo','file')->show() !!}
 
                     {!! \Nvd\Crud\Form::input('building','text')->show() !!}
 

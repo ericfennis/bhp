@@ -25,7 +25,18 @@
 
         {!! \Nvd\Crud\Form::input('name','text')->model($facility)->show() !!}
 
-        {!! \Nvd\Crud\Form::input('icon','text')->model($facility)->show() !!}
+		<div class="row form-group">
+			<label class="col-lg-1" for="status">icon</label>
+			<div class="col-lg-11">
+				<select name="icon" id="icon" class="form-control" value="" type="text">
+
+						<option value="toilet" {{ ($facility->icon == 'toilet') ? 'selected' : '' }}>Toilet</option>
+						<option value="stairs-up" {{ ($facility->icon == 'stairs-up') ? 'selected' : '' }}>Trap omhoog</option>
+						<option value="stairs-down" {{ ($facility->icon == 'stairs-down') ? 'selected' : '' }}>Trap omlaag</option>
+
+				</select>
+			</div>
+		</div>
 
         {!! \Nvd\Crud\Form::input('description','text')->model($facility)->show() !!}
 		<!-- onder crud: map -->

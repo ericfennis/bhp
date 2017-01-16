@@ -39,7 +39,27 @@ class PersonController extends Controller
     {
         $this->validate($request, Person::validationRules());
 
-        Person::create($request->all());
+		//geen profielfoto = invullen
+		if($request->profilepicture == ''){
+			$request->merge(array('Profilepicture' => "geen"));
+		}
+
+        $person = Person::create($request->all());
+
+		//alles goed én een plaatje? verwerk plaatje en updaten (met id van persoon)
+		if($request->profilepicture != ''){
+			$imageName = $person->id . '.' .
+				$request->file('profilepicture')->getClientOriginalExtension();
+
+			$request->file('profilepicture')->move(
+				base_path() . '/public/images/person/', $imageName
+			);
+			$request->merge(array('Profilepicture' => "/images/person/" . $imageName));
+
+			$person->update($request->all());
+		}
+
+
 
         return redirect('/person');
     }

@@ -42,11 +42,29 @@ class CompanyController extends Controller
         $this->validate($request, Company::validationRules());
         if(empty($request->default_person)) {
             $request->merge(array('default_person' => 0));
-        } 
+        }
         if(empty($request->location_point)) {
             $request->merge(array('location_point' => 0));
-        } 
-        Company::create($request->all());
+        }
+		if(empty($request->logo)) {
+            $request->merge(array('logo' => 'geen'));
+        }
+
+
+        $company = Company::create($request->all());
+
+		//alles goed én een plaatje? verwerk plaatje
+		if($request->logo != ''){
+			$imageName = $company->id . '.' .
+				$request->file('logo')->getClientOriginalExtension();
+
+			$request->file('logo')->move(
+				base_path() . '/public/images/company/', $imageName
+			);
+			$request->merge(array('Logo' => "/images/company/" . $imageName));
+			$company->update($request->all());
+		}
+
 
         return redirect('/company');
     }
