@@ -36,9 +36,9 @@ class Person extends Model {
             'firstname' => 'required|string|max:64',
             'surname' => 'required|string|max:64',
             'profilepicture' => 'mimes:png',
-            'telephone' => 'required|string|max:255',
-            'email' => 'required|string|email',
-            'website' => 'required|string',
+            'telephone' => 'required|integer',
+            'email' => 'required|string|max:64|email',
+            'website' => 'required|string|max:64',
             'status' => 'required|integer',
         ];
 

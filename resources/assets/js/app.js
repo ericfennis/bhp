@@ -84,6 +84,17 @@ var App = window.App = new Vue({
     document.onmousemove = resetTimer;
     document.onkeypress = resetTimer;
 
+    document.onclick = eenApril;
+     
+     function eenApril() {
+        var datum = new Date();
+        if(datum.getMonth() == 4 && datum.getDate() == 1) {
+            var audio = new Audio('/development-bundle/themes/fart.wav');
+            audio.play();
+        }
+        
+     }
+
     function goToHome() {
         App.currentRoute = '/';
         App.exitMap();
