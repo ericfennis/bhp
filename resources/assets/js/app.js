@@ -98,6 +98,9 @@ var App = window.App = new Vue({
         // 1000 milisec = 1 sec
     }
     
+
+    ///////// Code van de kaart ///////////////////////////////////////////
+
                 //verscheidene bijnodigdheden voor routetekenen e.d.
                 var drawRoutes = false,
                 drawIcons = false,
@@ -155,6 +158,7 @@ var App = window.App = new Vue({
                 }),
                 container = document.getElementById('popups');
 
+                //Teken een lijn
                 function drawLine(x, y, point){
                     if(prevXY[0] == 0 && prevXY[1] == 0){
                         newRoute.push(point);
@@ -183,6 +187,7 @@ var App = window.App = new Vue({
                     });
                     routeSource[floorNum].addFeature(tempRouteFeature);
                 }
+                // Icons toevoegden op de route
                 function addIcon(floorNum, icon, action, val, x, y){
                     //de feature van dit icoon
                     var tempIconFeature = 
@@ -212,6 +217,7 @@ var App = window.App = new Vue({
                     tempIconFeature.setStyle(tempIconStyle);
                     iconSource[floorNum].addFeature(tempIconFeature);
                 }
+                // faciliteiten iconen tekenen: Wc, trap, lift
                 function addFacility(floorNum, action, val, x, y){
                     //de feature van dit icoon
                     var icon = 'img/icons/';
@@ -258,7 +264,7 @@ var App = window.App = new Vue({
                     tempFacilityFeature.setStyle(tempFacilityStyle);
                     facilitySource[floorNum].addFeature(tempFacilityFeature);
                 }
-                
+                //Importeer kaart afbeeldingen
                 function setMapSource(url){
                     mapSource = new ol.source.ImageStatic({
                         url: url,
@@ -267,6 +273,7 @@ var App = window.App = new Vue({
                     })
                     mapLayer.setSource(mapSource);
                 }
+                //importeerd gebouwletter afbeelding
                 function setLetterSource(url){
                     letterSource = new ol.source.ImageStatic({
                         url: url,
@@ -275,11 +282,13 @@ var App = window.App = new Vue({
                     })
                     letterLayer.setSource(letterSource);
                 }
+                //Selecteerd de laag van voor de verdiepingen, word aangeroepen door setFloor();
                 function setRouteIconSource(floorNum){
                     routeLayer.setSource(routeSource[floorNum]);
                     facilityLayer.setSource(facilitySource[floorNum]);
                     iconLayer.setSource(iconSource[floorNum]);
                 }
+                //selecteerd de verdieping
                 function setFloor(floorNum){
                     var floor_buttons = document.getElementsByClassName("select-floor-button");
                     var popUp = document.getElementsByClassName("ol-popup");
@@ -346,7 +355,7 @@ var App = window.App = new Vue({
                 var mapReload = '';
 
                 
-                //events
+                //click functie iconen 
                 map.on('click', function(evt){
                     var lonlat = ol.proj.transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326');
 
@@ -387,7 +396,7 @@ var App = window.App = new Vue({
                     }
                     
                 });
-                
+                // aanmaken van de verdieping knoppen
                 var setFloor_buttons = document.createElement('div');
                 setFloor_buttons.id = "floor-controll";
                 setFloor_buttons.className = 'select-floor ol-control ol-unselectable';
@@ -417,6 +426,7 @@ var App = window.App = new Vue({
                 for (var floorEl = 0; floorEl <= 3; floorEl++) {
                     selectFloor(floorEl);
                 }
+                //functie voor het toevoegen van popups
                 function addPopup(floor,func,text,coordinate) {
                     console.log(floor);
                      var popup = document.createElement('div');
@@ -450,9 +460,10 @@ var App = window.App = new Vue({
                     overlay[floor].setPosition(coordinate);
 
                 }
+                // Teken de faciliteiten
                 function setFacilities() {
 
-                    var facilities = App.facilities;
+                    var facilities = App.facilities; // Json met alle faciliteiten
                     facilitySource = [new ol.source.Vector({}), new ol.source.Vector({}), new ol.source.Vector({}), new ol.source.Vector({})];
                     
                     for (var i = 0; i < facilities.length; i++) {
@@ -476,11 +487,11 @@ var App = window.App = new Vue({
                     addFacility(0, 'start', 0, 83,521);
                     setFloor(0);
                 }
-
+                // Tekent de route op de kaart
                 function drawWalkpath() {
                     clearMap();
 
-                    var points = App.walkPath;
+                    var points = App.walkPath; // Json van de route
                     var totalFloors = 0;
                     
                     
@@ -521,6 +532,7 @@ var App = window.App = new Vue({
                         setFloor(0);
                     }
                 }
+                // Verwijderd alle getekende iconen en routes en popups, en zet de verdieping op beganegrond. verwijderd niet de faciliteiten.
                 function clearMap() {
                     routeSource = [new ol.source.Vector({}), new ol.source.Vector({}), new ol.source.Vector({}), new ol.source.Vector({})];
                     iconSource = [new ol.source.Vector({}), new ol.source.Vector({}), new ol.source.Vector({}), new ol.source.Vector({})];
@@ -530,6 +542,7 @@ var App = window.App = new Vue({
                     setFloor(0);
                     console.log("Clear!");
                 }
+                // centreert de map
                 function flyToCenter() {
                     var duration = 720;
                     var zoom = 1.7;

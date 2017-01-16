@@ -53,7 +53,43 @@ class WalkpathController extends Controller
         // return Points
     	return $points;
     }
+    public function getWalkpathExtern($name)
+    {
+        $walkpath = Walkpath::where('name',$name)-> first();
 
+        $walkpathpoints = $walkpath->walkpathpoint;
+
+        $points = array(
+                0 => array(),
+                1 => array(),
+                2 => array(),
+                3 => array()
+            );
+
+        foreach ($walkpathpoints as $walkpath) {
+            // find each point with id.
+            $point = Point::find($walkpath->point_id);
+            //make-up the array for JSON structure
+            $coords = array($point->x,$point->y);
+
+            $points[$point->map_id] = array_merge($points[$point->map_id],array($coords));
+            //Merge the coords with the points array
+            //$points = array_merge($points,array($coords));
+
+        }
+        foreach ($points as $floorKey => $arrayPoints) {
+            if(!empty($arrayPoints)) {
+                $endPointInArray = end($arrayPoints);
+                
+                if(!empty($points[$floorKey+1])) {
+                    array_unshift($points[$floorKey+1],$endPointInArray);
+                }
+            }
+       
+        }
+        // return Points
+        return $points;
+    }
     public function index()
     {
         $records = Walkpath::findRequested();

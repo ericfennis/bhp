@@ -27,8 +27,9 @@ Route::get('/people', function(){
 });
 
 Route::get('/list', 'ListController@getJSON');
-Route::get('/walkpath/{id}', 'WalkpathController@getWalkpath');
 
+Route::get('/walkpath/name/{name}', 'WalkpathController@getWalkpathExtern');
+Route::get('/walkpath/{id}', 'WalkpathController@getWalkpath');
 
 Route::get('/point/list', 'PointController@getAll');
 Route::get('/point/add/{map}/{x}/{y}', 'PointController@addPoint');
