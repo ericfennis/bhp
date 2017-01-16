@@ -238,12 +238,39 @@ main {
 						color: #555;
 						margin: 0;
 					}
+					[class^="info-"], [class*=" info-"] {
+						line-height: 36px;
+						&:before {
+							font-family: 'icomoon';
+							content: "";
+							display: inline-block;
+							width: 30px;
+							line-height: 20px;
+							vertical-align: text-top;
+						}
+					}
+					.info-location {
+						text-transform: uppercase;
+						&:before {
+							content: "\e90b";
+						}
+					}
+					.info-telephone {
+						&:before {
+							content: "\e90a";
+						}
+					}
+					.info-email {
+						&:before {
+							content: "\e901";
+						}
+					}
 				}
 				.item-collapse {
 					will-change: height;
-				    height: 140px;
+				    height: 130px;
 				    opacity: 1;
-				    padding: 20px 0;
+				    padding: 12px 0;
 				    overflow: hidden;
 				}
 				.collapse-enter-active, .collapse-leave-active {

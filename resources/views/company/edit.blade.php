@@ -29,29 +29,6 @@
 			</div>
 		</div>
 
-
-        <!--{!! \Nvd\Crud\Form::input('location_point','text')->model($company)->show() !!}-->
-		<div class="row form-group">
-			<label class="col-lg-1" for="location_point">Punt</label>
-			<div class="col-lg-11">
-				<input name="location_point" id="location_point" class="form-control wp-field" value="{{$company->location_point}}" type="text" readonly>
-			</div>
-		</div>
-
-        <!--{!! \Nvd\Crud\Form::input('default_person','text')->model($company)->show() !!}-->
-		<div class="row form-group">
-			<label class="col-lg-1" for="status">Contactpersoon</label>
-			<div class="col-lg-11">
-				<select name="default_person" id="default_person" class="form-control" value="" type="text">
-					@forelse ( $people as $person )
-						<option value="{{ $person->id }}" {{ ($person->id == $company->default_person) ? 'selected' : '' }}>{{$person->surname}}, {{$person->firstname}}</option>
-					@empty
-						<option value="0" disabled>Geen personen gevonden</option>
-					@endforelse
-				</select>
-			</div>
-		</div>
-
         {!! \Nvd\Crud\Form::input('telephone','text')->model($company)->show() !!}
 
         {!! \Nvd\Crud\Form::input('email','text')->model($company)->show() !!}

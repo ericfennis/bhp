@@ -39,8 +39,8 @@ class Company extends Model {
     {
         $rules = [
             'walkpath_id' => 'required|integer',
-            'location_point' => 'required|integer',
-            'default_person' => 'required|integer',
+            'location_point' => 'integer',
+            'default_person' => 'integer',
             'telephone' => 'required|string|max:255',
             'email' => 'required|string|max:64|email',
             'name' => 'required|string|max:255',

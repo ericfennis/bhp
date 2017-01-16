@@ -28,22 +28,6 @@
 						</div>
 					</div>
 
-                    {!! \Nvd\Crud\Form::input('location_point','text')->show() !!}
-
-                    <!--{!! \Nvd\Crud\Form::input('default_person','text')->show() !!}-->
-					<div class="row form-group">
-						<label class="col-lg-1" for="default_person">default_person</label>
-						<div class="col-lg-11">
-							<select name="default_person" id="default_person" class="form-control" value="" type="text">
-								@forelse ( $people as $person )
-									<option value="{{ $person->id }}">{{$person->surname}}, {{$person->firstname}}</option>
-								@empty
-									<option value="0" disabled>Geen personen gevonden</option>
-								@endforelse
-							</select>
-						</div>
-					</div>
-
                     {!! \Nvd\Crud\Form::input('telephone','text')->show() !!}
 
                     {!! \Nvd\Crud\Form::input('email','text')->show() !!}

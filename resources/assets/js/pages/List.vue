@@ -41,7 +41,9 @@
                         
                                     <transition name="collapse">
                                         <div v-if="active == item" class="item-collapse">
-                                            <div class="info-location" v-if="item.room_number && item.building">Cel: {{ item.building+item.room_number }}</div>
+                                            <div class="info-location" v-if="item.room_number && item.building">
+                                                {{ item.building+'&nbsp;'+item.room_number }}
+                                            </div>
                                             <div class="info-telephone" v-if="item.room_number">
                                                 {{ item.telephone }}
                                             </div>

@@ -78,7 +78,7 @@ var App = window.App = new Vue({
     
 });
     var t;
-    var debugMode = false;
+    var debugMode = true;
     window.onload = resetTimer;
     // DOM Events
     document.onmousemove = resetTimer;
@@ -122,7 +122,7 @@ var App = window.App = new Vue({
                 iconSource = [new ol.source.Vector({}), new ol.source.Vector({}), new ol.source.Vector({}), new ol.source.Vector({})],
                 facilitySource = [new ol.source.Vector({}), new ol.source.Vector({}), new ol.source.Vector({}), new ol.source.Vector({})],
                 letterSource = new ol.source.ImageStatic({}),
-
+                
                 //layers waar we later misschien nog aanspraak op willen maken?
                 mapLayer = new ol.layer.Image({
                     source: new ol.source.ImageStatic({

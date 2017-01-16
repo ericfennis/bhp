@@ -40,7 +40,12 @@ class CompanyController extends Controller
     public function store( Request $request )
     {
         $this->validate($request, Company::validationRules());
-
+        if(empty($request->default_person)) {
+            $request->merge(array('default_person' => 0));
+        } 
+        if(empty($request->location_point)) {
+            $request->merge(array('location_point' => 0));
+        } 
         Company::create($request->all());
 
         return redirect('/company');
@@ -98,7 +103,6 @@ class CompanyController extends Controller
 			);
 			$request->merge(array('Logo' => "/images/company/" . $imageName));
 		}
-
         $company->update($request->all());
 
         return redirect('/company');

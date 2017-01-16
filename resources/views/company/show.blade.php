@@ -15,14 +15,6 @@
             <h5>{{$company->walkpath_id}}</h5>
         </li>
         <li class="list-group-item">
-            <h4>Location Point</h4>
-            <h5>{{$company->location_point}}</h5>
-        </li>
-        <li class="list-group-item">
-            <h4>Default Person</h4>
-            <h5>{{$company->default_person}}</h5>
-        </li>
-        <li class="list-group-item">
             <h4>Telephone</h4>
             <h5>{{$company->telephone}}</h5>
         </li>
